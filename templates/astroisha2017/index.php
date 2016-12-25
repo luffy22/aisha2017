@@ -11,6 +11,11 @@ $doc->setHtml5(true);
 // Add Stylesheets
 $doc->addStyleSheetVersion($this->baseurl . '/templates/' . $this->template . '/css/template.css');
 $sitename = $app->get('sitename');
+unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
+unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
+unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
+unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.js']);
+$doc->setGenerator("Astro Isha Inc.");
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">

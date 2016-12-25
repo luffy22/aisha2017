@@ -21,6 +21,8 @@ class modTopMenuHelper
         $result     = $menu->getItems('menutype', $base->menutype);
 ?>
 <nav class="navbar navbar-light navbar-fixed-top bg-primary">
+<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#top-menu" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"></button>
+<div class="collapse navbar-toggleable-md" id="top-menu">
 <a href="<?php echo JUri::base(); ?>" class="navbar-brand top-menu"><img src="<?php echo JUri::base() ?>logo.png" height="30" width="30" /> <?php echo $site; ?></a>
   <ul class="nav navbar-nav">
 <?php
@@ -39,7 +41,7 @@ class modTopMenuHelper
                 $children       = $menu->getItems('parent_id',$items->id, false);
           ?>
              <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="nav-link dropdown-toggle top-menu" href="<?php echo $url ?>"><?php echo $items->title ?><span class="caret"></span></a>
-             <div class="dropdown-menu nav bg-primary" aria-labelledby="supportedContentDropdown">
+             <div class="dropdown-menu bg-primary" aria-labelledby="supportedContentDropdown">
              <?php
                     foreach($children as $child)
                     {
@@ -59,6 +61,7 @@ class modTopMenuHelper
       }
 ?>
     </ul>
+</div>
 </nav>
 <?php
     }
