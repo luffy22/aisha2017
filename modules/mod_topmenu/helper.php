@@ -45,15 +45,24 @@ class modTopMenuHelper
              <?php
                     foreach($children as $child)
                     {
-                        $url   = JRoute::_($child->link . "&Itemid=" . $child->id);
+                        if($child->type=="url")
+                        {
+                            $url    = JRoute::_($child->link);
+                        }
+                        else
+                        {
+                            $url   = JRoute::_($child->link . "&Itemid=" . $child->id);
+                        }
                      ?>
                          <a href="<?php echo $url; ?>" title="<?php echo $child->title; ?>" class="dropdown-item top-menu-link"><?php echo $child->title; ?></a>
                  <?php
                     }
+                    
              ?>
              </div>
       <?php
             }
+            
       ?>
             </li>
             

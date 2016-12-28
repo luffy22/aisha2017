@@ -14,7 +14,7 @@ $sitename = $app->get('sitename');
 unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
 unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
 unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
-unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.js']);
+unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.min.js']);
 $doc->setGenerator("Astro Isha Inc.");
 ?>
 <!DOCTYPE html>
@@ -54,6 +54,7 @@ endif;
 <jdoc:include type="modules" name="topmenu" style="none" />
 <div class="spacer"></div>
 <jdoc:include type="modules" name="jbanner" style="none" />
+<div class="spacer"></div>
 <div class="container-fluid">
     <div class="row">
     <div class="col-md-8">

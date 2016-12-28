@@ -40,7 +40,7 @@ $baseurl = JUri::base();
 						<a
 							href="<?php echo $link; ?>" target="_blank"
 							title="<?php echo htmlspecialchars($item->name, ENT_QUOTES, 'UTF-8');?>">
-							<img
+							<img class="img-fluid"
 								src="<?php echo $baseurl . $imageurl;?>"
 								alt="<?php echo $alt;?>"
 								<?php if (!empty($width)) echo 'width ="' . $width . '"';?>
@@ -54,7 +54,7 @@ $baseurl = JUri::base();
 								'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=780,height=550');
 								return false"
 							title="<?php echo htmlspecialchars($item->name, ENT_QUOTES, 'UTF-8');?>">
-							<img
+							<img class="img-fluid"
 								src="<?php echo $baseurl . $imageurl;?>"
 								alt="<?php echo $alt;?>"
 								<?php if (!empty($width)) echo 'width ="' . $width . '"';?>
@@ -66,7 +66,7 @@ $baseurl = JUri::base();
 						<a
 							href="<?php echo $link;?>"
 							title="<?php echo htmlspecialchars($item->name, ENT_QUOTES, 'UTF-8');?>">
-							<img
+							<img class="img-fluid"
 								src="<?php echo $baseurl . $imageurl;?>"
 								alt="<?php echo $alt;?>"
 								<?php if (!empty($width)) echo 'width ="' . $width . '"';?>
@@ -76,7 +76,7 @@ $baseurl = JUri::base();
 					<?php endif;?>
 				<?php else :?>
 					<?php // Just display the image if no link specified?>
-					<img
+					<img class="img-fluid"
 						src="<?php echo $baseurl . $imageurl;?>"
 						alt="<?php echo $alt;?>"
 						<?php if (!empty($width)) echo 'width ="' . $width . '"';?>
