@@ -53,20 +53,20 @@ endif;
 <jdoc:include type="modules" name="topmenu" style="none" />
 <div class="spacer"></div>
 <jdoc:include type="modules" name="jbanner" style="none" />
-<div class="spacer"></div>
+<div class="mb-1"></div>
 <div class="container-fluid">
     <div class="row">
     <div class="col-md-8">
     <jdoc:include type="modules" name="breadcrumb" style="none" />
-    <div class="spacer"></div>
+    <div class="mb-1"></div>
     <jdoc:include type="message" />
-    <div class="spacer"></div>
+    <div class="mb-1"></div>
      <jdoc:include type="modules" name="articleslider" style="none" />
-     <div class="spacer"></div>
+     <div class="mb-1"></div>
     <jdoc:include type="component" />   
-    <div class="spacer"></div>
+    <div class="mb-1"></div>
     <jdoc:include type="modules" name="relatedarticles" style="none" />
-    <div class="spacer"></div>
+    <div class="mb-1"></div>
     </div>
     </div>
 </div>

@@ -45,8 +45,8 @@ $i = 0;
             <div class="carousel-item active">
                 <img src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $item->title; ?>">
                 <div class="carousel-caption">
-                   <h3 class="hidden-xs-down hidden-sm-down"><a href="<?php echo $item->link ?>"><?php echo "Read More"; ?></a></h3>
                    <p class="hidden-md-up"><a href="<?php echo $item->link ?>"><?php echo "Read More"; ?></a></p>
+                   <h3 class="hidden-xs-down hidden-sm-down"><a href="<?php echo $item->link ?>"><?php echo "Read More"; ?></a></h3>
                    <p class="hidden-xs-down hidden-sm-down"><?php echo $item->metadesc; ?></p>
               </div>
             </div>
@@ -57,8 +57,8 @@ $i = 0;
       <div class="carousel-item">
                 <img src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $item->title; ?>">
                 <div class="carousel-caption">
+                     <p class="hidden-md-up"><a href="<?php echo $item->link ?>"><?php echo "Read More"; ?></a></p>
                    <h3 class="hidden-xs-down hidden-sm-down"><a href="<?php echo $item->link ?>"><?php echo "Read More"; ?></a></h3>
-                   <p class="hidden-md-up"><a href="<?php echo $item->link ?>"><?php echo "Read More"; ?></a></p>
                    <p class="hidden-xs-down hidden-sm-down"><?php echo $item->metadesc; ?></p>
               </div>
             </div>
