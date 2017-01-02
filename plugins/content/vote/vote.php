@@ -82,15 +82,15 @@ class PlgContentVote extends JPlugin
 
 				for ($i = 1; $i < 6; $i++)
 				{
-					$options[] = JHtml::_('select.option', $i, JText::sprintf('PLG_VOTE_VOTE', $i));
+					$options[] = JHtml::_('select.option', $i, $i.JTEXT::sprintf(" star"));
 				}
 
 				// Generate voting form
 				$html .= '<form method="post" action="' . htmlspecialchars($uri->toString(), ENT_COMPAT, 'UTF-8') . '" class="form-inline">';
 				$html .= '<span class="content_vote">';
-				$html .= '<label class="unseen element-invisible" for="content_vote_' . $row->id . '">' . JText::_('PLG_VOTE_LABEL') . '</label>';
+				$html .= '<label class="unseen element-invisible" for="content_vote_' . $row->id . '">' . JText::_('Rate:') . '</label>&nbsp;';
 				$html .= JHtml::_('select.genericlist', $options, 'user_rating', null, 'value', 'text', '5', 'content_vote_' . $row->id);
-				$html .= '&#160;<input class="btn btn-mini" type="submit" name="submit_vote" value="' . JText::_('PLG_VOTE_RATE') . '" />';
+				$html .= '&#160;<input class="btn btn-sm btn-outline-primary" type="submit" name="submit_vote" value="' . JText::_('PLG_VOTE_RATE') . '" />';
 				$html .= '<input type="hidden" name="task" value="article.vote" />';
 				$html .= '<input type="hidden" name="hitcount" value="0" />';
 				$html .= '<input type="hidden" name="url" value="' . htmlspecialchars($uri->toString(), ENT_COMPAT, 'UTF-8') . '" />';

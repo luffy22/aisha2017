@@ -25,7 +25,7 @@ $useDefList = ($params->get('show_modify_date') || $params->get('show_publish_da
 ?>
 <div class="item-page<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="http://schema.org/Article">
 	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? JFactory::getConfig()->get('language') : $this->item->language; ?>" />
-	<?php if ($this->params->get('show_page_heading', 1)) : ?>
+	<?php if ($this->params->get('show_page_heading')) : ?>
 	<div class="page-header">
 		<h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
 	</div>
@@ -161,15 +161,16 @@ if (!empty($this->item->pagination) && $this->item->pagination && !$this->item->
 
 	<?php if (!$params->get('show_intro')) : echo $this->item->event->afterDisplayTitle; endif; ?>
 	<?php echo $this->item->event->beforeDisplayContent; ?>
-        <div class="mb-1"></div>
+
 	<?php if (isset($urls) && ((!empty($urls->urls_position) && ($urls->urls_position == '0')) || ($params->get('urls_position') == '0' && empty($urls->urls_position)))
 		|| (empty($urls->urls_position) && (!$params->get('urls_position')))) : ?>
 	<?php echo $this->loadTemplate('links'); ?>
 	<?php endif; ?>
+        <div class="mt-1"></div>
 	<?php if ($params->get('access-view')):?>
 	<?php if (isset($images->image_fulltext) && !empty($images->image_fulltext)) : ?>
 	<?php $imgfloat = (empty($images->float_fulltext)) ? $params->get('float_fulltext') : $images->float_fulltext; ?>
-	<div class="pull-<?php echo htmlspecialchars($imgfloat); ?> item-image"> <img
+	<div class="<?php echo htmlspecialchars($imgfloat); ?> item-image"> <img
 	<?php if ($images->image_fulltext_caption):
 		echo 'class="caption"'.' title="' .htmlspecialchars($images->image_fulltext_caption) . '"';
 	endif; ?>

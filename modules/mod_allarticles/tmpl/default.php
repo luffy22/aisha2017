@@ -25,19 +25,19 @@ foreach($allarticles as $data)
         if(!empty($images->image_intro) && empty($images->image_fulltext))
         {
 ?>
-            <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $item->title; ?>" />
+            <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" title="Click To Open Article" alt="<?php echo $item->title; ?>" /></a>
 <?php
         }
         else if(empty($images->image_intro) && !empty($images->image_fulltext))
         {
 ?>
-           <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo $item->title; ?>" />
+           <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" title="Click To Open Article" alt="<?php echo $item->title; ?>" /></a>
 <?php
         }
         else
         {
 ?>
-          <img class="img-fluid" src="<?php JURI::base() ?>images/art_img/img_soon.jpg" alt="Image Soon" title="Image Coming Soon..." />  
+          <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php JURI::base() ?>images/art_img/img_soon.jpg" alt="Image Soon" title="Image Coming Soon..." /></a>  
 <?php
         }
 ?>
