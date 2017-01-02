@@ -35,6 +35,7 @@ $doc->setGenerator("Astro Isha Inc.");
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/jquery.min.js" type="text/javascript" language="javascript"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/bootstrap.min.js" type="text/javascript" language="javascript"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/jquery-ui.min.js" type="text/javascript" language="javascript"></script>
+<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
 </head>
 <body>
     <?php
@@ -67,6 +68,10 @@ endif;
     <div class="mb-1"></div>
     <jdoc:include type="modules" name="relatedarticles" style="none" />
     <div class="mb-1"></div>
+    </div>
+    <div class="col-md-4">
+        <div class="mt-1"></div>
+        <jdoc:include type="modules" name="sidebar" style="none" />    
     </div>
     </div>
 </div>

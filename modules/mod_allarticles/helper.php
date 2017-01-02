@@ -18,7 +18,7 @@ class modAllarticlesHelper
             $query          = $db->getQuery(true);
             $query          = "SELECT jv_content.id AS article_id, jv_content.alias as article_alias,
                                 jv_content.title as title, jv_content.images as images, jv_content.language as language,
-                                LEFT(jv_content.introtext,1000) AS article_text,
+                                LEFT(jv_content.introtext,500) AS article_text,
                                 jv_content.hits AS hits, jv_categories.alias AS cat_alias, jv_categories.title as cat_title, jv_content.catid AS cat_id FROM jv_content INNER JOIN jv_categories
                                 ON jv_content.catid = jv_categories.id ORDER BY jv_content.id DESC LIMIT 10"; 
             $db->setQuery($query);

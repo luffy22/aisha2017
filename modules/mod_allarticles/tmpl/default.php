@@ -22,24 +22,30 @@ foreach($allarticles as $data)
 ?>
         <div class="card" id="panel_<?php echo $data->article_id; ?>">
 <?php
-        if(!empty($images->image_intro))
+        if(!empty($images->image_intro) && empty($images->image_fulltext))
         {
 ?>
             <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $item->title; ?>" />
 <?php
         }
+        else if(empty($images->image_intro) && !empty($images->image_fulltext))
+        {
+?>
+           <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo $item->title; ?>" />
+<?php
+        }
         else
         {
 ?>
-            <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo $item->title; ?>" />
+          <img class="img-fluid" src="<?php JURI::base() ?>images/art_img/img_soon.jpg" alt="Image Soon" title="Image Coming Soon..." />  
 <?php
         }
 ?>
-        <div class="card-header"><a href="<?php echo $data->link ?>" title="<?php echo $data->title;?>"><?php echo $data->title; ?></a></div>
+        <div class="card-header"><p class="lead"><?php echo $data->title; ?></p></div>
             <div class="card-block">
             <div class="card-header">
             <p class="text-right"><strong>Hits: <?php echo $data->hits; ?></strong></p></div>
-            <p><?php echo strip_tags(trim($data->article_text))."..."; ?><a href="<?php echo $data->link ?>" title="Click on link to read whole article">Read More</a></p>
+            <p><?php echo strip_tags(trim($data->article_text))."..."; ?><a class="btn btn-primary" href="<?php echo $data->link ?>" title="Click on link to read whole article">Read More</a></p>
             <div class="card-footer text-muted">
                 <p class="text-left">Category: <a href="<?php echo $data->catlink; ?>" title="Browse through Category: <?php echo $data->cat_title; ?> articles"><?php echo $data->cat_title; ?></a></p>
             </div>
