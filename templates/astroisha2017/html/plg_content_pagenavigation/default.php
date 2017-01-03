@@ -10,23 +10,22 @@
 defined('_JEXEC') or die;
 
 $lang = JFactory::getLanguage(); ?>
-<nav aria-label="Page navigation">
-<ul class="pagination">
+<div class="mt-2"></div>
+<ul class="pager pagenav">
 <?php if ($row->prev) :
 	$direction = $lang->isRtl() ? 'right' : 'left'; ?>
-	<li class="page-item">
-		<a class="page-link" href="<?php echo $row->prev; ?>" rel="prev">
-			<?php echo '<i class="fa fa-arrow-circle-left" aria-hidden="true"></i> ' . $row->prev_label; ?>
+	<li class="previous">
+		<a class="btn btn-primary" href="<?php echo $row->prev; ?>" rel="prev">
+			<i class="fa fa-arrow-left" aria-hidden="true"></i><?php echo "&nbsp;".$row->prev_label; ?>
 		</a>
 	</li>
 <?php endif; ?>
 <?php if ($row->next) :
 	$direction = $lang->isRtl() ? 'left' : 'right'; ?>
-	<li class="page-item">
-		<a class="page-link" href="<?php echo $row->next; ?>" rel="next">
-			<?php echo $row->next_label . ' <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>'; ?>
+	<li class="next">
+		<a class="btn btn-primary" href="<?php echo $row->next; ?>" rel="next">
+			<?php echo $row->next_label . '&nbsp;'; ?><i class="fa fa-arrow-right" aria-hidden="true"></i>
 		</a>
 	</li>
 <?php endif; ?>
 </ul>
-</nav>

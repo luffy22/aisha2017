@@ -308,5 +308,6 @@ if (!empty($this->item->pagination) && $this->item->pagination && $this->item->p
 if (!empty($this->item->pagination) && $this->item->pagination && $this->item->paginationposition && $this->item->paginationrelative) :
 	echo $this->item->pagination;
 ?>
+        <div class="mb-1"></div>
 	<?php endif; ?>
 	<?php echo $this->item->event->afterDisplayContent; ?> </div>

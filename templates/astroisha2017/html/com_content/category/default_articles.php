@@ -52,7 +52,7 @@ if (!empty($this->items))
 			</div>
 		<?php endif; ?>
 		<?php if ($this->params->get('show_pagination_limit')) : ?>
-			<div class="btn-group pull-right">
+			<div class="btn-group float-xs-right">
 				<label for="limit" class="element-invisible">
 					<?php echo JText::_('JGLOBAL_DISPLAY_NUM'); ?>
 				</label>
@@ -66,7 +66,7 @@ if (!empty($this->items))
 		<input type="hidden" name="task" value="" />
 	</fieldset>
 <?php endif; ?>
-
+<div class="mb-1"></div>
 <?php if (empty($this->items)) : ?>
 
 	<?php if ($this->params->get('show_no_articles', 1)) : ?>
@@ -131,7 +131,7 @@ if (!empty($this->items))
 				<tr class="cat-list-row<?php echo $i % 2; ?>" >
 			<?php endif; ?>
 			<td <?php echo $headerTitle; ?> class="list-title">
-                        <?php 
+                            <?php 
                                 $images                 = json_decode($article->images); 
                                 if(!empty($images->image_intro))
                                 {
@@ -220,7 +220,6 @@ if (!empty($this->items))
 <?php if ($this->category->getParams()->get('access-create')) : ?>
 	<?php echo JHtml::_('icon.create', $this->category, $this->category->params); ?>
 <?php  endif; ?>
-
 <?php // Add pagination links ?>
 <?php if (!empty($this->items)) : ?>
 	<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
