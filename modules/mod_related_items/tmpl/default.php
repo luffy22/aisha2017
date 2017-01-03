@@ -9,9 +9,11 @@
 
 defined('_JEXEC') or die;
 ?>
-<ul class="relateditems<?php echo $moduleclass_sfx; ?>">
+<div class="mt-1"></div>
+<h3>Related Articles</h3>
+<ul class="list-group<?php echo $moduleclass_sfx; ?>">
 <?php foreach ($list as $item) :	?>
-<li>
+<li class="list-group-item">
 	<a href="<?php echo $item->route; ?>">
 		<?php if ($showDate) echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')) . " - "; ?>
 		<?php echo $item->title; ?></a>

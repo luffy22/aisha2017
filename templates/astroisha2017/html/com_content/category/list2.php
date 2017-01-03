@@ -131,6 +131,16 @@ if (!empty($this->items))
 				<tr class="cat-list-row<?php echo $i % 2; ?>" >
 			<?php endif; ?>
 			<td <?php echo $headerTitle; ?> class="list-title">
+                        <?php 
+                                $images                 = json_decode($article->images); 
+                                if(!empty($images->image_intro))
+                                {
+
+                            ?>
+                            <img height="25px" width="25px" src="<?php echo htmlspecialchars($images->image_intro); ?>" title="<?php echo $article->title; ?>" alt="<?php echo $item->title; ?>" />
+                            <?php
+                                }
+                            ?>
                                <?php if (in_array($article->access, $this->user->getAuthorisedViewLevels())) : ?>
 					<a href="<?php echo JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->language)); ?>">
 						<?php echo $this->escape($article->title); ?>
