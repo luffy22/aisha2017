@@ -11,6 +11,7 @@ $doc->setHtml5(true);
 // Add Stylesheets
 $doc->addStyleSheetVersion($this->baseurl . '/templates/' . $this->template . '/css/template.css');
 $sitename = $app->get('sitename');
+unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
 unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
 unset($doc->_scripts[JURI::root(true) . '/media/system/js/mootools-core.js']);
 unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.min.js']);
@@ -33,6 +34,7 @@ $doc->setGenerator("Astro Isha Inc.");
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/jquery-ui.structure.min.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/jquery-ui.theme.min.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/font-awesome.min.css" type="text/css" />
+<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/jquery.min.js" type="text/javascript" language="javascript"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/jquery-ui.min.js" type="text/javascript" language="javascript"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
 </head>

@@ -6,7 +6,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.controller');
  
 /**
- * Horoscope Component Controller
+ * Astro Login Component Controller
  */
 class AstroLoginController extends JControllerLegacy
 {

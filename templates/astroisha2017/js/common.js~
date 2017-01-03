@@ -21,7 +21,11 @@ $(document).ready(function()
             collapsible : true,
         });
     });
-
+function toggleMenu(id)
+{
+    var menu_id = id;
+    $('#menu_id').dropdown();
+}
 function getLagna()
 {
     var inputs = document.getElementsByTagName('input');
