@@ -2,14 +2,16 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 ?>
-<p class="lead text-xs-right">The information on this page was last updated on 14th December 2016.</p>
+<p class="lead text-xs-right">The information on this page was last updated on 4th January 2017.</p>
 <div id="about-us">
 <h3>Brief Intro</h3>
 <div>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo JURI::base() ?>logo.png" title="Welcome To Astro Isha" class="img-responsive" align="left" hspace="10" />Astro Isha was founded as means to connect Astrologers with Clients who seek Astrological Advise. 
-By using <strong>Astro Isha</strong> the astrologers can focus on Client Queries and Astrological Reading. They need not make blogs, websites or worry about Payments anymore. 
-Astro Isha would provide the Astrologers with a chance to add Content, Articles and post their details online. They would also be able to receive client payments online.</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Clients can ask Online Queries, Pay Online and also connect with Astrologer residing in any part of the world. They can find Astrologers leaving in their local areas via Astrologer Search(Coming Soon).</p>
+By using <strong>Astro Isha</strong> the astrologers can focus on Client Queries and Astrological Reading. But coming into 2017 there are changes made to the 
+website so now Yoga Experts, Vastu Shastra or Feng Shui Experts, those involved in Karma Kand, Pujas and Yagnas, Numerologists, Ayurveda Experts can all connect with clients 
+and those interested in getting expertise from them. They need not make blogs, websites or worry about Payments anymore. 
+Astro Isha would provide them with a chance to add Content, Articles and post their details online. They would also be able to receive client payments online.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Clients can ask Online Queries, Pay Online and also connect with Experts in fields mentioned above residing in any part of the world. They can find Astrologers leaving in their local areas via Astro Search(Coming Soon).</p>
 </div>
 <h3>History Of Astro Isha</h3>
 <div>
@@ -18,12 +20,12 @@ Astro Isha was initially started in February 2013 under the name <strong>Jyotish
 </div>
 <h3>Purpose Of Astro Isha</h3>
 <div>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Astro Isha is a website for Astrologers and for Clients seeking expertise of those Astrologers. Astrologers and Astrology has its fair share of 
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Astro Isha is a website for Astrologers and Experts in related field with Vedic Connection as well as 
+    for Clients seeking expertise of those Astrologers and from related Vedic Fields. Astrologers and Astrology has its fair share of 
 critiques and believers. Both are partially right in their judgement. Astrology like all subjects has its positives and negatives.</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Goal of Astro Isha would be to separate the Astrological Part which is based on Reasoning, Logic, Probability, Statistics, Computation and Research which are purely Mathematical 
-Fields from the Social Evils like Superstition, Fear and Paranoia. Astrology was founded on mathematical concepts like Probability and Stats which were gathered over a long period of time. But slowly but surely social evils like 
-fear and superstition took over reasoning and logic part. Astro Isha is intended to filter the evils and try to show the logical and rational side of Astrology.</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As mentioned in <strong>Brief Intro</strong> other purpose of Astro Isha would be to provide a medium which allows Astrologers and Clients to connect with each other.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Goal of Astro Isha would be to separate parts of Vedic Knowledge which are based on Reasoning, Logic, Probability, Statistics, Computation and Research which are purely Mathematical 
+Fields from the Social Evils like Superstition, Fear and Paranoia. Astrology and related Vedic Fields were founded on mathematical concepts like Probability and as well as Stats and Observation which were gathered over a long period of time. But slowly but surely social evils like 
+fear and superstition took over reasoning and logic part. Astro Isha is intended to filter the evils and try to show the logical and rational side of Vedic Knowledge.</p>
 </div>
 <h3>About The Founder</h3>
 <div>
