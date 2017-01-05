@@ -70,6 +70,38 @@ class modTopMenuHelper
       }
 ?>
     </ul>
+    <ul class="nav navbar-nav float-md-right">
+        <li class="nav-item dropdown bg-primary">
+<?php 
+        $user = JFactory::getUser();
+        if($user->guest)
+        {
+
+?>
+        <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="nav-link dropdown-toggle top-menu"><i class="fa fa-user-o fa-2x" aria-hidden="true"></i> User Register<span class="caret"></span></a>
+            <div class="dropdown-menu bg-primary" aria-labelledby="supportedContentDropdown">
+                <a class="dropdown-item top-menu-link" href="<?php echo JURI::base() ?>login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+                <a class="dropdown-item top-menu-link" href="<?php echo JURi::base() ?>register">Register</a>
+                <a class="dropdown-item top-menu-link" href="<?php echo JUri::base() ?>reset-pwd"><i class="fa fa-info" aria-hidden="true"></i> Forgot Password?</a>
+                <a class="dropdown-item top-menu-link" href="<?php echo JUri::base() ?>remind"><i class="fa fa-info" aria-hidden="true"></i> Forgot Username?</a>
+            </div>
+<?php
+        }
+        else
+        {
+?>          
+            <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="nav-link dropdown-toggle top-menu"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i> Hello <?php echo $user->username; ?> <span class="caret"></span></a>
+            <div class="dropdown-menu bg-primary" aria-labelledby="supportedContentDropdown">
+                <a class="dropdown-item top-menu-link" href="<?php echo JUri::base() ?>dashboard"><i class="fa fa-dashboard" aria-hidden="true"></i> Dashboard</a>
+                <a class="dropdown-item top-menu-link" href="<?php echo JUri::base() ?>your-profile"><i class="fa fa-wrench" aria-hidden="true"></i> Settings</a>
+                <a class="dropdown-item top-menu-link" href="<?php echo JUri::base() ?>details"><span class="glyphicon glyphicon-pencil"></span> Details</a>
+                <a class="dropdown-item top-menu-link" href="<?php echo JUri::base() ?>logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Sign Out</a>
+            </div>
+<?php
+        }
+?>
+        </li>
+    </ul>	
 </div>
 </nav>
 <?php

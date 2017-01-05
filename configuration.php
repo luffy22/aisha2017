@@ -6,7 +6,7 @@ class JConfig {
 	public $offline_image = '';
 	public $sitename = 'Astro Isha';
 	public $editor = 'none';
-	public $captcha = '0';
+	public $captcha = 'recaptcha';
 	public $list_limit = '20';
 	public $access = '1';
 	public $debug = '0';
@@ -55,7 +55,7 @@ class JConfig {
 	public $sef_suffix = '0';
 	public $unicodeslugs = '1';
 	public $feed_limit = '10';
-	public $feed_email = 'none';
+	public $feed_email = 'site';
 	public $log_path = '/var/www/html/aisha2017/logs';
 	public $tmp_path = '/var/www/html/aisha2017/tmp';
 	public $lifetime = '15';

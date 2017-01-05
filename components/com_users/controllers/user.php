@@ -40,7 +40,7 @@ class UsersControllerUser extends UsersController
 		$data['username']  = $input->$method->get('username', '', 'USERNAME');
 		$data['password']  = $input->$method->get('password', '', 'RAW');
 		$data['secretkey'] = $input->$method->get('secretkey', '', 'RAW');
-
+                
 		// Check for a simple menu item id
 		if (is_numeric($data['return']))
 		{
@@ -95,7 +95,9 @@ class UsersControllerUser extends UsersController
 		{
 			$data['return'] = 'index.php?option=com_users&view=profile';
 		}
-
+                unset($data['return']);
+                $data['return'] = JURI::base().'dashboard';
+                
 		// Set the return URL in the user state to allow modification by plugins
 		$app->setUserState('users.login.form.return', $data['return']);
 

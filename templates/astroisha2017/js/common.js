@@ -16,7 +16,7 @@ $(document).ready(function()
 $(document).ready(function()
   {
       //var id = $('.accordion-id').attr('id');
-      $('#about-us').accordion({
+      $('#about-us, #paid_dash').accordion({
             heightStyle : "content",
             collapsible : true,
         });

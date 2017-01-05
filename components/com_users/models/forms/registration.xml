@@ -16,12 +16,13 @@
 			label="COM_USERS_REGISTER_NAME_LABEL"
 			required="true"
 			size="30"
+                        class="form-control"
 		/>
 
 		<field
 			name="username"
 			type="text"
-			class="validate-username"
+			class="validate-username form-control"
 			description="COM_USERS_DESIRED_USERNAME"
 			filter="username"
 			label="COM_USERS_REGISTER_USERNAME_LABEL"
@@ -35,7 +36,7 @@
 			name="password1" 
 			type="password"
 			autocomplete="off"
-			class="validate-password"
+			class="validate-password form-control"
 			description="COM_USERS_DESIRED_PASSWORD"
 			field="password1"
 			filter="raw"
@@ -47,9 +48,9 @@
 
 		<field
 			name="password2"
-			type="password"
+    			type="password"
 			autocomplete="off"
-			class="validate-password"
+			class="validate-password form-control"
 			description="COM_USERS_PROFILE_PASSWORD2_DESC"
 			field="password1"
 			filter="raw"
@@ -62,7 +63,7 @@
 
 		<field
 			name="email1"
-			type="email"
+ 			type="email"
 			description="COM_USERS_REGISTER_EMAIL1_DESC"
 			field="id"
 			filter="string"
@@ -73,6 +74,7 @@
 			unique="true"
 			validate="email"
 			autocomplete="email"
+                        class="form-control"
 		/>
 
 		<field
@@ -86,6 +88,7 @@
 			required="true"
 			size="30"
 			validate="equals"
+                        class="form-control"
 		/>
 
 		<field
