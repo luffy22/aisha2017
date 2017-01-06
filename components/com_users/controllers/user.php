@@ -94,10 +94,7 @@ class UsersControllerUser extends UsersController
 		if (empty($data['return']))
 		{
 			$data['return'] = 'index.php?option=com_users&view=profile';
-		}
-                unset($data['return']);
-                $data['return'] = JURI::base().'dashboard';
-                
+		}               
 		// Set the return URL in the user state to allow modification by plugins
 		$app->setUserState('users.login.form.return', $data['return']);
 

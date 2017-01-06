@@ -16,9 +16,9 @@ $(document).ready(function()
 $(document).ready(function()
   {
       //var id = $('.accordion-id').attr('id');
-      $('#about-us, #paid_dash').accordion({
+      $('#about-us, #paid_dash, #free_dash').accordion({
             heightStyle : "content",
-            collapsible : true,
+            collapsible : true
         });
     });
 

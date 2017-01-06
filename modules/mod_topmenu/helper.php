@@ -81,9 +81,9 @@ class modTopMenuHelper
         <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="nav-link dropdown-toggle top-menu"><i class="fa fa-user-o fa-2x" aria-hidden="true"></i> User Register<span class="caret"></span></a>
             <div class="dropdown-menu bg-primary" aria-labelledby="supportedContentDropdown">
                 <a class="dropdown-item top-menu-link" href="<?php echo JURI::base() ?>login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
-                <a class="dropdown-item top-menu-link" href="<?php echo JURi::base() ?>register">Register</a>
-                <a class="dropdown-item top-menu-link" href="<?php echo JUri::base() ?>reset-pwd"><i class="fa fa-info" aria-hidden="true"></i> Forgot Password?</a>
-                <a class="dropdown-item top-menu-link" href="<?php echo JUri::base() ?>remind"><i class="fa fa-info" aria-hidden="true"></i> Forgot Username?</a>
+                <a class="dropdown-item top-menu-link" href="<?php echo JURi::base() ?>register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
+                <a class="dropdown-item top-menu-link" href="<?php echo JUri::base() ?>reset-pwd"><i class="fa fa-exclamation" aria-hidden="true"></i> Forgot Password?</a>
+                <a class="dropdown-item top-menu-link" href="<?php echo JUri::base() ?>remind"><i class="fa fa-exclamation" aria-hidden="true"></i> Forgot Username?</a>
             </div>
 <?php
         }
