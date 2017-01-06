@@ -25,7 +25,15 @@ function hideFields()
 <?php
 //print_r($this->msg);exit;
 defined('_JEXEC') or die('Restricted access');
+$items          = $this->msg;
+//print_r($items);exit;
+unset($items['country']);
+unset($items['amount']);
+unset($items['currency']);
+unset($items['curr_code']);
+unset($items['curr_full']);
 $user       = JFactory::getUser();
+$i          = 1;
 if(isset($_GET['terms'])&&($_GET['terms']=='no'))
 {
 ?>
@@ -39,15 +47,68 @@ else if(isset($_GET['data'])&&($_GET['data']=='double'))
 <?php
 }
 ?>
-<h1 class="display-3">Membership Type</h1>
-<div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory</div>
-<div class="form-group"><label>Name:</label> <?php echo $user->name; ?></div>
+<h3>Enter Your Details</h3>
+<div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory.</div>
+<div class="form-group"><label>Name: </label> <?php echo $user->name; ?></div>
+<div class="form-group"><label>Email: </label> <?php echo $user->email; ?></div>
 <form enctype="application/x-www-form-urlencoded" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.registerAstro'); ?>">
 <div class="form-group">
-    <label for="astro_paid" class="control-label">Membership:</label>
+    <label>Phone: </label>
+    <input type="text" class="form-control" name="astro_phone" />
+</div>
+<div class="form-group">
+    <label>City: </label>
+    <input type="text" class="form-control" name="astro_city" />
+</div>
+<div class="form-group">
+    <label>State/Province: </label>
+    <input type="text" class="form-control" name="astro_state" />
+</div>  
+<div class="form-group">
+     <label>State/Province: </label>
+    <input type="text" class="form-control" name="astro_country" />
+</div>    
+<div class="form-check">
+    <label><strong>Select Expertise: </strong></label>
+<?php
+foreach($items as $item)
+{ 
+    $id     = $item['role_id'];
+    $name   = $item['role_name'];
+    $role   = $item['role_primary'];
+    $role_super     = $item['role_super'];
+    if($role  == "1")
+    {
+?>
+    <br/>
+    <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" value="<?php echo $id; ?>" /> <strong><?php echo $name; ?></strong>
+    </label><br/>
+<?php
+        foreach($items as $subitems)
+        {
+            $subid  = $subitems['role_id'];
+            $subname    = $subitems['role_name'];
+            $sub_role_super = $subitems['role_super'];
+            if($id       == $sub_role_super)
+            {
+?>      
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" value="<?php echo $subid; ?>" /> <?php echo $subname; ?>
+                </label>
+<?php   
+            }
+        }
+    }
+}
+?>
+</div>
+ <div class="form-group">
+    <label for="astro_paid" class="control-label">Membership*:</label>
          <input type="radio" name="astro_type" value="paid" id="astro_paid" onclick="javascript:showFields();" /> Paid
         <input type="radio" name="astro_type" value="free" id="astro_free" checked="checked" onclick="javscript:hideFields();"/> Free
 </div>
+
 <div id="profile_hidden1" class="form-group">
     <label for="astro_online" class="control-label">Payment Type:</label>
 <?php
@@ -82,7 +143,7 @@ else if(isset($_GET['data'])&&($_GET['data']=='double'))
 </div>
 <div class="form-group">
     <input type="checkbox" name="condition_profile" value="yes" />
-    <label for="condition_profile">Kindly Read and Accept the <a href="<?php echo JURI::base() ?>/terms" target="_blank" title="Read the Terms And Conditions before Registering as Astrologer">Terms and Conditions</a> for Astrologers *</label>
+    <label for="condition_profile">Kindly Read and Accept the <a href="<?php echo JURI::base() ?>/terms" target="_blank" title="Read the Terms And Conditions before Registering as Astrologer">Terms and Conditions</a> for Registration *</label>
 </div>
 <div class="form-group">
         <button type="submit" name="submit_profile" class="btn btn-primary" >Submit</button>

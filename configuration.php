@@ -6,7 +6,7 @@ class JConfig {
 	public $offline_image = '';
 	public $sitename = 'Astro Isha';
 	public $editor = 'none';
-	public $captcha = 'recaptcha';
+	public $captcha = '0';
 	public $list_limit = '20';
 	public $access = '1';
 	public $debug = '0';

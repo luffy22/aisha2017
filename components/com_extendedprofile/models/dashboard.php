@@ -59,6 +59,12 @@ class ExtendedProfileModelDashboard extends JModelItem
         }
         else
         {
+            $query          ->clear();
+            $query          ->select('*');
+            $query          ->from($db->quoteName('#__role'));
+            $db             ->setQuery($query);
+            $results        = $db->loadAssocList();
+            
             try
             {
                 $ip                     = '157.55.39.123';  // ip address
@@ -68,53 +74,55 @@ class ExtendedProfileModelDashboard extends JModelItem
                 //$location 		= $geoip->lookupLocation($ip);
                 //$info                   = $location->countryCode;
                 //$country                = $location->countryName;
+                
                 if($info == "US")
                 {
-                    $results   = array('country'=>$country,'amount'=>'10.00','currency'=>'USD','curr_code'=>'&#36;', 'curr_full'=>'United States Dollar');
+                    $details            = array('country'=>$country,'amount'=>'10.00','currency'=>'USD','curr_code'=>'&#36;', 'curr_full'=>'United States Dollar');
                 }
                 else if($info == "IN"||$info== 'LK'||$info=='NP'||$info=='TH'||$info=='MY'||$info=='MV')
                 {
-                    $results   = array('country'=>$country,'amount'=>'300.00', 'currency'=>'INR','curr_code'=>'&#8377;','curr_full'=>'Indian Rupees');
+                    $details            = array('country'=>$country,'amount'=>'300.00', 'currency'=>'INR','curr_code'=>'&#8377;','curr_full'=>'Indian Rupees');
                 }
                 else if($info=='UK')
                 {
-                    $results   = array('country'=>$country,'amount'=>'7.50','currency'=>'GBP','curr_code'=>'&#8356;','curr_full'=>'British Pound');
+                    $details            = array('country'=>$country,'amount'=>'7.50','currency'=>'GBP','curr_code'=>'&#8356;','curr_full'=>'British Pound');
                 }
                 else if($info=='NZ')
                 {
-                    $results   = array('country'=>$country,'amount'=>'15.00','currency'=>'NZD','curr_code'=>'&#36;', 'curr_full'=>'New Zealand Dollar');
+                    $details            = array('country'=>$country,'amount'=>'15.00','currency'=>'NZD','curr_code'=>'&#36;', 'curr_full'=>'New Zealand Dollar');
                 }
                 else if($info=='CA')
                 {
-                    $results   = array('country'=>$country,'amount'=>'10.00','currency'=>'CAD','curr_code'=>'&#36;', 'curr_full'=>'Canadian Dollar');
+                    $details            = array('country'=>$country,'amount'=>'10.00','currency'=>'CAD','curr_code'=>'&#36;', 'curr_full'=>'Canadian Dollar');
                 }
                 else if($info=='SG')
                 {
-                    $results   = array('country'=>$country,'amount'=>'15.00','currency'=>'SGD','curr_code'=>'&#36;','curr_full'=>'Singapore Dollar');
+                    $details            = array('country'=>$country,'amount'=>'15.00','currency'=>'SGD','curr_code'=>'&#36;','curr_full'=>'Singapore Dollar');
                 }
                 else if($info=='AU')
                 {
-                    $results   = array('country'=>$country,'amount'=>'15.00','currency'=>'AUD','curr_code'=>'&#36;', 'curr_full'=>'Australian Dollar');
+                    $details            = array('country'=>$country,'amount'=>'15.00','currency'=>'AUD','curr_code'=>'&#36;', 'curr_full'=>'Australian Dollar');
                 }
                 else if($info=='FR'||$info=='DE'||$info=='IE'||$info=='NL'||$info=='CR'||$info=='BE'
                         ||$info=='GR'||$info=='IT'||$info=='PT'||$info=='ES'||$info=='MT'||$info=='LV'||$info=='TR')
                 {
-                    $results = array('country'=>$country,'amount'=>'10.00','currency'=>'EUR','curr_code'=>'&#8364;', 'curr_full'=>'European Union Euro');
+                    $details            = array('country'=>$country,'amount'=>'10.00','currency'=>'EUR','curr_code'=>'&#8364;', 'curr_full'=>'European Union Euro');
                 }
                 else if($info =='RU')
                 {
-                    $results = array('country'=>$country,'amount'=>'500.00','currency'=>'RUB','curr_code'=>'&#8364;', 'curr_full'=>'Russian Ruble');
+                    $details            = array('country'=>$country,'amount'=>'500.00','currency'=>'RUB','curr_code'=>'&#8364;', 'curr_full'=>'Russian Ruble');
                 }
                  else
                 {
-                    $results   = array('country'=>$country,'amount'=>'7.00', 'currency'=>'USD','curr_code'=>'&#36;','curr_full'=>'United States Dollar');
+                   $details             = array('country'=>$country,'amount'=>'7.00', 'currency'=>'USD','curr_code'=>'&#36;','curr_full'=>'United States Dollar');
                 }
             }
             catch(Exception $e)
             {
-                $results =  array('error'=> 'Data not showing');
+                $details                =  array('error'=> 'Data not showing');
             }
         }
+        $results        = array_merge($results, $details);
         return $results;
     }
     public function authorizePayment($details)
