@@ -50,26 +50,30 @@ else if(isset($_GET['data'])&&($_GET['data']=='double'))
 <h3>Enter Your Details</h3>
 <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory.</div>
 <div class="form-group"><label>Name: </label> <?php echo $user->name; ?></div>
-<div class="form-group"><label>Email: </label> <?php echo $user->email; ?></div>
+<div class="form-group"><label>Email: </label> <?php echo $user->email; ?> <span style="color:green"><i class="fa fa-check-circle" aria-hidden="true"></i></span></div>
 <form enctype="application/x-www-form-urlencoded" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.registerAstro'); ?>">
 <div class="form-group">
     <label>Phone: </label>
-    <input type="text" class="form-control" name="astro_phone" />
+    <input type="phone" class="form-control" name="astro_phone" placeholder="Enter Phone Number(Optional)" />
+</div>
+<div class="form-group">
+    <label>Mobile: </label>
+    <input type="text" class="form-control" name="astro_mobile" placeholder="Enter Mobile Number(Optional)" />
 </div>
 <div class="form-group">
     <label>City: </label>
-    <input type="text" class="form-control" name="astro_city" />
+    <input type="text" class="form-control" name="astro_city" required placeholder="Enter City Name(Compulsory)" />
 </div>
 <div class="form-group">
     <label>State/Province: </label>
-    <input type="text" class="form-control" name="astro_state" />
+    <input type="text" class="form-control" name="astro_state" placeholder="Enter State/Province/County Name(Optional)" />
 </div>  
 <div class="form-group">
-     <label>State/Province: </label>
-    <input type="text" class="form-control" name="astro_country" />
+     <label>Country: </label>
+    <input type="text" class="form-control" name="astro_country" required placeholder="Enter Country Name(Compulsory)" />
 </div>    
 <div class="form-check">
-    <label><strong>Select Expertise: </strong></label>
+    <label><strong>Select Expertise </strong>(One Main Category and related Sub Category Compulsory): </label>
 <?php
 foreach($items as $item)
 { 
