@@ -17,7 +17,7 @@ class modTopContentHelper
         $query          = "SELECT jv_content.id AS article_id, jv_content.alias as article_alias,
                             jv_content.asset_id AS article_assetid,jv_content.title, jv_content.images as images, LEFT(jv_content.introtext,500) AS article_text,
                             jv_content.hits, jv_categories.alias AS cat_alias, jv_content.catid as cat_id, jv_categories.title as cat_title FROM jv_content INNER JOIN jv_categories
-                            ON jv_content.catid = jv_categories.id ORDER BY hits DESC LIMIT 5";     
+                            ON jv_content.catid = jv_categories.id WHERE state=1 ORDER BY hits DESC LIMIT 5";     
         $db->setQuery($query);
       
         // Load the results as a list of stdClass objects (see later for more options on retrieving data).
@@ -39,7 +39,7 @@ class modTopContentHelper
         $query          = "SELECT jv_content.id AS article_id, jv_content.alias as article_alias, jv_content.created as article_create,
                             jv_content.asset_id AS article_assetid,jv_content.title,jv_content.images as images, LEFT(jv_content.introtext,500) AS article_text,
                             jv_content.hits, jv_categories.alias AS cat_alias, jv_content.catid as cat_id, jv_categories.title as cat_title FROM jv_content INNER JOIN jv_categories
-                            ON jv_content.catid = jv_categories.id AND created between '$month_6' AND '$todate'
+                            ON jv_content.catid = jv_categories.id AND created between '$month_6' AND '$todate' where state=1 
                             ORDER BY hits DESC LIMIT 5";
         
         $db->setQuery($query);

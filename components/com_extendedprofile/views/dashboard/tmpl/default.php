@@ -1,5 +1,12 @@
 <body onload="hideFields()">
+<script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
 <script>
+  tinymce.init({
+    selector: '#astro_detail',
+    plugins: "wordcount autolink",
+    menubar: false
+  });
+
 function showFields()
 {
     $('#profile_hidden1').show();
@@ -33,6 +40,7 @@ unset($items['currency']);
 unset($items['curr_code']);
 unset($items['curr_full']);
 $user       = JFactory::getUser();
+//print_r($user);exit;
 $i          = 1;
 if(isset($_GET['terms'])&&($_GET['terms']=='no'))
 {
@@ -50,7 +58,7 @@ else if(isset($_GET['data'])&&($_GET['data']=='double'))
 <h3>Enter Your Details</h3>
 <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory.</div>
 <div class="form-group"><label>Name: </label> <?php echo $user->name; ?></div>
-<div class="form-group"><label>Email: </label> <?php echo $user->email; ?> <span style="color:green"><i class="fa fa-check-circle" aria-hidden="true"></i></span></div>
+<div class="form-group"><label>Email: </label> <?php echo $user->email; ?> <?php if($user->sendEmail == '0'){ ?><span style="color:green"><i class="fa fa-check-circle" aria-hidden="true"></i></span><?php } ?></div>
 <form enctype="application/x-www-form-urlencoded" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.registerAstro'); ?>">
 <div class="form-group">
     <label>Phone: </label>
@@ -107,6 +115,10 @@ foreach($items as $item)
 }
 ?>
 </div>
+<div class="form-group">
+    <label for="astro_detail" class="control-label">Describe Your Expertise in Few Words(Max 750 Words):</label>
+    <textarea rows="7" class="form-control" name="astro_detail" id="astro_detail" maxlength="10000 "></textarea>
+</div>
  <div class="form-group">
     <label for="astro_paid" class="control-label">Membership*:</label>
          <input type="radio" name="astro_type" value="paid" id="astro_paid" onclick="javascript:showFields();" /> Paid
@@ -154,4 +166,8 @@ foreach($items as $item)
         <a class="btn btn-danger" href="<?php echo JURI::base() ?>dashboard">Cancel</a>
     </div>
 </form>
+<?php
+flush($this->msg);
+flush($items);
+?>
 </body>

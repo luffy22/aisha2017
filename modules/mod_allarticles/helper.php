@@ -20,7 +20,7 @@ class modAllarticlesHelper
                                 jv_content.title as title, jv_content.images as images, jv_content.language as language,
                                 LEFT(jv_content.introtext,500) AS article_text,
                                 jv_content.hits AS hits, jv_categories.alias AS cat_alias, jv_categories.title as cat_title, jv_content.catid AS cat_id FROM jv_content INNER JOIN jv_categories
-                                ON jv_content.catid = jv_categories.id ORDER BY jv_content.id DESC LIMIT 10"; 
+                                ON jv_content.catid = jv_categories.id WHERE state=1 ORDER BY jv_content.id DESC LIMIT 10"; 
             $db->setQuery($query);
   
             // Load the results as a list of stdClass objects (see later for more options on retrieving data).
