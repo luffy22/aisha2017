@@ -13,10 +13,10 @@ class ExtendedProfileModelDashboard extends JModelItem
          {
             $location   = JURi::base()."login";
             $mainframes = JFactory::getApplication();
-            $link=  JURI::base().'login';
-            $msg = "Please Login";
-
-            $mainframes->redirect($link, $msg);
+            $link       =  JURI::base().'login';
+            $msg        = "Please Login";
+            $type       = "error";
+            $mainframes->redirect($link, $msg, $type);
          }
         $id   = $user->id;$name = $user->name;  
         // get the data

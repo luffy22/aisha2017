@@ -1,3 +1,11 @@
+<?php
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+defined('_JEXEC') or die;
+//print_r($this->msg);exit;
+?>
 <body onload="hideFields()">
 <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
 <script>
@@ -27,6 +35,11 @@ function hideFields()
     {
         showFields();
     }
+}
+function checkTextBox()
+{
+    document.getElementById("astro_detail").style.borderColor = "red";
+    return false;
 }
 </script>
 <?php
@@ -69,7 +82,7 @@ else if(isset($_GET['data'])&&($_GET['data']=='double'))
     <input type="text" class="form-control" name="astro_mobile" placeholder="Enter Mobile Number(Optional)" />
 </div>
 <div class="form-group">
-    <label>City: </label>
+    <label>City*: </label>
     <input type="text" class="form-control" name="astro_city" required placeholder="Enter City Name(Compulsory)" />
 </div>
 <div class="form-group">
@@ -77,11 +90,11 @@ else if(isset($_GET['data'])&&($_GET['data']=='double'))
     <input type="text" class="form-control" name="astro_state" placeholder="Enter State/Province/County Name(Optional)" />
 </div>  
 <div class="form-group">
-     <label>Country: </label>
+     <label>Country*: </label>
     <input type="text" class="form-control" name="astro_country" required placeholder="Enter Country Name(Compulsory)" />
 </div>    
 <div class="form-check">
-    <label><strong>Select Expertise </strong>(One Main Category and related Sub Category Compulsory): </label>
+    <label><strong>Select Expertise*: </strong>(One Main Category and related Sub Category Compulsory): </label>
 <?php
 foreach($items as $item)
 { 
@@ -94,7 +107,7 @@ foreach($items as $item)
 ?>
     <br/>
     <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" value="<?php echo $id; ?>" /> <strong><?php echo $name; ?></strong>
+        <input class="form-check-input" type="checkbox" name="expert" value="<?php echo $id; ?>" /> <strong><?php echo $name; ?></strong>
     </label><br/>
 <?php
         foreach($items as $subitems)
@@ -106,7 +119,7 @@ foreach($items as $item)
             {
 ?>      
                 <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" value="<?php echo $subid; ?>" /> <?php echo $subname; ?>
+                    <input class="form-check-input" name="subexpert" type="checkbox" value="<?php echo $id.":".$subid; ?>" /> <?php echo $subname; ?>
                 </label>
 <?php   
             }
@@ -116,8 +129,8 @@ foreach($items as $item)
 ?>
 </div>
 <div class="form-group">
-    <label for="astro_detail" class="control-label">Describe Your Expertise in Few Words(Max 750 Words):</label>
-    <textarea rows="7" class="form-control" name="astro_detail" id="astro_detail" maxlength="10000 "></textarea>
+    <label for="astro_detail" class="control-label">Describe Your Expertise in Few Words*(Max 750 Words):</label>
+    <textarea rows="7" class="form-control" name="astro_detail" id="astro_detail" maxlength="10000" required></textarea>
 </div>
  <div class="form-group">
     <label for="astro_paid" class="control-label">Membership*:</label>
@@ -158,11 +171,11 @@ foreach($items as $item)
 <input type="hidden" name="astro_country" id="astro_country" value="<?php if(isset($this->msg['country']))echo $this->msg['country'];else "India"; ?>" />
 </div>
 <div class="form-group">
-    <input type="checkbox" name="condition_profile" value="yes" />
+    <input type="checkbox" name="condition_profile" value="yes" required />
     <label for="condition_profile">Kindly Read and Accept the <a href="<?php echo JURI::base() ?>/terms" target="_blank" title="Read the Terms And Conditions before Registering as Astrologer">Terms and Conditions</a> for Registration *</label>
 </div>
 <div class="form-group">
-        <button type="submit" name="submit_profile" class="btn btn-primary" >Submit</button>
+        <button type="submit" name="submit_profile" class="btn btn-primary" onclick="checkTextBox();">Submit</button>
         <a class="btn btn-danger" href="<?php echo JURI::base() ?>dashboard">Cancel</a>
     </div>
 </form>

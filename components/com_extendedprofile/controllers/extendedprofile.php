@@ -8,10 +8,17 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
         if(isset($_POST['submit_profile']))
         {
             $membership     = $_POST['astro_type'];
+            $city           = $_POST['astro_city'];
+            if(!empty($state)){$state          = $_POST['astro_state'];}
+            exit;
+            $country        = $_POST['astro_country'];
             
             if(!isset($_POST['condition_profile']))
             {
-                header('Location: '.JURi::base().'dashboard?terms=no');
+                $link       = JURI::base().'dashboard';
+                $msg        = "You must <strong>Accept The Terms And Agreement</strong> in order to register.";
+                $type       = 'error';
+                $this->redictUrl($link, $msg,$type);
             }
             else
             {
@@ -117,8 +124,9 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
         $model          = $this->getModel('extendedprofile');  // Add the array to model
         $data           = $model->updateAstro($user_details);
     }
-    protected function directUrl($url)
+    protected function redictUrl($link, $msg, $type)
     {
-        header('Location: '.$url);
+        $mainframes = JFactory::getApplication();
+        $mainframes->redirect($link, $msg,$type);
     }
 }

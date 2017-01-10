@@ -13,7 +13,7 @@ $msgList = $displayData['msgList'];
 
 if (is_array($msgList) && !empty($msgList)) : ?>
     <?php foreach ($msgList as $type => $msgs) : ?>
-        <div class="alert alert-<?php echo $type; ?> alert-dismissible fade in">
+        <div class="alert alert-<?php if($type=="error"){echo "danger";}else{echo $type;} ?> alert-dismissible fade in">
                 <?php // This requires JS so we should add it trough JS. Progressive enhancement and stuff. ?>
          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
