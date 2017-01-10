@@ -1,47 +1,9 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 defined('_JEXEC') or die;
 //print_r($this->msg);exit;
 ?>
 <body onload="hideFields()">
-<script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
-<script>
-  tinymce.init({
-    selector: '#astro_detail',
-    plugins: "wordcount autolink",
-    menubar: false
-  });
-
-function showFields()
-{
-    $('#profile_hidden1').show();
-    document.getElementById("profile_hidden1").style.visibility = 'visible';
-    $('#profile_hidden2').show();
-    document.getElementById("profile_hidden2").style.visibility = 'visible';
-}
-function hideFields()
-{
-    if(document.getElementById("astro_free").checked)
-    {
-        $('#profile_hidden1').hide();
-        document.getElementById("profile_hidden1").style.visibility = 'hidden';
-        $('#profile_hidden2').hide();
-        document.getElementById("profile_hidden2").style.visibility = 'hidden';
-    }
-    else
-    {
-        showFields();
-    }
-}
-function checkTextBox()
-{
-    document.getElementById("astro_detail").style.borderColor = "red";
-    return false;
-}
-</script>
 <?php
 //print_r($this->msg);exit;
 defined('_JEXEC') or die('Restricted access');
@@ -55,18 +17,6 @@ unset($items['curr_full']);
 $user       = JFactory::getUser();
 //print_r($user);exit;
 $i          = 1;
-if(isset($_GET['terms'])&&($_GET['terms']=='no'))
-{
-?>
-    <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Kindly accept the Terms and Conditions if you wish to join as an Astrologer.</div>
-<?php
-}
-else if(isset($_GET['data'])&&($_GET['data']=='double'))
-{
-?>
-    <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> User is already registered as Astrologer with us. If you have encountered some problem please email details to admin@astroisha.com</div>
-<?php
-}
 ?>
 <h3>Enter Your Details</h3>
 <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory.</div>
@@ -128,10 +78,6 @@ foreach($items as $item)
 }
 ?>
 </div>
-<div class="form-group">
-    <label for="astro_detail" class="control-label">Describe Your Expertise in Few Words*(Max 750 Words):</label>
-    <textarea rows="7" class="form-control" name="astro_detail" id="astro_detail" maxlength="10000" required></textarea>
-</div>
  <div class="form-group">
     <label for="astro_paid" class="control-label">Membership*:</label>
          <input type="radio" name="astro_type" value="paid" id="astro_paid" onclick="javascript:showFields();" /> Paid
@@ -144,16 +90,20 @@ foreach($items as $item)
     if(isset($this->msg['amount']) && isset($this->msg['currency']) && $this->msg['currency']=='INR')
     {
 ?>
-    <input type="radio" name="astro_pay" value="online" id="astro_online" checked="checked"  /> Online
+    <input type="radio" name="astro_pay" value="online" id="astro_paytm" checked="checked"  /> <img src="<?php echo JURI::base() ?>images/paytm-logo.png" alt="Paytm" width="40px" height="25px" />
+    <input type="radio" name="astro_pay" value="netbanking" id="astro_netbank" /> <img src="<?php echo JURI::base() ?>images/ccavenue.png" alt="CCAvenues" width="55px" height="35px" /> Netbanking/Debit Card/Credit Card/UPI
+    <input type="radio" name="astro_pay" value="cheque" id="astro_bhim" /> <img src="<?php echo JURI::base() ?>images/bhim.png" alt="BHIM UPI" width="15px" height="25px" /> BHIM Scan Code/Virtual Address
+    <input type="radio" name="astro_pay" value="cheque" id="astro_phonepe" /> <img src="<?php echo JURI::base() ?>images/phonepe.png" alt="Phonepe UPI" /> PhonePe Scan Code/Virtual Address
+    <input type="radio" name="astro_pay" value="cheque" id="astro_paytm_code" /> <img src="<?php echo JURI::base() ?>images/paytm-logo.png" alt="Paytm" width="40px" height="25px" /> Scan Code
     <input type="radio" name="astro_pay" value="cheque" id="astro_cheque" /> Cheque
-    <input type="radio" name="astro_pay" value="transfer" id="astro_transfter" />Direct Transfer
+    <input type="radio" name="astro_pay" value="transfer" id="astro_transfter" /><span style="color:#C68642"><i class="fa fa-university" aria-hidden="true"></i></span> Direct Transfer Via NEFT/ATM/BANK
 <?php
     }
     else
     {
 ?>
-     <input type="radio" name="astro_pay" value="online" id="astro_online" checked="checked"  /> Online
-    <input type="radio" name="astro_pay" value="transfer" id="astro_transfter" />Direct Transfer
+     <input type="radio" name="astro_pay" value="online" id="astro_online" checked="checked"  /> <span style="color:#139AD6"><i class="fa fa-paypal" aria-hidden="true"></i></span> Paypal
+    <input type="radio" name="astro_pay" value="transfer" id="astro_transfter" /><span style="color:#C68642"><i class="fa fa-university" aria-hidden="true"></i></span> Direct Transfer Via Bank
 <?php
     }
 ?>
@@ -175,7 +125,7 @@ foreach($items as $item)
     <label for="condition_profile">Kindly Read and Accept the <a href="<?php echo JURI::base() ?>/terms" target="_blank" title="Read the Terms And Conditions before Registering as Astrologer">Terms and Conditions</a> for Registration *</label>
 </div>
 <div class="form-group">
-        <button type="submit" name="submit_profile" class="btn btn-primary" onclick="checkTextBox();">Submit</button>
+        <button type="submit" name="submit_profile" class="btn btn-primary" onclick="checkValues();return false;">Submit</button>
         <a class="btn btn-danger" href="<?php echo JURI::base() ?>dashboard">Cancel</a>
     </div>
 </form>
@@ -183,4 +133,34 @@ foreach($items as $item)
 flush($this->msg);
 flush($items);
 ?>
+<script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+<script>
+  tinymce.init({
+    selector: '#astro_detail',
+    plugins: "wordcount autolink",
+    menubar: false
+  });
+
+function showFields()
+{
+    $('#profile_hidden1').show();
+    document.getElementById("profile_hidden1").style.visibility = 'visible';
+    $('#profile_hidden2').show();
+    document.getElementById("profile_hidden2").style.visibility = 'visible';
+}
+function hideFields()
+{
+    if(document.getElementById("astro_free").checked)
+    {
+        $('#profile_hidden1').hide();
+        document.getElementById("profile_hidden1").style.visibility = 'hidden';
+        $('#profile_hidden2').hide();
+        document.getElementById("profile_hidden2").style.visibility = 'hidden';
+    }
+    else
+    {
+        showFields();
+    }
+}
+</script>
 </body>

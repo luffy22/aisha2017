@@ -1,5 +1,5 @@
 <?php
-defined('_JEXEC') or die;  // No direct Access
+defined('_JEXEC') or die("Restricted Access");  // No direct Access
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
 //Import filesystem libraries. Perhaps not necessary, but does not hurt
@@ -67,7 +67,8 @@ class ExtendedProfileModelDashboard extends JModelItem
             
             try
             {
-                $ip                     = '157.55.39.123';  // ip address
+                $ip                     = '117.196.1.11';
+                //$ip                     = '157.55.39.123';  // ip address
                 //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
                 $info                   = geoip_country_code_by_name($ip);
                 $country                = geoip_country_name_by_name($ip);
