@@ -6,9 +6,10 @@ jimport('joomla.application.component.modelitem');
 jimport('joomla.filesystem.file');
 class ExtendedProfileModelExtendedProfile extends JModelItem
 {
-    public function redirectLink($url)
+    public function redirectLink($url, $msg, $type)
     {
-        header('Location: '.$url);
+        $app            = JFactory::getApplication();
+        $app            ->redirect($link, $msg,$type);
     }
     public function getData()
     {
@@ -29,293 +30,53 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
     public function saveUser($data)
     {
         //print_r($data);exit;
+        $city           = $data['city'];
+        $state          = $data['state'];
+        $country        = $data['country'];
+        $phone          = $data['phone'];
+        $mobile         = (int)$data['mobile'];
+        $info           = $data['detail'];
+        $sub_exp        = $data['sub_exp'];
+        $terms          = $data['terms'];
+        $date           = new DateTime("now",new DateTimeZone('Asia/Kolkata'));
+        $date           = $date->format('Y-m-d H:i:s');
         $user           = JFactory::getUser();
         $id             = $user->id;
-        $membership     = ucfirst($data['membership']);   // astrologer membership type free/paid
-        $amount         = $data['amount'];$curr = $data['currency'];$country=  $data['country'];
+        $membership     = "Free";
+        
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        $query          ->select(array('UserId','membership'));
-        $query          ->from($db->quoteName('#__user_astrologer'));
-        $query          ->where($db->quoteName('UserId').' = '.$db->quote($id));
-        $db             ->setQuery($query);$db->execute();
-        $row            = $db->getNumRows();    
-        $app            = JFactory::getApplication();
-        
-        if($row > 0)
+        $columns        = array('UserId','membership','city','state','country','phone','mobile','info','terms','reg_date');
+        $values         = array($db->quote($id),$db->quote($membership),$db->quote($city),$db->quote($state),
+                                $db->quote($country),$db->quote($phone),$db->quote($mobile),$db->quote($info),
+                                $db->quote($terms),$db->quote($date));
+        $query
+                        ->insert($db->quoteName('#__user_astrologer'))
+                        ->columns($db->quoteName($columns))
+                        ->values(implode(',', $values));
+            // Set the query using our newly populated query object and execute it
+        $db->setQuery($query);
+        $result         = $db->execute();
+        foreach($sub_exp as $exp)
         {
-                $link       = JURI::base().'dashboard?data=double';
-                $msg        = "Data Already Exists..";
-                $app        ->redirect($link,$msg,$msgType='error');
+            $query      ->clear();
+            $query      = "INSERT INTO jv_role_astro (astro_id, sub_expert) VALUES ('".$id."','".$exp."')";
+            $db         ->setQuery($query);
+            $db         ->execute();
+        }
+        if($result)
+        {
+            $msg        = "Added Successfully. Kindly Check Your Email For Details.";
+            $type       = "success";
+            $url        = JURI::base();
+            $this       ->redirectLink($url, $msg, $type);
         }
         else
         {
-            $query          ->clear();
-            if($membership=='Paid')
-            {
-                $membership     = "Unpaid";
-                $columns        = array('UserId','membership');
-                $values         = array($db->quote($id),$db->quote($membership));
-            }
-            else
-            {
-                $columns        = array('UserId','membership');
-                $values         = array($db->quote($id),$db->quote($membership));
-            }
-            $query
-            ->insert($db->quoteName('#__user_astrologer'))
-            ->columns($db->quoteName($columns))
-            ->values(implode(',', $values));
-            // Set the query using our newly populated query object and execute it
-            $db             ->setQuery($query);
-            $result          = $db->query();
-            if($membership=='Unpaid')
-            {
-                $token              = uniqid('token_');
-                $query      ->clear();
-                $columns    = array('UserId','token','amount','currency','location');
-                $values     = array($db->quote($id),$db->quote($token),$db->quote($amount),$db->quote($curr),$db->quote($country));
-                $query
-                    ->insert($db->quoteName('#__user_finance'))
-                    ->columns($db->quoteName($columns))
-                    ->values(implode(',', $values));
-                $db             ->setQuery($query);$db->query();
-                $query  ->clear();
-                $query          ->select(array('a.id','a.name','a.email','b.token','b.currency','b.amount'));
-                $query          ->from($db->quoteName('#__users','a'));
-                $query          ->join('INNER', $db->quoteName('#__user_finance','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');
-                $query          ->where($db->quoteName('id').' = '.$db->quote($id));
-                $db             ->setQuery($query);
-                $result         = $db->loadAssoc();
-                //print_r($result);exit;
-                if($data['pay_type'] == 'online'&& $data['currency']=='INR')
-                {
-                    $link   = JUri::base().'ccavenue/nonseam/ccavenue_astrologer.php?id='.$id.'&token='.$result['token'].'&name='.$result['name'].'&email='.$result['email'].'&curr='.$result['currency'].'&amount='.$result['amount']; 
-                    $app->redirect($link);
-                }
-                else if($data['pay_type'] == 'online'&& $data['currency']!=='INR')
-                {
-                    $link   = JUri::base().'vendor/paypal_astro.php?id='.$id.'&token='.$result['token'].'&name='.$result['name'].'&email='.$result['email'].'&curr='.$curr.'&amount='.$amount;
-                    $app->redirect($link);
-                }
-                else if($data['pay_type'] == 'transfer')
-                {
-                    $query->clear();        // unset all variables
-                    $query       ->select($db->quoteName(array('a.name','a.email','a.username',
-                                    'b.membership','b.number','c.amount','c.currency','c.paid','c.location')))
-                            ->from($db->quoteName('#__users','a'))
-                            ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
-                            ->join('INNER', $db->quoteName('#__user_finance', 'c').' ON ('.$db->quoteName('a.id').' = '.$db->quoteName('c.UserId').')')
-                            ->where($db->quoteName('a.id').' = '.$db->quote($id));
-                    $db                  ->setQuery($query);
-                    $details        = $db->loadAssoc();
-
-                    $reg_number         = "AS00".$details['number']."00";
-                    $bcc                = 'kopnite@gmail.com';
-                    $subject            = "AstroIsha Register ID: ".$reg_number;
-                    $body               = "<br/>Dear ".$details['name'].",<br/>";
-                    $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your Free Account has been activated. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details.
-                                            Alternatively you can also email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.
-                                            Once the direct transfer request has been done kindly reply back at 
-                                            admin@astroisha.com with Registration Number and Email and we would open your Paid Account 
-                                            whereby you can accept Online Payments and Orders. Bank Details for Direct Transfer are provided below.<br/><br/>";
-                    $body               .= "<div style='align:center;font-size:15px'><strong>Account Details</strong></div><br/>";
-                    $body               .= "Astrologer Registration Number: ".$reg_number."<br/>";
-                    $body               .= "Name: ".$details['name']."<br/>";
-                    $body               .= "Email: ".$details['email']."<br/>";
-                    $body               .= "Username: ".$details['username']."<br/>";
-                    $body               .= "Type Of Membership: Free<br/>";
-                    $body                  .= "Payment Completed: ".$details['paid']."<br/>";
-                    $body                  .= "Amount To Be Paid: ".$details['amount']." ".$details['currency']."<br/><br/>";
-                    $body               .= "<strong>Below are Our Bank Details For Direct Transfer</strong><br/>";
-                    $body               .= "Payable to: Astro Isha<br/> 
-                                            Account Number: 915020051554614<br/> 
-                                            Axis Bank MANINAGAR, AHMEDABAD <br/>
-                                            Address:<br/>GROUND FLOOR, BUSINESS SQUARE BUILDING,<br/>NR. KRISHNABAUG CHAR RISTA<br/> AHMEDABAD 380008<br/>";
-                    if($data['currency']=='INR')
-                    {
-                        $body               .= "MICR Code: 380211005<br/>";
-                        $body               .= "IFSC Code: UTIB0000080<br/><br/>";
-                        $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
-                                        other Private Information with us. We only require your Account Number or Card Number, Name, and IFSC Code for money transfer in case you decide to opt for Paid Membership.</span><br/>";
-                    }
-                    else
-                    {
-                        $body               .= "Swift Code: AXISINBB080<br/><br/>";
-                        $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
-                                                other Private Information with us. We only require your Account Number, Name, and Swift Code or Paypal ID/Email for money transfer in case you decide to opt for Paid Membership.</span><br/>";
-                    }
-                    $body               .= "<br/><div style='align:right'>Admin At Astro Isha,<br/>Rohan Desai</div>"; 
-                    $mailer             = JFactory::getMailer();
-                    $config             = JFactory::getConfig();
-                    $sender             = array( 
-                                                    $config->get( 'mailfrom' ),
-                                                    $config->get( 'fromname' ) 
-                                                );
-
-                    $mailer             ->setSender($sender);
-                    $mailer             ->addRecipient($details['email']);
-                    $mailer             ->addBCC($bcc, 'Rohan Desai');
-                    $mailer             ->setSubject($subject);
-                    $mailer             ->isHTML(true);
-                    $mailer             ->Encoding = 'base64';
-                    $mailer             ->setBody($body);
-
-                    $send = $mailer->Send();
-                    if ( $send !== true ) 
-                    {
-                        $msg    =  'Error sending email: ' . $send->__toString();
-                        $msgType = "error";
-                        $link   = JUri::base().'dashboard?freeacc=success';
-                        $app->redirect($link, $msg,$msgType);
-                    } else 
-                    {
-                        $msg    = "Check Your Email For Confirmation.";
-                        $msgType    = "success";
-                        $link   = JUri::base().'dashboard?payment=success';
-                        $app->redirect($link); 
-                    }
-                }
-                else if($data['pay_type'] == 'cheque')
-                {
-                    $query->clear();        // unset all variables
-                    $query       ->select($db->quoteName(array('a.name','a.email','a.username',
-                                    'b.membership','b.number','c.amount','c.currency','c.paid','c.location')))
-                            ->from($db->quoteName('#__users','a'))
-                            ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
-                            ->join('INNER', $db->quoteName('#__user_finance', 'c').' ON ('.$db->quoteName('a.id').' = '.$db->quoteName('c.UserId').')')
-                            ->where($db->quoteName('a.id').' = '.$db->quote($id));
-                    $db                  ->setQuery($query);
-                    $details        = $db->loadAssoc();
-
-                    $reg_number         = "AS00".$details['number']."00";
-                    $bcc                = 'kopnite@gmail.com';
-                    $subject            = "AstroIsha Register ID: ".$reg_number;
-                    $body               = "<br/>Dear ".$details['name'].",<br/>";
-                    $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your Free Account has been activated. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details.
-                                            Alternatively you can also email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.
-                                            If you wish to pay by Cheque then write a Cheque to <strong>Astro Isha</strong> and submit it to your nearest Axis Bank. 
-                                            Alternatively you can use direct transfer to send money. Once payment is done kindly reply back at 
-                                            admin@astroisha.com with Registration Number and Email and we would open your Paid Account 
-                                            whereby you can accept Online Payments and Orders. Bank Details for Direct Transfer are provided below.<br/><br/>";
-                    $body               .= "<div style='align:center;font-size:15px'><strong>Account Details</strong></div><br/>";
-                    $body               .= "Astrologer Registration Number: ".$reg_number."<br/>";
-                    $body               .= "Name: ".$details['name']."<br/>";
-                    $body               .= "Email: ".$details['email']."<br/>";
-                    $body               .= "Username: ".$details['username']."<br/>";
-                    $body               .= "Type Of Membership: Free<br/>";
-                    $body                  .= "Payment Completed: ".$details['paid']."<br/>";
-                    $body                  .= "Amount To Be Paid: ".$details['amount']." ".$details['currency']."<br/><br/>";
-                    $body               .= "<strong>Below are Our Bank Details For Direct Transfer</strong><br/>";
-                    $body               .= "Payable to: Astro Isha<br/> 
-                                            Account Number: 915020051554614<br/> 
-                                            Axis Bank MANINAGAR, AHMEDABAD <br/>
-                                            Address:<br/>GROUND FLOOR, BUSINESS SQUARE BUILDING,<br/>NR. KRISHNABAUG CHAR RISTA<br/> AHMEDABAD 380008<br/>";
-                    if($data['currency']=='INR')
-                    {
-                        $body               .= "MICR Code: 380211005<br/>";
-                        $body               .= "IFSC Code: UTIB0000080<br/><br/>";
-                        $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
-                                        other Private Information with us. We only require your Account Number or Card Number, Name, and IFSC Code for money transfer in case you decide to opt for Paid Membership.</span><br/>";
-                    }
-                    else
-                    {
-                        $body               .= "Swift Code: AXISINBB080<br/><br/>";
-                        $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
-                                                other Private Information with us. We only require your Account Number, Name, and Swift Code or Paypal ID/Email for money transfer in case you decide to opt for Paid Membership.</span><br/>";
-                    }
-                    $body               .= "<br/><div style='align:right'>Admin At Astro Isha,<br/>Rohan Desai</div>"; 
-                    $mailer             = JFactory::getMailer();
-                    $config             = JFactory::getConfig();
-                    $sender             = array( 
-                                                    $config->get( 'mailfrom' ),
-                                                    $config->get( 'fromname' ) 
-                                                );
-
-                    $mailer             ->setSender($sender);
-                    $mailer             ->addRecipient($details['email']);
-                    $mailer             ->addBCC($bcc, 'Rohan Desai');
-                    $mailer             ->setSubject($subject);
-                    $mailer             ->isHTML(true);
-                    $mailer             ->Encoding = 'base64';
-                    $mailer             ->setBody($body);
-
-                    $send = $mailer->Send();
-                    if ( $send !== true ) 
-                    {
-                        $msg    =  'Error sending email: ' . $send->__toString();
-                        $msgType = "error";
-                        $link   = JUri::base().'dashboard?freeacc=success';
-                        $app->redirect($link, $msg,$msgType);
-                    } else 
-                    {
-                        $msg    = "Check Your Email For Confirmation.";
-                        $msgType    = "success";
-                        $link   = JUri::base().'dashboard?freeacc=success';
-                        $app->redirect($link); 
-                    }
-                }
-                else
-                {
-                    $link   = JUri::base().'vendor/paypal_astro.php?id='.$id.'&token='.$result['token'].'&name='.$result['name'].'&email='.$result['email'].'&curr='.$curr.'&amount='.$amount;
-                    $app->redirect($link);
-                }
-            }
-            else
-            { 
-                $query->clear();        // unset all variables
-                $query          ->select($db->quoteName(array('a.name','a.email','a.username',
-                                    'b.membership', 'b.number')))
-                                ->from($db->quoteName('#__users','a'))
-                                ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
-                                ->where($db->quoteName('a.id').' = '.$db->quote($id));
-                $db             ->setQuery($query);
-                $details        = $db->loadAssoc();
-                
-                $reg_number         = "AS00".$details['number']."00";
-                $bcc                = 'kopnite@gmail.com';
-                $subject            = "AstroIsha Register ID: ".$reg_number;
-                $body               = "<br/>Dear ".$details['name'].",<br/>";
-                $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your Free Account has been activated. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details.
-                                        Alternatively you can also email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.<br/><br/>";
-                $body               .= "<div style='align:center;font-size:15px'><strong>Account Details</strong></div><br/>";
-                $body               .= "Astrologer Registration Number: ".$reg_number."<br/>";
-                $body               .= "Name: ".$details['name']."<br/>";
-                $body               .= "Email: ".$details['email']."<br/>";
-                $body               .= "Username: ".$details['username']."<br/>";
-                $body               .= "Type Of Membership: ".$details['membership']."<br/><br/>";
-                $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
-                                            other Private Information with us. We only require your Account Number, Name, IBAN and Swift Code or Paypal ID/Email for money transfer.</span><br/>";
-                $body               .= "<br/><div style='align:right'>Admin At Astro Isha,<br/>Rohan Desai</div>"; 
-                $mailer             = JFactory::getMailer();
-                $config             = JFactory::getConfig();
-                $sender             = array( 
-                                                $config->get( 'mailfrom' ),
-                                                $config->get( 'fromname' ) 
-                                            );
-
-                $mailer             ->setSender($sender);
-                $mailer             ->addRecipient($details['email']);
-                $mailer             ->addBCC($bcc, 'Rohan Desai');
-                $mailer             ->setSubject($subject);
-                $mailer             ->isHTML(true);
-                $mailer             ->Encoding = 'base64';
-                $mailer             ->setBody($body);
-
-                $send = $mailer->Send();
-                 if ( $send !== true ) {
-                    $msg    =  'Error sending email: ' . $send->__toString();
-                    $msgType = "error";
-                    $link   = JUri::base().'dashboard?freeacc=success';
-                    $app->redirect($link, $msg,$msgType);
-                } else {
-                    $msg    = "Check Your Email For Confirmation.";
-                    $msgType    = "success";
-                    $link   = JUri::base().'dashboard?payment=success';
-                   $app->redirect($link); 
-                }
-                    
-                }
+            $msg        = "Failed To Add Data. Something went wrong";
+            $type       = "success";
+            $url        = JURI::base();
+            $this       ->redirectLink($url, $msg, $type);
         }
     }
     public function updateUser($data)

@@ -1,12 +1,6 @@
 <?php
-
-defined('_JEXEC') or die;
-//print_r($this->msg);exit;
-?>
-<body onload="hideFields()">
-<?php
-//print_r($this->msg);exit;
 defined('_JEXEC') or die('Restricted access');
+//print_r($this->msg);exit;
 $items          = $this->msg;
 //print_r($items);exit;
 unset($items['country']);
@@ -16,13 +10,12 @@ unset($items['curr_code']);
 unset($items['curr_full']);
 $user       = JFactory::getUser();
 //print_r($user);exit;
-$i          = 1;
 ?>
 <h3>Enter Your Details</h3>
 <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory.</div>
 <div class="form-group"><label>Name: </label> <?php echo $user->name; ?></div>
 <div class="form-group"><label>Email: </label> <?php echo $user->email; ?> <?php if($user->sendEmail == '0'){ ?><span style="color:green"><i class="fa fa-check-circle" aria-hidden="true"></i></span><?php } ?></div>
-<form enctype="application/x-www-form-urlencoded" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.registerAstro'); ?>">
+<form enctype="application/x-www-form-urlencoded" method="post" action="<?php echo JRoute::_('?option=com_extendedprofile&task=extendedprofile.registerAstro'); ?>">
 <div class="form-group">
     <label>Phone: </label>
     <input type="phone" class="form-control" name="astro_phone" placeholder="Enter Phone Number(Optional)" />
@@ -44,7 +37,7 @@ $i          = 1;
     <input type="text" class="form-control" name="astro_country" required placeholder="Enter Country Name(Compulsory)" />
 </div>    
 <div class="form-check">
-    <label><strong>Select Expertise*: </strong>(One Main Category and related Sub Category Compulsory): </label>
+    <label><strong>Select Expertise*: </strong>(One Compulsory): </label>
 <?php
 foreach($items as $item)
 { 
@@ -56,9 +49,7 @@ foreach($items as $item)
     {
 ?>
     <br/>
-    <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" name="expert" value="<?php echo $id; ?>" /> <strong><?php echo $name; ?></strong>
-    </label><br/>
+   <strong><?php echo $name; ?></strong><br/>
 <?php
         foreach($items as $subitems)
         {
@@ -69,7 +60,7 @@ foreach($items as $item)
             {
 ?>      
                 <label class="form-check-label">
-                    <input class="form-check-input" name="subexpert" type="checkbox" value="<?php echo $id.":".$subid; ?>" /> <?php echo $subname; ?>
+                    <input class="form-check-input" name="astro_subexpert[]" type="checkbox" value="<?php echo $id.":".$subid; ?>" /> <?php echo $subname; ?>
                 </label>
 <?php   
             }
@@ -78,50 +69,12 @@ foreach($items as $item)
 }
 ?>
 </div>
- <div class="form-group">
-    <label for="astro_paid" class="control-label">Membership*:</label>
-         <input type="radio" name="astro_type" value="paid" id="astro_paid" onclick="javascript:showFields();" /> Paid
-        <input type="radio" name="astro_type" value="free" id="astro_free" checked="checked" onclick="javscript:hideFields();"/> Free
-</div>
-
-<div id="profile_hidden1" class="form-group">
-    <label for="astro_online" class="control-label">Payment Type:</label>
-<?php
-    if(isset($this->msg['amount']) && isset($this->msg['currency']) && $this->msg['currency']=='INR')
-    {
-?>
-    <input type="radio" name="astro_pay" value="online" id="astro_paytm" checked="checked"  /> <img src="<?php echo JURI::base() ?>images/paytm-logo.png" alt="Paytm" width="40px" height="25px" />
-    <input type="radio" name="astro_pay" value="netbanking" id="astro_netbank" /> <img src="<?php echo JURI::base() ?>images/ccavenue.png" alt="CCAvenues" width="55px" height="35px" /> Netbanking/Debit Card/Credit Card/UPI
-    <input type="radio" name="astro_pay" value="cheque" id="astro_bhim" /> <img src="<?php echo JURI::base() ?>images/bhim.png" alt="BHIM UPI" width="15px" height="25px" /> BHIM Scan Code/Virtual Address
-    <input type="radio" name="astro_pay" value="cheque" id="astro_phonepe" /> <img src="<?php echo JURI::base() ?>images/phonepe.png" alt="Phonepe UPI" /> PhonePe Scan Code/Virtual Address
-    <input type="radio" name="astro_pay" value="cheque" id="astro_paytm_code" /> <img src="<?php echo JURI::base() ?>images/paytm-logo.png" alt="Paytm" width="40px" height="25px" /> Scan Code
-    <input type="radio" name="astro_pay" value="cheque" id="astro_cheque" /> Cheque
-    <input type="radio" name="astro_pay" value="transfer" id="astro_transfter" /><span style="color:#C68642"><i class="fa fa-university" aria-hidden="true"></i></span> Direct Transfer Via NEFT/ATM/BANK
-<?php
-    }
-    else
-    {
-?>
-     <input type="radio" name="astro_pay" value="online" id="astro_online" checked="checked"  /> <span style="color:#139AD6"><i class="fa fa-paypal" aria-hidden="true"></i></span> Paypal
-    <input type="radio" name="astro_pay" value="transfer" id="astro_transfter" /><span style="color:#C68642"><i class="fa fa-university" aria-hidden="true"></i></span> Direct Transfer Via Bank
-<?php
-    }
-?>
-</div>
-<div id="profile_hidden2" class="form-group">
-    <label for="astro_amount" class="control-label">Amount:</label>
-<?php 
-    if(isset($this->msg['amount']) && isset($this->msg['currency']))
-    echo $this->msg['amount'].' '.$this->msg['curr_code'].'('.$this->msg['currency'].' - '.$this->msg['curr_full'].')';
-    else
-    echo "300 Rs";
- ?>
-<input type="hidden" name="astro_amount" id="astro_amount" value="<?php if(isset($this->msg['amount']))echo $this->msg['amount'];else "300"; ?>" />
-<input type="hidden" name="astro_currency" id="astro_currency" value="<?php if(isset($this->msg['currency']))echo $this->msg['currency'];else "INR"; ?>" />
-<input type="hidden" name="astro_country" id="astro_country" value="<?php if(isset($this->msg['country']))echo $this->msg['country'];else "India"; ?>" />
-</div>
 <div class="form-group">
-    <input type="checkbox" name="condition_profile" value="yes" required />
+     <label>Describe Your Expertise(Max 750 Words)*: </label>
+    <textarea class="form-control" name="astro_detail" id="astro_detail" placeholder="Enter Country Name(Compulsory)" rows="10" ></textarea>
+</div> 
+<div class="form-group">
+    <input type="checkbox" name="astro_terms" value="yes" required />
     <label for="condition_profile">Kindly Read and Accept the <a href="<?php echo JURI::base() ?>/terms" target="_blank" title="Read the Terms And Conditions before Registering as Astrologer">Terms and Conditions</a> for Registration *</label>
 </div>
 <div class="form-group">
@@ -140,27 +93,5 @@ flush($items);
     plugins: "wordcount autolink",
     menubar: false
   });
-
-function showFields()
-{
-    $('#profile_hidden1').show();
-    document.getElementById("profile_hidden1").style.visibility = 'visible';
-    $('#profile_hidden2').show();
-    document.getElementById("profile_hidden2").style.visibility = 'visible';
-}
-function hideFields()
-{
-    if(document.getElementById("astro_free").checked)
-    {
-        $('#profile_hidden1').hide();
-        document.getElementById("profile_hidden1").style.visibility = 'hidden';
-        $('#profile_hidden2').hide();
-        document.getElementById("profile_hidden2").style.visibility = 'hidden';
-    }
-    else
-    {
-        showFields();
-    }
-}
 </script>
 </body>

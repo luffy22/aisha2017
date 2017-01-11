@@ -5,43 +5,47 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
 {
     public function registerAstro()
     {
+        $link       = JURI::base().'dashboard';
+        $type       = "error";
         if(isset($_POST['submit_profile']))
         {
-            $membership     = $_POST['astro_type'];
+            $phone          = $_POST['astro_phone'];
+            $mobile         = $_POST['astro_mobile'];
             $city           = $_POST['astro_city'];
-            if(!empty($state)){$state          = $_POST['astro_state'];}
-            exit;
+            $state          = $_POST['astro_state'];
             $country        = $_POST['astro_country'];
-            
-            if(!isset($_POST['condition_profile']))
+            $sub_exp        = $_POST['astro_subexpert'];
+            $detail         = $_POST['astro_detail'];
+            $terms          = $_POST['astro_terms'];
+            if(empty($sub_exp))
             {
-                $link       = JURI::base().'dashboard';
-                $msg        = "You must <strong>Accept The Terms And Agreement</strong> in order to register.";
-                $type       = 'error';
-                $this->redictUrl($link, $msg,$type);
+                $msg        = "Please select one or more expertise to register with Astro Isha.";
+                $this->redictUrl($link, $msg, $type);
             }
-            else
+            if(empty($detail)|| str_word_count($detail)<25 || str_word_count($detail)>750 || strlen($detail)> 10000)
             {
-                if($membership == "free")
-                {
-                    $user_details   = array(
-                                            'membership'=>$membership
+                $msg        = "Description is mandatory. Minimum 25 Words and maximum 750 Words and 10,000 Characters allowed.";
+                $this->redictUrl($link, $msg, $type);
+            }
+            if($terms !== "yes")
+            {
+                $msg        = "Please accept the Terms and Conditions";
+                $this->redictUrl($link, $msg, $type);
+            }
+           else
+           {
+               $user_details   = array(
+                                        'city'=>$city,
+                                        'state'=>$state,'country'=>$country,
+                                        'phone'=>$phone,'mobile'=>$mobile,
+                                        'sub_exp'=>$sub_exp,
+                                        'detail'=>$detail,'terms'=>$terms
                                     );
-                    $model          = $this->getModel('extendedprofile');  // Add the array to model
-                    $data           = $model->saveUser($user_details);
-                }
-                else if($membership == "paid")
-                {
-                    $pay_type       = $_POST['astro_pay'];
-                    $amount         = $_POST['astro_amount'];
-                    $currency       = $_POST['astro_currency'];
-                    $country        = $_POST['astro_country'];
-                    $user_details = array('membership'=>$membership,'pay_type'=>$pay_type,
-                                            'amount'=>$amount,'currency'=>$currency,'country'=>$country);
-                    $model          = $this->getModel('extendedprofile');  // Add the array to model
-                    $data           = $model->saveUser($user_details);
-                }
-            }
+            $model          = $this->getModel('extendedprofile');  // Add the array to model
+            $data           = $model->saveUser($user_details);
+               
+           }
+                
         }
     }
     
