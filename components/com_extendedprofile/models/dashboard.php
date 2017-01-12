@@ -32,7 +32,7 @@ class ExtendedProfileModelDashboard extends JModelItem
         {
             $query          ->clear();
             $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
-                                        'b.membership','b.img_1','b.img_1_id','b.addr_1','b.addr_2','b.city',
+                                        'b.membership','b.addr_1','b.addr_2','b.city',
                                         'b.state','b.country','b.postcode','b.phone','b.mobile','b.whatsapp','b.website',
                                         'b.info','b.profile_status')));
             $query          ->from($db->quoteName('#__users', 'a'));
@@ -40,6 +40,7 @@ class ExtendedProfileModelDashboard extends JModelItem
             $query          ->where($db->quoteName('a.id').' = '.$db->quote($id));
             $db             ->setQuery($query);
             $results =      $db->loadAssoc();
+            return $results;
         }
         else if($row > 0 && $result['membership'] == 'Paid')
         {
@@ -55,6 +56,7 @@ class ExtendedProfileModelDashboard extends JModelItem
             $query          ->where($db->quoteName('a.id').' = '.$db->quote($id));
             $db             ->setQuery($query);
             $results =      $db->loadAssoc();
+            return $results;
         }
         else
         {
@@ -121,9 +123,9 @@ class ExtendedProfileModelDashboard extends JModelItem
             {
                 $details                =  array('error'=> 'Data not showing');
             }
-        }
-        $results        = array_merge($results, $details);
-        return $results;
+            $results        = array_merge($results, $details);
+            return $results;
+        }      
     }
     public function authorizePayment($details)
     {

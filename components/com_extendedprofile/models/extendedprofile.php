@@ -6,7 +6,7 @@ jimport('joomla.application.component.modelitem');
 jimport('joomla.filesystem.file');
 class ExtendedProfileModelExtendedProfile extends JModelItem
 {
-    public function redirectLink($url, $msg, $type)
+    public function redirectLink($link, $msg, $type)
     {
         $app            = JFactory::getApplication();
         $app            ->redirect($link, $msg,$type);
@@ -59,24 +59,24 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $result         = $db->execute();
         foreach($sub_exp as $exp)
         {
-            $query      ->clear();
+            //$query      ->clear();
             $query      = "INSERT INTO jv_role_astro (astro_id, sub_expert) VALUES ('".$id."','".$exp."')";
             $db         ->setQuery($query);
-            $db         ->execute();
+            $db         ->query();
         }
         if($result)
         {
             $msg        = "Added Successfully. Kindly Check Your Email For Details.";
             $type       = "success";
-            $url        = JURI::base();
-            $this       ->redirectLink($url, $msg, $type);
+            $link       =  JURI::base().'dashboard';
+            $this       ->redirectLink($link, $msg, $type);
         }
         else
         {
             $msg        = "Failed To Add Data. Something went wrong";
             $type       = "success";
-            $url        = JURI::base();
-            $this       ->redirectLink($url, $msg, $type);
+            $link       =  JURI::base().'dashboard';
+            $this       ->redirectLink($link, $msg, $type);
         }
     }
     public function updateUser($data)
