@@ -18,7 +18,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         // get the data
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        $query          ->select($db->quoteName(array('UserId','membership','img_1','img_1_id',
+        $query          ->select($db->quoteName(array('UserId','membership',
                                      'addr_1','addr_2', 'city','state','country',
                                     'postcode','phone','mobile','whatsapp','website', 'info','profile_status')));
         $query          ->from($db->quoteName('#__user_astrologer'));
@@ -196,9 +196,10 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $db->setQuery($query);
         $result = $db->execute();
         $app            = JFactory::getApplication();
-        $link           = JURI::base().'dashboard?profile_update=success';
+        $link           = JURI::base().'dashboard';
         $msg            = "Profile Updated Successfully... ";
-        $app            ->redirect($link, $msg);
+        $type           = "success";
+        $app            ->redirect($link, $msg, $type);
        
     }
 }

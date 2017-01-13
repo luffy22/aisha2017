@@ -1,4 +1,5 @@
 .footer_link a{color: #fff !important;}.footer_link a:hover{font-weight: bold; }.banner_link a{color: #5bc0de !important;}.banner_link a:hover{color: #fff !important;text-decoration: none;}
+.footer2{background:url(../images/back_footer.png)!important;width:100%;color:#FFFFFF;padding:2px;}.footer2 a{color: #fff !important;}
 .top-menu-link{color: #fff !important;}.top-menu-link:hover{color: #000 !important;text-decoration: none !important; font-weight:bold !important;}.top-menu{color: #fff !important;}.top-menu:hover{font-weight: bold !important;}
 .banner_glob{margin: 5em 0 1.5em 0;}.pagination{display:block !important;}
 .pagenav{text-align:right}
@@ -14,4 +15,4 @@
 .pagination span,.pagination span a:hover{cursor:default;padding:0 14px;line-height:2em;}
 .pagination li:first-child a{border-left-width:1px;-webkit-border-radius:3px 0 0 3px;-moz-border-radius:3px 0 0 3px;border-radius:3px 0 0 3px;}
 .pagination li:last-child a{-webkit-border-radius:0 3px 3px 0;-moz-border-radius:0 3px 3px 0;border-radius:0 3px 3px 0;}
-#astro_warn{visibility: hidden;}
+#astro_warn{visibility: hidden;}.form-text1{padding:6px 12px;width:10%;}.form-text2{padding: 6px 12px;width:20%}

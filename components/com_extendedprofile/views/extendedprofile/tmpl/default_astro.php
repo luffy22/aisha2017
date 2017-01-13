@@ -19,54 +19,41 @@ if($user->guest)
     $location   = JURi::base()."login";
     echo header('Location: '.$location);
 }
-if(isset($_GET['image'])&&($_GET['image']=='false'))
-    {
 ?>
-        <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> File must be an image file with jpg, png or gif extension.</div>
-<?php
-    }
-if(isset($_GET['image'])&&($_GET['image']=='size'))
-    {
-?>
-        <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> File must be less then 2 MB(Mega Byte).</div>
-<?php
-    }
-//print_r($this->msg);
-?>
-<h1 class="display-3">Enter Details</h1>
+<h3>Enter Details</h3>
 <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory</div>
 <div class="form-group"><label>Name:</label> <?php echo $user->name;; ?></div>
-<?php 
-    if((empty($this->msg['city']))&&(empty($this->msg['country'])))
-    {
-?>
-    <form enctype="multipart/form-data" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.saveAstro'); ?>">
- <?php
-    }
-    else
-    {
- ?>
-    <form enctype="multipart/form-data" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.updateAstro'); ?>">
-<?php
-    }
-?>
+<form enctype="multipart/form-data" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.updateAstro'); ?>">
 <input type="hidden" value="<?php echo $this->msg['UserId'] ?>" name="profile_id" />
+
 <div class="form-group">
-    <label for="astro_address1">Profile Picture*: </label>
-    <?php if(empty($this->msg['img_1_id'])) { ?>
-    <input type="file" class="form-control" name="astro_img" id="astro_img"  />
-    <?php } else{ ?>
-    <img src="<?php echo JURI::base() ?>images/profiles/<?php echo $this->msg['img_1_id'] ?>" height="100px" width="100px" />
-    <?php
-    }
-    ?>
+    <label for="astro_address1">Profile Status: </label>
+    <select name="astro_status" id="astro_status" class="form-control">
+    <?php if(empty($this->msg['profile_status'])) { ?>
+        <option value="visible" selected>Visible <i class="fa fa-eye" aria-hidden="true"></i></option>
+        <option value="hidden">Hidden <i class="fa fa-eye-slash" aria-hidden="true"></i></option>
+   <?php }else if($this->msg['profile_status'] == 'visible'){
+   ?>
+        <option value="visible" selected>Visible <i class="fa fa-eye" aria-hidden="true"></i></option>
+        <option value="hidden">Hidden <i class="fa fa-eye-slash" aria-hidden="true"></i></option>
+        <?php
+           }
+           else if($this->msg['profile_status'] == 'hidden')
+           {
+        ?>
+            <option value="hidden" selected>Hidden <i class="fa fa-eye-slash" aria-hidden="true"></i></option>
+            <option value="visible">Visible <i class="fa fa-eye" aria-hidden="true"></i></option>
+        <?php
+           }
+        ?>
+    </select>
 </div>
 <div class="form-group">
     <label for="astro_address1">Address Line 1: </label>
     <?php if(empty($this->msg['addr_1'])) { ?>
-    <input type="text" class="form-control" name="astro_address1" id="astro_addr1" placeholder="Enter Address of Office or Home" />
+    <input type="text" class="form-control" name="astro_addr1" id="astro_addr1" placeholder="Enter Address of Office or Home" />
     <?php } else{ ?>
-    <input type="text" class="form-control" name="astro_address1" id="astro_addr1" value="<?php echo $this->msg['addr_1'] ?>" />
+    <input type="text" class="form-control" name="astro_addr1" id="astro_addr1" value="<?php echo $this->msg['addr_1'] ?>" />
     <?php
     }
     ?>
@@ -74,9 +61,9 @@ if(isset($_GET['image'])&&($_GET['image']=='size'))
 <div class="form-group">
     <label for="astro_address2">Address Line 2: </label>
     <?php if(empty($this->msg['addr_1'])) { ?>    
-    <input type="text" class="form-control" name="astro_address2" id="astro_addr2" placeholder="Enter Related Address Details" />
+    <input type="text" class="form-control" name="astro_addr2" id="astro_addr2" placeholder="Enter Related Address Details" />
     <?php } else{ ?>
-    <input type="text" class="form-control" name="astro_address2" id="astro_addr2" value="<?php echo $this->msg['addr_2'] ?>" />
+    <input type="text" class="form-control" name="astro_addr2" id="astro_addr2" value="<?php echo $this->msg['addr_2'] ?>" />
     <?php
     }
     ?>
@@ -124,15 +111,26 @@ if(isset($_GET['image'])&&($_GET['image']=='size'))
 <div class="form-group">
     <label for="astro_phone">Phone: </label>
     <?php 
-    if(empty($this->msg['postcode'])) { ?>  
-    <input type="number" class="form-text" name="astro_code" id="astro_code" placeholder="area code" /> -
+    if(empty($this->msg['phone'])) { ?>  
+    <input type="number" class="form-text1" name="astro_code" id="astro_code" placeholder="area code" /> -
     <input type="number" class="form-text2" name="astro_phone" id="astro_phone" placeholder="phone number" /> Example 22-xxxxxxxx for Mumbai, India
     <?php } else{ 
+        $phone      = $this->msg['phone'];
+        if(strpos($phone,"-"))
+        {
           $phone    = explode("-",$this->msg['phone']);
         ?>
-    <input type="number" class="form-text" name="astro_code" id="astro_code" value="<?php echo $phone[0]; ?>" /> -
-    <input type="number" class="form-text2" name="astro_phone" id="astro_phone" value="<?php echo $phone[1]; ?>" /> Example 22-xxxxxxxx for Mumbai, India
+            <input type="number" class="form-text1" name="astro_code" id="astro_code" value="<?php echo $phone[0]; ?>" /> -
+            <input type="number" class="form-text2" name="astro_phone" id="astro_phone" value="<?php echo $phone[1]; ?>" /> Example 22-xxxxxxxx for Mumbai, India
+        <?php
+        }
+        else
+        {  
+        ?>
+            <input type="number" class="form-text1" name="astro_code" id="astro_code"  /> -
+            <input type="number" class="form-text2" name="astro_phone" id="astro_phone" value="<?php echo $phone; ?>" /> Example 22-xxxxxxxx for Mumbai, India
     <?php 
+        }
     }
     ?>
 </div>
@@ -173,20 +171,7 @@ if(isset($_GET['image'])&&($_GET['image']=='size'))
     ?>
 </div>
 <div class="form-group">
-    <?php 
-       if((empty($this->msg['city']))&&(empty($this->msg['country'])))
-        {
-    ?>
-            <button type="submit" name="submit_profile" class="btn btn-primary" >Submit</button>
-    <?php
-        }
-       else
-       {
-   ?>
-            <button type="submit" name="update_profile" class="btn btn-primary" >Update</button>
-  <?php
-       }
-  ?>
+    <button type="submit" name="update_profile" class="btn btn-primary" >Update</button>
     <button type="reset" name="reset" class="btn btn-warning">Reset</button>
     <a class="btn btn-danger" href="<?php echo JURI::base() ?>dashboard">Cancel</a>
 </div>

@@ -77,6 +77,7 @@ endif;
     </div>
 </div>
 <div class="mb-2"></div>
+<jdoc:include type="modules" name="footer2" style="none" />
 <jdoc:include type="modules" name="footer" style="none" />
 <?php
 include_once (JPATH_ROOT.DS.'analyticstracking.php');
