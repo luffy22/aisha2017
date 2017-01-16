@@ -14,6 +14,8 @@ class AstrologinControllerAstrosearch extends AstroLoginController
                                 );
             $model          = $this->getModel('astrosearch');  // Add the array to model
             $data           = $model->getDetails($details);
+            $view           = $this->getView('astrosearch','html');
+            $view->showDetails($data);
         }
     }
 }
