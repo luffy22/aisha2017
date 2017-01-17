@@ -9,14 +9,14 @@ $(function() {
 <?php
 defined('_JEXEC') or die('Restricted access');
 ?>
-<div class="spacer"></div>
-<div class="text-right"><a href="<?php echo JURI::base() ?>astro-register" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Register With Us</a></div>
-<div class="spacer"></div>
+<div class="mt-1"></div>
+<a href="<?php echo JURI::base() ?>register" class="btn btn-primary"><i class="fa fa-user"></i> Register With Us</a>
+<div class="mt-1"></div>
 <div id="astro-reg">
 <h3>Welcome To Astro Isha</h3>
 <div>
 	
-<p>&nbsp;&nbsp;&nbsp;<img src="<?php echo JURI::base() ?>images/jv_logo3.png" title="Welcome To Astro Isha" class="img-responsive" align="left" />If you happen to be an Astrologer, Palmist, Feng-Shui Expert, Vastu Shastra Expert, 
+<p>&nbsp;&nbsp;&nbsp;<img src="<?php echo JURI::base() ?>logo.png" title="Welcome To Astro Isha" class="img-responsive" align="left" />If you happen to be an Astrologer, Palmist, Feng-Shui Expert, Vastu Shastra Expert, 
 involved in karmakand, poojas or rituals then kindly go through the contents of this page.</p>
 </div>
 <h3>Registering With Astro Isha</h3>
@@ -72,8 +72,8 @@ considering charges by Astro Isha, related Taxes, Payment Gateway charges and al
 <h3>For More Information</h3>
 <div>
 <p>&nbsp;&nbsp;&nbsp;If you find the <a href="<?php echo JURI::base() ?>astro-register" title="Register with Astro Isha">Registration</a> Process difficult then kindly get in 
-touch at email: admin@astroisha.com. Alternatively you can call or whatsapp to +91-9727841461 for more details.</p>
+touch at email: admin@astroisha.com. </p>
 </div>
 </div> <!-- astro-reg -->
-<div class="spacer"></div>
+<div class="mb-2"></div>
 

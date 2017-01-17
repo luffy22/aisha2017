@@ -311,3 +311,4 @@ if (!empty($this->item->pagination) && $this->item->pagination && $this->item->p
         <div class="mb-1"></div>
 	<?php endif; ?>
 	<?php echo $this->item->event->afterDisplayContent; ?> </div>
+	<div class="mb-2"></div>

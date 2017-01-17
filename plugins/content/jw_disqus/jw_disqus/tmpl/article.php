@@ -23,6 +23,7 @@ defined('_JEXEC') or die;
 </div>
 <?php endif; ?>
 <?php echo $row->text; ?>
+<div class="mb-2"></div>
 <ul class="nav nav-pills" role="tablist">
 <li class="nav-item active"><a class="nav-link" href="#fb" role="tab" data-toggle="tab">Facebook</a></li>
 <li class="nav-item"><a class="nav-link" href="#disqus" role="tab" data-toggle="tab">Disqus</a></li>
