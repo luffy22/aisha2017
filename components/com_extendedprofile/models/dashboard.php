@@ -46,7 +46,7 @@ class ExtendedProfileModelDashboard extends JModelItem
         {
             $query          ->clear();
             $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
-                                        'b.membership','b.img_1','b.img_1_id','b.addr_1','b.addr_2','b.city',
+                                        'b.membership','b.addr_1','b.addr_2','b.city',
                                         'b.state','b.country','b.postcode','b.phone','b.mobile','b.whatsapp','b.website',
                                         'b.info','b.profile_status','c.acc_holder_name','c.acc_number','c.acc_bank_name',
                                         'c.acc_bank_addr','c.acc_iban','c.acc_swift_code','c.acc_ifsc','c.acc_paypalid')));

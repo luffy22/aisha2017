@@ -53,12 +53,32 @@ endif;
 ?>
 <div id="fb-root"></div>
 <jdoc:include type="modules" name="topmenu" style="none" />
-<div class="spacer"></div>
+<div class="mb-1"></div>
 <jdoc:include type="modules" name="jbanner" style="none" />
 <div class="mb-1"></div>
 <div class="container-fluid">
-    <div class="row">
+  <div class="row">
     <div class="col-md-8">
+    <div class="alert alert-warning" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  <strong>Upgradation In Progress!</strong> Site going upgradation. Some features are removed while others would be back online shortly. Kindly contact admin@astroisha.com 
+  if you want more information.
+</div>
+<?php
+	if ($option == 'com_content' && $view == 'article'):
+  $id = JRequest::getInt('id');
+?>
+<div class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  <strong>Links Error!</strong> Do not click on article links or there would be 404 Page Error. Links are in process of upgradation. Users would be notified when links are up-to-date.
+</div>
+<?php
+endif;
+?>
     <jdoc:include type="modules" name="breadcrumb" style="none" />
     <div class="mb-1"></div>
     <jdoc:include type="message" />
