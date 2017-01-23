@@ -1,10 +1,10 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 $data      = $this->astro;
-//print_r($data->name);exit;
+//print_r($data);exit;
 ?>
 <div class="mt-2"></div>
-
+<!--<a href="<?php //echo $back_url; ?>" class="btn btn-primary"><i class="fa fa-caret-left"></i> Go Back</a>-->
 <div class="mb-1"></div>
 <div class="card" id="<?php echo "astro_".$data->number; ?>">
     <div class="card-block">

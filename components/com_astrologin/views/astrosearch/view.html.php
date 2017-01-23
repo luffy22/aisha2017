@@ -10,20 +10,23 @@ class AstroLoginViewAstroSearch extends JViewLegacy
     var $pagination;
     function display($tpl = null)
     {
-        $user        = $_GET['user'];
-       // print_r($this->pagination);exit;
-        if(isset($user))
-        {
-            $this->astro    = $this->get('User');
-            //print_r($this->astro);exit;
-            parent::display("user");
-        }
-        else
+        $user   = $this->get('User');
+        //print_r($user);exit;
+        if(empty($user))
         {
             $this->astro = $this->get('Data');
             $this->pagination = $this->get('Pagination'); 
             parent::display($tpl);
         }
+        else
+        {
+            
+            $this->astro    = $user;
+            //print_r($this->astro);exit;
+            parent::display("user");
+        }
+       // print_r($this->pagination);exit;
+       
     }
     function showDetails($data)
     {

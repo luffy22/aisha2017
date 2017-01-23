@@ -31,13 +31,13 @@ foreach($topview as $data)
         if(!empty($images->image_intro) && empty($images->image_fulltext))
         {
 ?>
-            <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" title="Click To Open Article" alt="<?php echo $item->title; ?>" /></a>
+            <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" title="Click To Open Article" alt="<?php echo $data->title; ?>" /></a>
 <?php
         }
         else if(empty($images->image_intro) && !empty($images->image_fulltext))
         {
 ?>
-           <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" title="Click To Open Article" alt="<?php echo $item->title; ?>" /></a>
+           <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" title="Click To Open Article" alt="<?php echo $data->title; ?>" /></a>
 <?php
         }
         else
@@ -81,19 +81,19 @@ foreach($toprecent as $data)
         if(!empty($images->image_intro) && empty($images->image_fulltext))
         {
 ?>
-            <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" title="Click To Open Article" alt="<?php echo $item->title; ?>" /></a>
+            <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" title="Click To Open Article" alt="<?php echo $data->title; ?>" /></a>
 <?php
         }
         else if(empty($images->image_intro) && !empty($images->image_fulltext))
         {
 ?>
-           <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" title="Click To Open Article" alt="<?php echo $item->title; ?>" /></a>
+           <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" title="Click To Open Article" alt="<?php echo $data->title; ?>" /></a>
 <?php
         }
         else
         {
 ?>
-          <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php JURI::base() ?>images/art_img/img_soon.jpg" alt="Image Soon" title="Image Coming Soon..." /></a>
+          <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php JURI::base() ?>images/art_img/img_soon.jpg" alt="Image Soon" title="Click To Open Article" /></a>
 <?php
         }
 ?>

@@ -33,19 +33,19 @@ foreach($topview as $data)
         if(!empty($images->image_intro) && empty($images->image_fulltext))
         {
 ?>
-            <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $item->title; ?>" />
+            <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $data->title; ?>" />
 <?php
         }
         else if(empty($images->image_intro) && !empty($images->image_fulltext))
         {
 ?>
-           <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo $item->title; ?>" />
+           <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo $data->title; ?>" />
 <?php
         }
         else
         {
 ?>
-          <img class="img-fluid" src="<?php JURI::base() ?>images/art_img/img_soon.jpg" alt="Image Soon" title="Image Coming Soon..." />  
+          <img class="img-fluid" src="<?php JURI::base() ?>images/art_img/img_soon.jpg" alt="Image Soon" title="Click To Open Article" />  
 <?php
         }
 ?>
@@ -87,13 +87,13 @@ foreach($toprecent as $data)
         if(!empty($images->image_intro))
         {
 ?>
-            <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $item->title; ?>" />
+            <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $data->title; ?>" />
 <?php
         }
         else
         {
 ?>
-            <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo $item->title; ?>" />
+            <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo $data->title; ?>" />
 <?php
         }
 ?>

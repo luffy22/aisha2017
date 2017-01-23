@@ -7,6 +7,9 @@ $astro      = $this->astro;
 <?php
      foreach($astro as $data)
      {
+        $user      = $data->username;
+        $jinput = JFactory::getApplication()->input;
+        $jinput->set('user', $user);
 ?>      
 <div class="card" id="<?php echo "astro_".$data->number ?>">
     <div class="card-block">
@@ -23,13 +26,7 @@ $astro      = $this->astro;
             <div class="col-md-2"><img src="<?php echo JURI::base() ?>images/blank-profile.png" title="<?php echo $this->img_1 ?>" class="img-fluid" /></div>
             <div class="col-md-10"><strong>Location:</strong> <?php echo $data->city.", ",$data->state.", ".$data->country;  ?><br/>
                 <strong>Little About Me:</strong><br/> <?php if(strlen($data->info) > 1000){echo substr($data->info,0,1000)."...";}else{echo $data->info;} ?>
-              <form role="form" enctype="application/x-www-form-urlencoded" method="post" 
-                    action="<?php echo JRoute::_('index.php?option=com_astrologin&task=astrosearch.getDetails'); ?>">
-               <input type="hidden" value="<?php $uri = JUri::getInstance();echo  $uri->toString(); ?>" name="current_url" />
-               <input type="hidden" value="<?php echo $data->username; ?>" name="astro_getuser" />
-               <button type="submit" class="btn btn-primary" name="profile_full"><i class="fa fa-address-card-o"></i> Get Full Details</button>
-              </form>
-              
+                <a class="btn btn-primary" href="<?php echo JRoute::_('index.php?view=astrosearch&user='.$user); ?>"><i class="fa fa-address-card-o"></i> Get Full Details</a>
             </div>
         </div>
     </div>

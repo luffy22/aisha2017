@@ -79,23 +79,29 @@ class AstrologinModelAstroSearch extends JModelItem
     {
         $jinput             = JFactory::getApplication()->input;
         $user               = $jinput->get('user', 'default_value', 'string');
-        
-        $db             = JFactory::getDbo();  // Get db connection
-        $query          = $db->getQuery(true);
-        $query2         = $db->getQuery(true);
-        $query              ->select($db->quoteName(array('b.number','b.membership','a.id','a.username','a.email',
-                                    'a.name', 'a.registerDate', 'a.lastVisitDate','b.addr_1',
-                                    'b.addr_2','b.city','b.state','b.country','b.postcode', 
-                                    'b.phone','b.mobile','b.whatsapp','b.info')))
-                            ->from($db->quoteName('#__users','a'))
-                              ->join('INNER', $db->quoteName('#__user_astrologer', 'b') . ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')')
-                            ->where($db->quoteName('b.approval_status').'='.$db->quote('approved').' AND '.
-                                    $db->quoteName('b.profile_status').' = '.$db->quote('visible').' AND '.
-                                    $db->quoteName('a.username').' = '.$db->quote($user));
-        $db                  ->setQuery($query);
-        //$query          ->clear();
-        $result         = $db->loadObject();
-        return $result;
-        
+        if($user  == 'default_value')
+        {
+            return;
+        }
+        else
+        {
+            $db             = JFactory::getDbo();  // Get db connection
+            $query          = $db->getQuery(true);
+
+            $query              ->select($db->quoteName(array('b.number','b.membership','a.id','a.username','a.email',
+                                        'a.name', 'a.registerDate', 'a.lastVisitDate','b.addr_1',
+                                        'b.addr_2','b.city','b.state','b.country','b.postcode', 
+                                        'b.phone','b.mobile','b.whatsapp','b.info')))
+                                ->from($db->quoteName('#__users','a'))
+                                  ->join('INNER', $db->quoteName('#__user_astrologer', 'b') . ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')')
+                                ->where($db->quoteName('b.approval_status').'='.$db->quote('approved').' AND '.
+                                        $db->quoteName('b.profile_status').' = '.$db->quote('visible').' AND '.
+                                        $db->quoteName('a.username').' = '.$db->quote($user));
+            $db                  ->setQuery($query);
+            //$query          ->clear();
+            $result         = $db->loadObject();
+            //$result         = array_push($result,$back_url);
+            return $result;
+        }
     }
 }
