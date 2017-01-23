@@ -20,7 +20,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $query          = $db->getQuery(true);
         $query          ->select($db->quoteName(array('UserId','membership',
                                      'addr_1','addr_2', 'city','state','country',
-                                    'postcode','phone','mobile','whatsapp','website', 'info','profile_status')));
+                                    'postcode','phone','mobile','whatsapp','website', 'info','profile_status','approval_status')));
         $query          ->from($db->quoteName('#__user_astrologer'));
         $query          ->where($db->quoteName('UserId').' = '.$db->quote($id));
         $db             ->setQuery($query);
@@ -42,6 +42,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $date           = $date->format('Y-m-d H:i:s');
         $user           = JFactory::getUser();
         $id             = $user->id;
+        $username       = $user->username;
         $membership     = "Free";
         
         $db             = JFactory::getDbo();  // Get db connection
@@ -66,7 +67,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         }
         if($result)
         {
-            $msg        = "Added Successfully. Kindly Check Your Email For Details.";
+            $msg        = "User Successfully registered. Details would be published once information is authenticated.";
             $type       = "success";
             $link       =  JURI::base().'dashboard';
             $this       ->redirectLink($link, $msg, $type);
@@ -74,7 +75,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         else
         {
             $msg        = "Failed To Add Data. Something went wrong";
-            $type       = "success";
+            $type       = "error";
             $link       =  JURI::base().'dashboard';
             $this       ->redirectLink($link, $msg, $type);
         }

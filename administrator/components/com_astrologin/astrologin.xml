@@ -40,6 +40,7 @@
                         <filename>astrologin.php</filename>
                         <!-- SQL files section -->
                         <folder>sql</folder>
+                        <folder>views</folder>
                 </files>
         </administration>
  

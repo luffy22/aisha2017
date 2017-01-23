@@ -34,7 +34,7 @@ class ExtendedProfileModelDashboard extends JModelItem
             $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
                                         'b.membership','b.addr_1','b.addr_2','b.city',
                                         'b.state','b.country','b.postcode','b.phone','b.mobile','b.whatsapp','b.website',
-                                        'b.info','b.profile_status')));
+                                        'b.info','b.profile_status','b.approval_status')));
             $query          ->from($db->quoteName('#__users', 'a'));
             $query          ->join('INNER', $db->quoteName('#__user_astrologer','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');
             $query          ->where($db->quoteName('a.id').' = '.$db->quote($id));
