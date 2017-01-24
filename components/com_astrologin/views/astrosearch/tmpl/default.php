@@ -4,12 +4,14 @@ $astro      = $this->astro;
 //print_r($astro);exit;
 ?>
 <div class="mt-1"></div>
+<p class="float-xs-right">Results Per Page: <?php echo $this->pagination->getLimitBox(); ?></p>
+<div class="mb-3"></div>
 <?php
      foreach($astro as $data)
      {
-        $user      = $data->username;
+        $user       = $data->username;    
         $jinput = JFactory::getApplication()->input;
-        $jinput->set('user', $user);
+        $jinput->set('user',  $user, 'string');
 ?>      
 <div class="card" id="<?php echo "astro_".$data->number ?>">
     <div class="card-block">
@@ -35,4 +37,20 @@ $astro      = $this->astro;
      }
 ?>
 <div class="mb-1"></div>
+<?php // Add pagination links ?>
+<?php if (!empty($this->items)) : ?>
+	<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
+		<div class="pagination">
+
+			<?php if ($this->params->def('show_pagination_results', 1)) : ?>
+				<p class="counter pull-right">
+					<?php echo $this->pagination->getPagesCounter(); ?>
+				</p>
+			<?php endif; ?>
+
+			<?php echo $this->pagination->getPagesLinks(); ?>
+		</div>
+	<?php endif; ?>
+<?php  endif; ?>    
+<div class="mb-2"></div>
 

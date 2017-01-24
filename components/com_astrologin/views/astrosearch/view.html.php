@@ -8,6 +8,7 @@ class AstroLoginViewAstroSearch extends JViewLegacy
     */
     var $astro;
     var $pagination;
+    var $expert;
     function display($tpl = null)
     {
         $user   = $this->get('User');
@@ -20,9 +21,8 @@ class AstroLoginViewAstroSearch extends JViewLegacy
         }
         else
         {
-            
             $this->astro    = $user;
-            //print_r($this->astro);exit;
+            $this->expert    = $this->get('Expert');
             parent::display("user");
         }
        // print_r($this->pagination);exit;

@@ -56,12 +56,10 @@ class AstrologinModelAstroSearch extends JModelItem
     } 
     public function getDetails($data)
     {
-        //print_r($data);exit;
-        $url            = array("url"=> $data['url']);
         
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        $query              ->select($db->quoteName(array('b.number','b.membership','a.username','a.email',
+        $query              ->select($db->quoteName(array('b.number','b.membership','a.id','a.username','a.email',
                                     'a.name', 'a.registerDate', 'a.lastVisitDate','b.addr_1',
                                     'b.addr_2','b.city','b.state','b.country','b.postcode', 
                                     'b.phone','b.mobile','b.whatsapp','b.info')))
@@ -71,7 +69,6 @@ class AstrologinModelAstroSearch extends JModelItem
                                     $db->quoteName('b.profile_status').' = '.$db->quote('visible'));
         $db                  ->setQuery($query);
         $result         = $db->loadAssoc();
-        $result         = array_merge($result, $url);
         return $result;
         
     }
@@ -79,6 +76,7 @@ class AstrologinModelAstroSearch extends JModelItem
     {
         $jinput             = JFactory::getApplication()->input;
         $user               = $jinput->get('user', 'default_value', 'string');
+       
         if($user  == 'default_value')
         {
             return;
@@ -88,7 +86,7 @@ class AstrologinModelAstroSearch extends JModelItem
             $db             = JFactory::getDbo();  // Get db connection
             $query          = $db->getQuery(true);
 
-            $query              ->select($db->quoteName(array('b.number','b.membership','a.id','a.username','a.email',
+            $query              ->select($db->quoteName(array('b.number','b.membership','a.username','a.email',
                                         'a.name', 'a.registerDate', 'a.lastVisitDate','b.addr_1',
                                         'b.addr_2','b.city','b.state','b.country','b.postcode', 
                                         'b.phone','b.mobile','b.whatsapp','b.info')))
@@ -102,6 +100,32 @@ class AstrologinModelAstroSearch extends JModelItem
             $result         = $db->loadObject();
             //$result         = array_push($result,$back_url);
             return $result;
+        }
+    }
+    public function getExpert()
+    {
+        $jinput             = JFactory::getApplication()->input;
+        $user               = $jinput->get('user', 'default_value', 'string');
+        if($user  == 'default_value')
+        {
+            return;
+        }
+        else
+        {
+            $db             = JFactory::getDbo();  // Get db connection
+            $query          = $db->getQuery(true);
+            $query          ->select($db->quoteName('id'))
+                            ->from($db->quoteName('#__users'))
+                            ->where($db->quoteName('username').' = '.$db->quote($user));
+            $db             ->setQuery($query);
+            $id             = $db->loadResult();
+            $query          ->clear();
+            $query          ->select($db->quoteName('sub_expert'))
+                            ->from($db->quoteName('#__role_astro'))
+                            ->where($db->quoteName('astro_id').' = '.$db->quote($id));
+            $db             ->setQuery($query);
+            $expert         = $db->loadColumn();
+            $query          ->clear();
         }
     }
 }
