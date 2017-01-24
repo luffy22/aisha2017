@@ -10,18 +10,18 @@ $username   = $user->username;
 <div class="mb-1"></div>
 <div class="card" id="<?php echo "astro_".$data->number; ?>">
     <div class="card-block">
-        <div class="row">
+        <div class="row float-xs-right">
         <?php
          if($data->membership == "Paid")
          {
       ?>
-        <div class="col-md-2 col-sm-1 float-xs-right"><a class="btn btn-primary" href="<?php echo JUri::base() ?>ask-question"><i class="fa fa-globe"></i> Ask Online</a></div>
+        <a class="btn btn-primary" href="<?php echo JUri::base() ?>ask-question"><i class="fa fa-globe"></i> Ask Online</a>&nbsp;
       <?php
          }
         if($username == $data->username)
          {
        ?>
-        <div class="col-md-2 col-sm-1 float-xs-right"><a class="btn btn-primary" href="<?php echo JUri::base() ?>dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></div>
+       <a class="btn btn-primary" href="<?php echo JUri::base() ?>dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
         <?php
         }
       ?>

@@ -4,19 +4,9 @@
  * and open the template in the editor.
  */
 defined('_JEXEC') or die;
-if($this->msg['approval_status'] == 'pending')
-{        
-?>
-<div class="alert alert-success" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-    <strong>Authentication Pending!!</strong> Details would be published once information is authenticated.</div>
-<?php
-}
 ?>
 <h3>Astrologer: Free Account</h3>
-<div class="float-xs-right"><span class="glyphicon glyphicon-user"></span> Profile  |  <a href="<?php echo JURI::base() ?>details" title="Edit Details"><span class="glyphicon glyphicon-pencil"></span> Details</a></div>
+<div class="float-xs-right"><a href="<?php echo JUri::base() ?>astro/<?php echo $this->msg['username'] ?>"><i class="fa fa-user"></i> Profile</a>  |  <a href="<?php echo JURI::base() ?>details" title="Edit Details"> <i class="fa fa-pencil"></i> Edit Details</a></div>
 <div class="mt-3"></div>
 <div id="dashboard_free">
 <h3>Basic Details</h3>
