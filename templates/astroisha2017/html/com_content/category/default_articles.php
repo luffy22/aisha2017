@@ -137,7 +137,7 @@ if (!empty($this->items))
                                 {
 
                             ?>
-                            <img height="25px" width="25px" src="<?php echo htmlspecialchars($images->image_intro); ?>" title="<?php echo $article->title; ?>" alt="<?php echo $item->title; ?>" />
+                            <img height="25px" width="25px" src="<?php echo htmlspecialchars($images->image_intro); ?>" title="<?php echo $article->title; ?>" alt="<?php echo $article->title; ?>" />
                             <?php
                                 }
                             ?>

@@ -8,6 +8,7 @@ class AstrologinModelAstroSearch extends JModelItem
     var $_total         = null;
     var $_data          = null;
     var $_pagination    = null;
+
     function __construct()
      {
          parent::__construct();
@@ -30,7 +31,7 @@ class AstrologinModelAstroSearch extends JModelItem
         $db                  ->setQuery($query);
        
         $this->_data         = $db->loadObjectList();
-        $this->_total    = count($details);
+        $this->_total    = count( $this->_data ); 
         
        return $this->_data;
        
@@ -72,7 +73,7 @@ class AstrologinModelAstroSearch extends JModelItem
         return $result;
         
     }
-    public function getUser($user)
+    public function getAstro($user)
     {
         $jinput             = JFactory::getApplication()->input;
         $user               = $jinput->get('user', 'default_value', 'string');
@@ -112,20 +113,39 @@ class AstrologinModelAstroSearch extends JModelItem
         }
         else
         {
-            $db             = JFactory::getDbo();  // Get db connection
-            $query          = $db->getQuery(true);
-            $query          ->select($db->quoteName('id'))
-                            ->from($db->quoteName('#__users'))
-                            ->where($db->quoteName('username').' = '.$db->quote($user));
-            $db             ->setQuery($query);
-            $id             = $db->loadResult();
-            $query          ->clear();
-            $query          ->select($db->quoteName('sub_expert'))
-                            ->from($db->quoteName('#__role_astro'))
-                            ->where($db->quoteName('astro_id').' = '.$db->quote($id));
-            $db             ->setQuery($query);
-            $expert         = $db->loadColumn();
-            $query          ->clear();
+            $db                     = JFactory::getDbo();  // Get db connection
+            $query                  = $db->getQuery(true);
+            $query                  ->select($db->quoteName('id'))
+                                    ->from($db->quoteName('#__users'))
+                                    ->where($db->quoteName('username').' = '.$db->quote($user));
+            $db                     ->setQuery($query);
+            $id                     = $db->loadResult();
+            $query                  ->clear();
+            $query                  ->select($db->quoteName('sub_expert'))
+                                    ->from($db->quoteName('#__role_astro'))
+                                    ->where($db->quoteName('astro_id').' = '.$db->quote($id));
+            $db                     ->setQuery($query);
+            $expert                 = $db->loadColumn();
+            $query                  ->clear();
+            $main             = array();
+            $sub              = array();
+            foreach($expert as $exp)
+            {
+                $prof       = explode(":",$exp);
+               
+                if(!in_array($prof[0],$main))
+                {
+                    $main       = array($prof[0]);
+                }
+                if(!in_array($prof[1],$sub))
+                {
+ 
+                     $sub       = array_push($sub,$prof[1]);
+                   
+                }
+                
+            }
+            print_r($main);
         }
     }
 }
