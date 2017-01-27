@@ -3,6 +3,7 @@ defined('_JEXEC') or die('Restricted access');
 $data      = $this->astro;
 $user       = JFactory::getUser();
 $username   = $user->username;
+
 //print_r($data);exit;
 ?>
 <div class="mt-2"></div>
@@ -29,6 +30,27 @@ $username   = $user->username;
           <img src="<?php echo JURI::base() ?>images/blank-profile.png" title="<?php echo $this->img_1 ?>" class="img-fluid" />
           <div class="mt-1"></div>
           <p class="text-lead"><?php echo $data->info; ?></p>
+          <h3>Expertise: </h3>
+<?php
+      foreach($this->expert as $expert)
+      {
+           if($expert->role_super == "0")
+          {
+              $id       = $expert->role_id;
+?>            
+          <p class="lead"><?php echo $expert->role_name ?></p>
+<?php
+             foreach($this->expert as $exp)
+             {
+                 if($exp->role_super == $id)
+                 {
+                     echo $exp->role_name.", ";
+                 }
+             }
+          }
+         
+      }
+?>
                 <table class="table table-borderd table-hover">
                     <tr><th>Name</th><td><?php echo $data->name; ?></td></tr>
                     <tr><th><i class="fa fa-envelope-o"></i> Email</th><td><?php echo $data->email; ?><?php if($user->sendEmail == '0'){ ?><span style="color:green"> <i class="fa fa-check-circle" aria-hidden="true"></i></span><?php } ?></td></tr>

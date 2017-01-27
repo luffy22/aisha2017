@@ -115,37 +115,48 @@ class AstrologinModelAstroSearch extends JModelItem
         {
             $db                     = JFactory::getDbo();  // Get db connection
             $query                  = $db->getQuery(true);
+            $query2                 = $db->getQuerY(true);
             $query                  ->select($db->quoteName('id'))
                                     ->from($db->quoteName('#__users'))
                                     ->where($db->quoteName('username').' = '.$db->quote($user));
             $db                     ->setQuery($query);
             $id                     = $db->loadResult();
             $query                  ->clear();
-            $query                  ->select($db->quoteName('sub_expert'))
-                                    ->from($db->quoteName('#__role_astro'))
-                                    ->where($db->quoteName('astro_id').' = '.$db->quote($id));
+            $query                  =   "SELECT DISTINCT(main_expert) from jv_role_astro where astro_id ='".$id."'";
             $db                     ->setQuery($query);
-            $expert                 = $db->loadColumn();
-            $query                  ->clear();
-            $main             = array();
-            $sub              = array();
-            foreach($expert as $exp)
+            $main                    = $db->loadColumn();     
+            $main_exp               = array();
+            foreach($main as $mainexp)
             {
-                $prof       = explode(":",$exp);
-               
-                if(!in_array($prof[0],$main))
-                {
-                    $main       = array($prof[0]);
-                }
-                if(!in_array($prof[1],$sub))
-                {
- 
-                     $sub       = array_push($sub,$prof[1]);
-                   
-                }
+                $query2                  ->select($db->quoteName(array('role_id','role_name','role_super')))
+                                        ->from($db->quoteName('#__role'))
+                                        ->where($db->quoteName('role_id') . ' = '. $db->quote($mainexp));
+                $db                     ->setQuery($query2);
+                $row                    = $db->loadObjectList();
+                $main_exp               = array_merge($main_exp,$row);
+                $query2                 ->clear();
                 
             }
-            print_r($main);
+            
+            $query2                  ->select($db->quoteName('sub_expert'))
+                                    ->from($db->quoteName('#__role_astro'))
+                                    ->where($db->quoteName('astro_id').' = '.$db->quote($id));
+            $db                     ->setQuery($query2);
+            $sub                    = $db->loadColumn();
+            $sub_exp                 = array();
+            foreach($sub as $subexp)
+            {
+                $query2                 ->clear();
+                $query2                  ->select($db->quoteName(array('role_id','role_name','role_super')))
+                                        ->from($db->quoteName('#__role'))
+                                        ->where($db->quoteName('role_id') . ' = '. $db->quote($subexp));
+                $db                     ->setQuery($query2);
+                $row                    = $db->loadObjectList();
+                $sub_exp               = array_merge($sub_exp,$row);
+                
+            }
+            $exp                      = array_merge($main_exp, $sub_exp);
+            return $exp;
         }
     }
 }
