@@ -151,7 +151,7 @@ if($user->guest)
     ?>
 </div> 
 <div class="form-group">
-    <label for="astro_web">Website/Blog: </label>
+    <label for="astro_web">Website/Blog <i class="fa fa-globe"></i>: </label>
     <?php if(empty($this->msg['website'])) { ?>  
     <input type="text" class="form-control" name="astro_web" id="astro_web" placeholder="Enter Website/Blog if Available" />
     <?php } else{ ?>
@@ -159,6 +159,18 @@ if($user->guest)
     <?php
     }
     ?>
+</div>
+<div class="form-group">
+    <label for="astro_fb">Facebook Page <i class="fa fa-facebook-square"></i> : </label>
+    www.facebook.com/<input type="text" class="form-text2" name="astro_fb" id="astro_fb" placeholder="Page Name" value="<?php if(!empty($this->msg['fb_page'])){ echo $this->msg['fb_page'];} ?>" />
+</div>
+<div class="form-group">
+    <label for="astro_gplus">Google Plus <i class="fa fa-google-plus"></i> : </label>
+    https://plus.google.com/<input type="text" class="form-text2" name="astro_gplus" id="astro_gplus" placeholder="Page Name" value="<?php if(!empty($this->msg['gplus_page'])){ echo $this->msg['gplus_page'];} ?>" />
+</div>
+<div class="form-group">
+    <label for="astro_fb">Twitter <i class="fa fa-twitter-square"></i> : </label>
+    https://twitter.com/<input type="text" class="form-text2" name="astro_tweet" id="astro_tweet" placeholder="Page Name" value="<?php if(!empty($this->msg['tweet_page'])){ echo $this->msg['tweet_page'];} ?>" />
 </div>
 <div class="form-group">
     <label for="astro_info">Describe About Yourself(1000 Words Max)*: </label>

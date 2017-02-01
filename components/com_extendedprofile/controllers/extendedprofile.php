@@ -101,11 +101,13 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
     }
     public function updateAstro()
     {
-        $id         = $_POST['profile_id'];
+        $id         = $_POST['profile_id'];$status      = $_POST['astro_status'];
         $addr1        = $_POST['astro_addr1'];
         $addr2      = $_POST['astro_addr2'];$city       = $_POST['astro_city'];
         $state      = $_POST['astro_state'];$country    = $_POST['astro_country'];
-        $pcode      = $_POST['astro_pcode'];
+        $pcode      = $_POST['astro_pcode'];$fb_page    = $_POST['astro_fb'];
+        $gplus_page = $_POST['astro_gplus'];$tweet_page = $_POST['astro_tweet'];
+    
         if(empty($_POST['astro_code'])&& empty($_POST['astro_phone']))
         {
             $phone  = "";
@@ -119,16 +121,17 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
         $website   = $_POST['astro_web'];$info          = $_POST['astro_info'];
         
         $user_details   = array(
-                                    'id'=>$id,
+                                    'id'=>$id,'status'=>$status,
                                 'addr1'=>$addr1,'addr2'=>$addr2, 'city'=>$city,
                                 'state'=>$state,'country'=>$country,'pcode'=>$pcode,
                                 'phone'=>$phone,'mobile'=>$mobile,'whatsapp'=>$whatsapp,
-                                'website'=>$website,'info'=>$info
+                                'website'=>$website,'fb_page'=>$fb_page,
+                                'gplus'=>$gplus_page, 'tweet'=> $tweet_page,'info'=>$info
                                 );
         $model          = $this->getModel('extendedprofile');  // Add the array to model
         $data           = $model->updateAstro($user_details);
     }
-    protected function redictUrl($link, $msg, $type)
+    protected function redirectUrl($link, $msg, $type)
     {
         $mainframes = JFactory::getApplication();
         $mainframes->redirect($link, $msg,$type);

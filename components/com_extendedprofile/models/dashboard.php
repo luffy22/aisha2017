@@ -34,7 +34,7 @@ class ExtendedProfileModelDashboard extends JModelItem
             $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
                                         'b.membership','b.addr_1','b.addr_2','b.city',
                                         'b.state','b.country','b.postcode','b.phone','b.mobile','b.whatsapp','b.website',
-                                        'b.info','b.profile_status','b.approval_status')));
+                                        'b.info','b.fb_page','b.gplus_page','b.tweet_page', 'b.profile_status','b.approval_status')));
             $query          ->from($db->quoteName('#__users', 'a'));
             $query          ->join('INNER', $db->quoteName('#__user_astrologer','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');
             $query          ->where($db->quoteName('a.id').' = '.$db->quote($id));
@@ -48,7 +48,7 @@ class ExtendedProfileModelDashboard extends JModelItem
             $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
                                         'b.membership','b.addr_1','b.addr_2','b.city',
                                         'b.state','b.country','b.postcode','b.phone','b.mobile','b.whatsapp','b.website',
-                                        'b.info','b.profile_status','c.acc_holder_name','c.acc_number','c.acc_bank_name',
+                                        'b.info','b.profile_status','b.info','b.fb_page','b.gplus_page','b.tweet_page','c.acc_holder_name','c.acc_number','c.acc_bank_name',
                                         'c.acc_bank_addr','c.acc_iban','c.acc_swift_code','c.acc_ifsc','c.acc_paypalid')));
             $query          ->from($db->quoteName('#__users', 'a'));
             $query          ->join('INNER', $db->quoteName('#__user_astrologer','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');

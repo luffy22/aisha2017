@@ -90,7 +90,8 @@ class AstrologinModelAstroSearch extends JModelItem
             $query              ->select($db->quoteName(array('b.number','b.membership','a.username','a.email',
                                         'a.name', 'a.registerDate', 'a.lastVisitDate','b.addr_1',
                                         'b.addr_2','b.city','b.state','b.country','b.postcode', 
-                                        'b.phone','b.mobile','b.whatsapp','b.info')))
+                                        'b.phone','b.mobile','b.whatsapp','b.info','b.website',
+                                    'b.fb_page','b.gplus_page','b.tweet_page')))
                                 ->from($db->quoteName('#__users','a'))
                                   ->join('INNER', $db->quoteName('#__user_astrologer', 'b') . ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')')
                                 ->where($db->quoteName('b.approval_status').'='.$db->quote('approved').' AND '.

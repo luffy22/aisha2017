@@ -20,7 +20,9 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $query          = $db->getQuery(true);
         $query          ->select($db->quoteName(array('UserId','membership',
                                      'addr_1','addr_2', 'city','state','country',
-                                    'postcode','phone','mobile','whatsapp','website', 'info','profile_status','approval_status')));
+                                    'postcode','phone','mobile','whatsapp','website',
+                                    'fb_page','gplus_page','tweet_page',
+                                    'info','profile_status','approval_status')));
         $query          ->from($db->quoteName('#__user_astrologer'));
         $query          ->where($db->quoteName('UserId').' = '.$db->quote($id));
         $db             ->setQuery($query);
@@ -60,8 +62,11 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $result         = $db->execute();
         foreach($sub_exp as $exp)
         {
+            $expert             =  explode(":", $exp);
+            $main_exp           = $expert[0];
+            $sub_exp            = $expert[1];      
             //$query      ->clear();
-            $query      = "INSERT INTO jv_role_astro (astro_id, sub_expert) VALUES ('".$id."','".$exp."')";
+            $query      = "INSERT INTO jv_role_astro (astro_id,main_expert, sub_expert) VALUES ('".$id."','".$main_exp."','".$sub_exp."')";
             $db         ->setQuery($query);
             $db         ->query();
         }
@@ -176,7 +181,10 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $state          = $details['state'];$country    = $details['country'];
         $pcode          = $details['pcode'];$phone      = $details['phone'];
         $mobile         = $details['mobile'];$whatsapp  = $details['whatsapp'];
-        $website        = $details['website'];$info     = $details['info'];$status  = 'visible';
+        $website        = $details['website'];$fb       = $details['fb_page'];
+        $gplus          = $details['gplus'];$tweet      = $details['tweet'];
+        $info           = $details['info'];$status      = $details['status'];
+        
         $fields         = array(
                                 $db->quoteName('addr_1').'='.$db->quote($addr1),
                                 $db->quoteName('addr_2').'='.$db->quote($addr2),
@@ -188,7 +196,11 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                                 $db->quoteName('mobile').'='.$db->quote($mobile),
                                 $db->quoteName('whatsapp').'='.$db->quote($whatsapp),
                                 $db->quoteName('website').'='.$db->quote($website),
-                                $db->quoteName('info').'='.$db->quote($info),
+                                $db->quoteName('fb_page').'='.$db->quote($fb),
+                                $db->quoteName('gplus_page').'='.$db->quote($gplus),
+                                $db->quoteName('tweet_page').'='.$db->quote($tweet),
+                                $db->quoteName('profile_status').'='.$db->quote($status),
+                                $db->quoteName('info').'='.$db->quote($info)
                                 );
         $conditions = array(
                                 $db->quoteName('UserId') . ' = '.$db->quote($id)
