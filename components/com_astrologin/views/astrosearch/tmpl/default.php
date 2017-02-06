@@ -1,7 +1,6 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 $astro      = $this->astro;
-//print_r($astro);exit;
 ?>
 <div class="mt-1"></div>
 <p class="float-xs-right">Results Per Page: <?php echo $this->pagination->getLimitBox(); ?></p>
@@ -25,7 +24,22 @@ $astro      = $this->astro;
          }
       ?>
         <div class="row">
-            <div class="col-md-2"><img src="<?php echo JURI::base() ?>images/blank-profile.png" title="<?php echo $this->img_1 ?>" class="img-fluid" /></div>
+            <div class="col-md-2">
+             <?php
+            if(empty($data->img_new_name))
+            {
+        ?>   
+                <img src="<?php echo JURI::base() ?>images/blank-profile.png" class="img-fluid" />
+        <?php
+            }
+            else
+            {
+        ?>
+                <img src="<?php echo JURI::base() ?>images/profiles/<?php echo $data->img_new_name; ?>" title="<?php echo $this->astro['img_name']; ?>" class="img-fluid" />
+        <?php
+            }
+        ?>
+            </div>
             <div class="col-md-10"><strong>Location:</strong> <?php echo $data->city.", ",$data->state.", ".$data->country;  ?><br/>
                 <strong>Little About Me:</strong><br/> <?php if(strlen($data->info) > 1000){echo substr($data->info,0,1000)."...";}else{echo $data->info;} ?>
                 <a class="btn btn-primary" href="<?php echo JRoute::_('index.php?view=astrosearch&user='.$user); ?>"><i class="fa fa-address-card-o"></i> Get Full Details</a>

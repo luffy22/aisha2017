@@ -26,8 +26,21 @@ $username   = $user->username;
         }
       ?>
         </div>
-          <img src="<?php echo JURI::base() ?>images/blank-profile.png" title="<?php echo $this->img_1 ?>" class="img-fluid" />
-          <div class="mt-1"></div>
+        <?php
+            if(empty($data->img_new_name))
+            {
+        ?>
+          <img src="<?php echo JURI::base() ?>images/blank-profile.png" height="180px" width="120px" />
+        <?php
+            }
+            else
+            {
+        ?>
+          <img src="<?php echo JURI::base() ?>images/profiles/<?php echo $data->img_new_name; ?>" height="180px" width="120px" />
+      <?php
+            }
+      ?>
+          <div class="mb-1"></div>
           <p class="text-lead"><?php echo $data->info; ?></p>
           <h3>Expertise: </h3>
 <?php

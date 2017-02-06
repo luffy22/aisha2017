@@ -1,28 +1,31 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 defined('_JEXEC') or die;
+//print_r($this->msg);exit;
+$document = JFactory::getDocument();
+$sheet      = JUri::base().'ajaxcalls/dropzone.css';
+$script     = JUri::base().'ajaxcalls/dropzone.js';
+$document->addStyleSheet($sheet);
+$document->addScript($script);
+$u_id         = $this->msg['id'];
 ?>
 <h3>Astrologer: Free Account</h3>
-<div class="float-xs-right"><a href="<?php echo JUri::base() ?>astro/<?php echo $this->msg['username'] ?>"><i class="fa fa-user"></i> Profile</a>  |  <a href="<?php echo JURI::base() ?>details" title="Edit Details"> <i class="fa fa-pencil"></i> Edit Details</a></div>
+<div class="float-xs-right"><a href="<?php echo JUri::base(); ?>astro/<?php echo $this->msg['username'] ?>"><i class="fa fa-user"></i> Profile</a>  |  <a href="<?php echo JURI::base() ?>details" title="Edit Details"> <i class="fa fa-pencil"></i> Edit Details</a></div>
 <div class="mt-3"></div>
 <div id="dashboard_free">
 <h3>Basic Details</h3>
 <div>
     <div class="row">
         <div class="col-md-3">
-          <?php if(empty($this->msg['img_1_id'])){ ?>
-          <img src="<?php echo JURI::base() ?>images/blank-profile.png" alt="blank photo" 
-               class="img-fluid img-thumbnail" title="Please Upload Your Photo..." />
+          <?php if(empty($this->msg['img_new_name'])){ ?>
+          <form action="<?php echo JUri::base() ?>ajaxcalls/upload.php" class="dropzone"><img src="<?php echo JURI::base() ?>images/blank-profile.png" alt="blank photo" 
+               class="img-fluid img-thumbnail" id="img_upload" title="Please Upload Your Photo..." /><input type="hidden" name="img_id" value="img_100<?php echo $u_id ?>" /></form>
           <?php
           }
           else
           {
           ?>
-          <img src="<?php echo JURI::base() ?>images/profiles/<?php echo $this->msg['img_1_id'] ?>" alt="<?php echo $this->msg['name'] ?> image" 
-               class="img-fluid img-thumbnail" title="<?php echo $this->msg['name']; ?>" /><?php } ?>
+          <img src="<?php echo JURI::base() ?>images/profiles/<?php echo $this->msg['img_new_name'] ?>" alt="<?php echo $this->msg['img_name'] ?> image" 
+               class="img-fluid img-thumbnail" title="<?php echo $this->msg['img_name']; ?>" /><?php } ?>
       </div>
       <div class="col-md-5">
           <div class="table-responsive">

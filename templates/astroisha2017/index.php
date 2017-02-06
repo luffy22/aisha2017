@@ -55,6 +55,18 @@ endif;
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-8">
+<script>
+  (function() {
+    var cx = '006812877761787834600:wz19pryi_e0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
     <div class="alert alert-warning" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -95,10 +107,6 @@ endif;
 <div class="mb-2"></div>
 <jdoc:include type="modules" name="footer2" style="none" />
 <jdoc:include type="modules" name="footer" style="none" />
-<?php
-include_once (JPATH_ROOT.DS.'analyticstracking.php');
-?>
-
 <script>
   window.fbAsyncInit = function() {FB.init({appId      : '220390744824296',xfbml      : true,version    : 'v2.4'});};
   (function(d, s, id){var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) {return;}
@@ -113,5 +121,8 @@ include_once (JPATH_ROOT.DS.'analyticstracking.php');
     var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(gcse, s);
   })();
 </script>
+<?php
+include_once (JPATH_ROOT.DS.'analyticstracking.php');
+?>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>

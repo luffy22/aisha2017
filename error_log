@@ -1,0 +1,18 @@
+[02-Feb-2017 13:23:42 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/application/web.php on line 849
+[02-Feb-2017 13:23:42 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/uri/uri.php on line 85
+[02-Feb-2017 14:09:43 Etc/GMT] PHP Warning:  Missing argument 1 for AstrologinModelAstroSearch::getAstro(), called in /home/astroxou/public_html/libraries/legacy/view/legacy.php on line 408 and defined in /home/astroxou/public_html/components/com_astrologin/models/astrosearch.php on line 76
+[02-Feb-2017 14:09:43 Etc/GMT] PHP Notice:  Undefined property: AstroLoginViewAstroSearch::$img_1 in /home/astroxou/public_html/components/com_astrologin/views/astrosearch/tmpl/default.php on line 28
+[02-Feb-2017 14:09:43 Etc/GMT] PHP Notice:  Undefined index: astrosearch in /home/astroxou/public_html/components/com_astrologin/router.php on line 17
+[02-Feb-2017 14:09:43 Etc/GMT] PHP Notice:  Undefined property: AstroLoginViewAstroSearch::$img_1 in /home/astroxou/public_html/components/com_astrologin/views/astrosearch/tmpl/default.php on line 28
+[02-Feb-2017 14:09:43 Etc/GMT] PHP Notice:  Undefined index: astrosearch in /home/astroxou/public_html/components/com_astrologin/router.php on line 17
+[02-Feb-2017 14:09:47 Etc/GMT] PHP Warning:  Missing argument 1 for AstrologinModelAstroSearch::getAstro(), called in /home/astroxou/public_html/libraries/legacy/view/legacy.php on line 408 and defined in /home/astroxou/public_html/components/com_astrologin/models/astrosearch.php on line 76
+[02-Feb-2017 14:09:47 Etc/GMT] PHP Notice:  Undefined property: AstroLoginViewAstroSearch::$img_1 in /home/astroxou/public_html/components/com_astrologin/views/astrosearch/tmpl/default_user.php on line 29
+[02-Feb-2017 14:09:56 Etc/GMT] PHP Warning:  Missing argument 1 for AstrologinModelAstroSearch::getAstro(), called in /home/astroxou/public_html/libraries/legacy/view/legacy.php on line 408 and defined in /home/astroxou/public_html/components/com_astrologin/models/astrosearch.php on line 76
+[02-Feb-2017 14:09:56 Etc/GMT] PHP Notice:  Undefined property: AstroLoginViewAstroSearch::$img_1 in /home/astroxou/public_html/components/com_astrologin/views/astrosearch/tmpl/default.php on line 28
+[02-Feb-2017 14:09:56 Etc/GMT] PHP Notice:  Undefined index: astrosearch in /home/astroxou/public_html/components/com_astrologin/router.php on line 17
+[02-Feb-2017 14:09:56 Etc/GMT] PHP Notice:  Undefined property: AstroLoginViewAstroSearch::$img_1 in /home/astroxou/public_html/components/com_astrologin/views/astrosearch/tmpl/default.php on line 28
+[02-Feb-2017 14:09:56 Etc/GMT] PHP Notice:  Undefined index: astrosearch in /home/astroxou/public_html/components/com_astrologin/router.php on line 17
+[02-Feb-2017 14:09:59 Etc/GMT] PHP Warning:  Missing argument 1 for AstrologinModelAstroSearch::getAstro(), called in /home/astroxou/public_html/libraries/legacy/view/legacy.php on line 408 and defined in /home/astroxou/public_html/components/com_astrologin/models/astrosearch.php on line 76
+[02-Feb-2017 14:09:59 Etc/GMT] PHP Notice:  Undefined property: AstroLoginViewAstroSearch::$img_1 in /home/astroxou/public_html/components/com_astrologin/views/astrosearch/tmpl/default_user.php on line 29
+[02-Feb-2017 15:16:16 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/application/web.php on line 849
+[02-Feb-2017 15:16:16 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/uri/uri.php on line 85

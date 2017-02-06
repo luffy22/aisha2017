@@ -22,6 +22,7 @@ class ExtendedProfileViewDashboard extends JViewLegacy
             }
             else if((!empty($this->msg))&&($this->msg['membership']=='Paid'))
             {
+                
                 $tpl    = "paid";
             }
             else

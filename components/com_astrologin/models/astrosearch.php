@@ -23,9 +23,10 @@ class AstrologinModelAstroSearch extends JModelItem
         $query          = $db->getQuery(true);
       
         $query              ->select($db->quoteName(array('b.number','b.membership','a.username',
-                                    'a.name', 'b.city','b.state','b.country','b.info')))
+                                    'a.name', 'b.city','b.state','b.country','b.info','c.img_name','c.img_new_name')))
                             ->from($db->quoteName('#__users','a'))
                               ->join('INNER', $db->quoteName('#__user_astrologer', 'b') . ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')')
+                              ->join('RIGHT', $db->quoteName('#__user_img', 'c') . ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('c.user_id') . ')')
                             ->where($db->quoteName('b.approval_status').'='.$db->quote('approved').' AND '.
                                     $db->quoteName('b.profile_status').' = '.$db->quote('visible'));    
         $db                  ->setQuery($query);
@@ -91,9 +92,10 @@ class AstrologinModelAstroSearch extends JModelItem
                                         'a.name', 'a.registerDate', 'a.lastVisitDate','b.addr_1',
                                         'b.addr_2','b.city','b.state','b.country','b.postcode', 
                                         'b.phone','b.mobile','b.whatsapp','b.info','b.website',
-                                    'b.fb_page','b.gplus_page','b.tweet_page')))
+                                    'b.fb_page','b.gplus_page','b.tweet_page','c.img_name','c.img_new_name')))
                                 ->from($db->quoteName('#__users','a'))
                                   ->join('INNER', $db->quoteName('#__user_astrologer', 'b') . ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')')
+                                   ->join('RIGHT', $db->quoteName('#__user_img', 'c') . ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('c.user_id') . ')')
                                 ->where($db->quoteName('b.approval_status').'='.$db->quote('approved').' AND '.
                                         $db->quoteName('b.profile_status').' = '.$db->quote('visible').' AND '.
                                         $db->quoteName('a.username').' = '.$db->quote($user));

@@ -34,9 +34,11 @@ class ExtendedProfileModelDashboard extends JModelItem
             $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
                                         'b.membership','b.addr_1','b.addr_2','b.city',
                                         'b.state','b.country','b.postcode','b.phone','b.mobile','b.whatsapp','b.website',
-                                        'b.info','b.fb_page','b.gplus_page','b.tweet_page', 'b.profile_status','b.approval_status')));
+                                        'b.info','b.fb_page','b.gplus_page','b.tweet_page', 'b.profile_status','b.approval_status',
+                                        'c.img_name','c.img_new_name','c.default_img','c.img_crop')));
             $query          ->from($db->quoteName('#__users', 'a'));
             $query          ->join('INNER', $db->quoteName('#__user_astrologer','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');
+            $query          ->join('LEFT', $db->quoteName('#__user_img','c'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('c.user_id') . ')');
             $query          ->where($db->quoteName('a.id').' = '.$db->quote($id));
             $db             ->setQuery($query);
             $results =      $db->loadAssoc();
@@ -49,10 +51,12 @@ class ExtendedProfileModelDashboard extends JModelItem
                                         'b.membership','b.addr_1','b.addr_2','b.city',
                                         'b.state','b.country','b.postcode','b.phone','b.mobile','b.whatsapp','b.website',
                                         'b.info','b.profile_status','b.info','b.fb_page','b.gplus_page','b.tweet_page','c.acc_holder_name','c.acc_number','c.acc_bank_name',
-                                        'c.acc_bank_addr','c.acc_iban','c.acc_swift_code','c.acc_ifsc','c.acc_paypalid')));
+                                        'c.acc_bank_addr','c.acc_iban','c.acc_swift_code','c.acc_ifsc','c.acc_paypalid',
+                                        'd.img_name','d.img_new_name','d.default_img','d.img_crop')));
             $query          ->from($db->quoteName('#__users', 'a'));
             $query          ->join('INNER', $db->quoteName('#__user_astrologer','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');
             $query          ->join('INNER', $db->quoteName('#__user_finance','c').' ON ('.$db->quoteName('a.id').' = '.$db->quoteName('c.UserId').')');
+            $query          ->join('LEFT', $db->quoteName('#__user_img','d'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('d.user_id') . ')');
             $query          ->where($db->quoteName('a.id').' = '.$db->quote($id));
             $db             ->setQuery($query);
             $results =      $db->loadAssoc();

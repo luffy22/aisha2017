@@ -49,6 +49,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
+        $query1          = $db->getQuery(true);
         $columns        = array('UserId','membership','city','state','country','phone','mobile','info','terms','reg_date');
         $values         = array($db->quote($id),$db->quote($membership),$db->quote($city),$db->quote($state),
                                 $db->quote($country),$db->quote($phone),$db->quote($mobile),$db->quote($info),
@@ -72,6 +73,14 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         }
         if($result)
         {
+            $columns1    = array('user_id', 'default_img','img_crop');
+            $values1     = array($db->quote($id), $db->quote('yes'),$db->quote('no'));
+           $query1
+                        ->insert($db->quoteName('#__user_img'))
+                        ->columns($db->quoteName($columns1))
+                        ->values(implode(',', $values1));
+            $db->setQuery($query1);
+            $db->execute();
             $msg        = "User Successfully registered. Details would be published once information is authenticated.";
             $type       = "success";
             $link       =  JURI::base().'dashboard';
