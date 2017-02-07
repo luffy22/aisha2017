@@ -11,14 +11,14 @@ class modSliderHelper
     {
         if(empty($params->catid))
         {
-            self::getSelectedArticles($params);
+            $items  = self::getSelectedArticles($params);
         }
         else
         {
-            self::getArticleCategory($params);
+            $items  = self::getArticleCategory($params);
         }
        
-     
+        return $items;
     }
     function getSelectedArticles($params)
     {
@@ -35,9 +35,8 @@ class modSliderHelper
         $model->setState('filter.access', $access);
 
         // Category filter
-        $this->setState('filter.article_id', $articles);
+        $model->setState('filter.article_id', $articles);
        
-        $model->setState('filter.article_id', $this->getState('filter.article_id'));
         // Filter by language
         $model->setState('filter.language', $app->getLanguageFilter());
         // Set the filters based on the module params
@@ -53,7 +52,6 @@ class modSliderHelper
         //print_r($items);exit;
         foreach ($items as &$item)
         {
-            
                 $item->slug = $item->id . ':' . $item->alias;
                 $item->catslug = $item->catid . ':' . $item->category_alias;
 
@@ -67,7 +65,6 @@ class modSliderHelper
                         $item->link = JRoute::_('index.php?option=com_users&view=login');
                 }
         }
-
         return $items;
     }
     function getArticleCategory($params)

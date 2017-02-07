@@ -7,6 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 defined('_JEXEC') or die;
+//print_r($list);exit;
 $count = count($list);
 $i = 0;
 ?>
@@ -43,9 +44,28 @@ $i = 0;
         {
     ?>
             <div class="carousel-item active">
+                <?php
+        if(!empty($images->image_intro) && empty($images->image_fulltext))
+        {
+?>
                 <a href="<?php echo $item->link ?>"><img src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $item->title; ?>"></a>
+        <?php
+        }
+        else if(empty($images->image_intro) && !empty($images->image_fulltext))
+        {
+?>
+           <a href="<?php echo $item->link ?>"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" title="Click To Open Article" alt="<?php echo $item->title; ?>" /></a>
+<?php
+        }
+        else
+        {
+?>
+          <a href="<?php echo $item->link ?>"><img class="img-fluid" src="<?php JURI::base() ?>images/art_img/img_soon.jpg" alt="Image Soon" title="Click To Open Article" /></a>  
+<?php
+        }
+?>
                 <div class="carousel-caption">
-                   <h3 class="hidden-xs-down hidden-sm-down"><a href="<?php echo $item->link ?>"><?php echo "Read More"; ?></a></h3>
+                   <h3 class="hidden-xs-down hidden-sm-down"><a href="<?php echo $item->link ?>"><?php echo $item->title; ?></a></h3>
                    <p class="hidden-xs-down hidden-sm-down"><?php echo $item->metadesc; ?></p>
               </div>
             </div>
@@ -54,9 +74,28 @@ $i = 0;
  else {
    ?>
       <div class="carousel-item">
+                                <?php
+        if(!empty($images->image_intro) && empty($images->image_fulltext))
+        {
+?>
                 <a href="<?php echo $item->link ?>"><img src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $item->title; ?>"></a>
+        <?php
+        }
+        else if(empty($images->image_intro) && !empty($images->image_fulltext))
+        {
+?>
+           <a href="<?php echo $item->link ?>"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" title="Click To Open Article" alt="<?php echo $item->title; ?>" /></a>
+<?php
+        }
+        else
+        {
+?>
+          <a href="<?php echo $item->link ?>"><img class="img-fluid" src="<?php JURI::base() ?>images/art_img/img_soon.jpg" alt="Image Soon" title="Click To Open Article" /></a>  
+<?php
+        }
+?>
                 <div class="carousel-caption">
-                   <h3 class="hidden-xs-down hidden-sm-down"><a href="<?php echo $item->link ?>"><?php echo "Read More"; ?></a></h3>
+                   <h3 class="hidden-xs-down hidden-sm-down"><a href="<?php echo $item->link ?>"><?php echo $item->title; ?></a></h3>
                    <p class="hidden-xs-down hidden-sm-down"><?php echo $item->metadesc; ?></p>
               </div>
             </div>
