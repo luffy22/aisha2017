@@ -29,7 +29,7 @@ if (!empty($_FILES)) {
         }
         else
         {
-            $query      = "INSERT INTO jv_user_img(user_id, img_name,img_new_name) VALUES ('".$id."','".$filename."','".$new_name."')";
+            $query      = "UPDATE jv_user_img SET img_name = '".$filename."', img_new_name='".$new_name."' WHERE user_id = '".$id."')";
             $result	= mysqli_query($mysqli, $query);
             if(!$result)
             {
