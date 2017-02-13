@@ -35,7 +35,7 @@ $astro      = $this->astro;
             else
             {
         ?>
-                <img src="<?php echo JURI::base() ?>images/profiles/<?php echo $data->img_new_name; ?>" title="<?php echo $this->astro['img_name']; ?>" class="img-fluid" />
+                <img src="<?php echo JURI::base() ?>images/profiles/<?php echo $data->img_new_name; ?>" title="<?php $data->img_name; ?>" class="img-fluid" />
         <?php
             }
         ?>
