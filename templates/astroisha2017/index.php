@@ -15,7 +15,6 @@ $doc->setGenerator("Astro Isha Inc.");
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
-<title><?php echo trim($sitename); ?></title>
 <meta name="robots" content="index, follow" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="<?php echo $this->baseurl ?>/favicon.ico" type="image/x-icon" />
@@ -33,6 +32,17 @@ $doc->setGenerator("Astro Isha Inc.");
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/jquery-ui.min.js" type="text/javascript" language="javascript"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/bootstrap.min.js"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
+<script>
+  (function() {
+    var cx = '006812877761787834600:wz19pryi_e0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
 </head>
 <body>
     <?php
@@ -55,36 +65,11 @@ endif;
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-8">
-<script>
-  (function() {
-    var cx = '006812877761787834600:wz19pryi_e0';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.async = true;
-    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-  })();
-</script>
+
 <gcse:search></gcse:search>
-    <div class="alert alert-warning" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-  <strong>Upgradation In Progress!</strong> Site going upgradation. Some features are removed while others would be back online shortly. Kindly contact admin@astroisha.com 
-  if you want more information.
-</div>
 <?php
-	if ($option == 'com_content' && $view == 'article'):
-  $id = JRequest::getInt('id');
-?>
-<div class="alert alert-danger" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-  <strong>Links Error!</strong> Do not click on article links or there would be 404 Page Error. Links are in process of upgradation. Users would be notified when links are up-to-date.
-</div>
-<?php
+    if ($option == 'com_content' && $view == 'article'):
+    $id = JRequest::getInt('id');
 endif;
 ?>
     <jdoc:include type="modules" name="breadcrumb" style="none" />
