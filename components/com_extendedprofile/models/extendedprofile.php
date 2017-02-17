@@ -81,7 +81,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                         ->values(implode(',', $values1));
             $db->setQuery($query1);
             $db->execute();
-            $msg        = "User Successfully registered. Details would be published once information is authenticated.";
+            $msg        = "Thank You For Registering With Astro Isha.";
             $type       = "success";
             $link       =  JURI::base().'dashboard';
             $this       ->redirectLink($link, $msg, $type);

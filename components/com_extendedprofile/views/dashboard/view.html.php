@@ -12,7 +12,7 @@ class ExtendedProfileViewDashboard extends JViewLegacy
             // Assign data to the view
             $this->msg = $this->get('Data');
             //print_r($this->msg);exit;
-            if((isset($this->msg['amount']) && isset($this->msg['currency']))||isset($this->msg['error']))
+            if((empty($this->msg['membership']))||isset($this->msg['error']))
             {
                 $tpl = null;
             }

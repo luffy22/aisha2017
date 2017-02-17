@@ -7,6 +7,7 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
     {
         $link       = JURI::base().'dashboard';
         $type       = "error";
+        $mainframes = JFactory::getApplication();
         if(isset($_POST['submit_profile']))
         {
             $phone          = $_POST['astro_phone'];
@@ -20,17 +21,17 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
             if(empty($sub_exp))
             {
                 $msg        = "Please select one or more expertise to register with Astro Isha.";
-                $this->redictUrl($link, $msg, $type);
+                $mainframes->redirect($link, $msg,$type);
             }
             if(empty($detail)|| str_word_count($detail)<25 || str_word_count($detail)>750 || strlen($detail)> 10000)
             {
                 $msg        = "Description is mandatory. Minimum 25 Words and maximum 750 Words and 10,000 Characters allowed.";
-                $this->redictUrl($link, $msg, $type);
+                 $mainframes->redirect($link, $msg,$type);
             }
             if($terms !== "yes")
             {
                 $msg        = "Please accept the Terms and Conditions";
-                $this->redictUrl($link, $msg, $type);
+                 $mainframes->redirect($link, $msg,$type);
             }
            else
            {
@@ -131,9 +132,5 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
         $model          = $this->getModel('extendedprofile');  // Add the array to model
         $data           = $model->updateAstro($user_details);
     }
-    protected function redirectUrl($link, $msg, $type)
-    {
-        $mainframes = JFactory::getApplication();
-        $mainframes->redirect($link, $msg,$type);
-    }
+
 }
