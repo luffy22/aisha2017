@@ -9,8 +9,8 @@ $document->addScript($script);
 $u_id         = $this->msg['id'];
 ?>
 <div class="spacer"></div>
-<h3>Astrologer: Paid Account</h3>
-<div class="float-xs-right"><a href="<?php echo JUri::base() ?>astro/<?php echo $this->msg['username'] ?>"><i class="fa fa-user"></i> Profile</a>   |  <a href="<?php echo JURI::base() ?>details" title="Edit Details"><i class="fa fa-pencil"></i> Details</a> | <a href="<?php echo JURI::base() ?>finance" title="Edit Payment"><span class="glyphicon glyphicon-usd"></span> Payment Details</a></div>
+<h3>Expert: Paid Account</h3>
+<div class="float-xs-right"><a href="<?php echo JUri::base() ?>astro/<?php echo $this->msg['username'] ?>" title="Check how your page looks to others"><i class="fa fa-user"></i> Profile</a>   |  <a href="<?php echo JURI::base() ?>details" title="Edit Details"><i class="fa fa-pencil"></i> Details</a></div>
 <div class="mt-3"></div>
 <div id="paid_dash">
 <h3>Basic Details</h3>       

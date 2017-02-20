@@ -18,8 +18,8 @@ if (!empty($_FILES)) {
     $upload		= move_uploaded_file($tempFile,$targetFile); //6
     if($upload)
     {
-        $host   = "localhost";$user = "astroxou_admin";
-        $pwd    = "*Jrp;F.=OKzG";$db   = "astroxou_jvidya";
+        $host   = "localhost";$user = "root";
+        $pwd    = "desai1985";$db   = "astroisha2017";
         $mysqli = new mysqli($host, $user, $pwd, $db);
         /* check connection */
         if (mysqli_connect_errno()) 
@@ -29,11 +29,8 @@ if (!empty($_FILES)) {
         }
         else
         {
-<<<<<<< HEAD
+
             $query      = "UPDATE jv_user_img SET img_name='".$filename."', img_new_name='".$new_name."' WHERE user_id='".$u_id."'";
-=======
-            $query      = "INSERT INTO jv_user_img(user_id, img_name,img_new_name) VALUES ('".$id."','".$filename."','".$new_name."')";
->>>>>>> ac7d0b72b342cfad0f4321afe476597f002ed0ef
             $result	= mysqli_query($mysqli, $query);
             if(!$result)
             {

@@ -8,8 +8,8 @@ $document->addStyleSheet($sheet);
 $document->addScript($script);
 $u_id         = $this->msg['id'];
 ?>
-<h3>Astrologer: Free Account</h3>
-<div class="float-xs-right"><a href="<?php echo JUri::base(); ?>astro/<?php echo $this->msg['username'] ?>"><i class="fa fa-user"></i> Profile</a>  |  <a href="<?php echo JURI::base() ?>details" title="Edit Details"> <i class="fa fa-pencil"></i> Edit Details</a></div>
+<h3>Expert: Free Account</h3>
+<div class="float-xs-right">Get Paid Membership | <a href="<?php echo JUri::base(); ?>astro/<?php echo $this->msg['username'] ?>" title="Check how your page looks to others"><i class="fa fa-user"></i> Profile</a>  |  <a href="<?php echo JURI::base() ?>details" title="Edit Details"> <i class="fa fa-pencil"></i> Edit Details</a></div>
 <div class="mt-3"></div>
 <div id="dashboard_free">
 <h3>Basic Details</h3>
