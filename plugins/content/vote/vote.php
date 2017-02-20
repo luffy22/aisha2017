@@ -97,6 +97,10 @@ class PlgContentVote extends JPlugin
 				$html .= JHtml::_('form.token');
 				$html .= '</span>';
 				$html .= '</form>';
+				$html .= "<br/><div class ='row'>";
+                $html .= '<div class="fb-like col-md-1" data-layout="box_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>';
+                $html .= '<div class="g-plusone col-md-1" data-size="tall"></div>';
+                $html .= '</div><div class="mb-1"></div>';
 			}
 		}
 

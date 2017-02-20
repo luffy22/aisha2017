@@ -24,16 +24,20 @@ if (!empty($_FILES)) {
         /* check connection */
         if (mysqli_connect_errno()) 
         {
-            printf("<br/>Connection failed: Contact admin@astroisha.com to notify image does not upload");
+            return "error: Contact admin@astroisha.com to notify image does not upload";
             exit();
         }
         else
         {
+<<<<<<< HEAD
             $query      = "UPDATE jv_user_img SET img_name='".$filename."', img_new_name='".$new_name."' WHERE user_id='".$u_id."'";
+=======
+            $query      = "INSERT INTO jv_user_img(user_id, img_name,img_new_name) VALUES ('".$id."','".$filename."','".$new_name."')";
+>>>>>>> ac7d0b72b342cfad0f4321afe476597f002ed0ef
             $result	= mysqli_query($mysqli, $query);
             if(!$result)
             {
-                echo "Failed To Upload File. Please contact admin@astroisha.com";
+                return "error: Failed To Upload File. Please contact admin@astroisha.com";
             }
         }
     }
