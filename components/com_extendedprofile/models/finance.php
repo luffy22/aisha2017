@@ -8,22 +8,133 @@ class ExtendedProfileModelFinance extends JModelItem
 {
     public function getData()
     {
+
         $user = JFactory::getUser();
         $id   = $user->id;$name = $user->name;       
         // get the data
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        $query          ->select($db->quoteName(array('acc_holder_name','acc_number','acc_bank_name',
-                                        'acc_bank_addr','acc_iban','acc_swift_code','acc_ifsc',
-                                        'acc_paypalid')))
-                        ->from($db->quoteName('#__user_finance'))
+        $query          ->select($db->quoteName(array('membership')))
+                        ->from($db->quoteName('#__user_astrologer'))
                         ->where($db->quoteName('UserId').' = '.$db->quote($id));
         $db             ->setQuery($query);
-        $result         = $db->loadAssoc();
-        return $result;
-        
+        $data           = $db->loadAssoc();
+        if($data['membership'] == 'Free'|| $data['membership']=='Unpaid')
+        {
+           $result     = $this->getLocationDetails();
+        }
+       
+        print_r($result);exit;
     }
-    public function saveDetails($details)
+    function getLocationDetails()
+    {
+        $u_id           = 750;
+        $service        = 'expert_fees';
+        $db             = JFactory::getDbo();  // Get db connection
+        $query          = $db->getQuery(true);
+        try
+        {
+            //$ip                     = '117.196.1.11';
+            $ip                     = '157.55.39.123';  // ip address
+            //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
+            $info                   = geoip_country_code_by_name($ip);
+            $country                = geoip_country_name_by_name($ip);
+           // $location 		= $geoip->lookupLocation($ip);
+            //$info                   = $location->countryCode;
+            //$country                = $location->countryName;
+
+            if($info == "US")
+            {
+                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
+                                ->from($db->quoteName('#__expert_charges'))
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('US'));
+                
+            }
+            else if($info == "IN"||$info== 'LK'||$info=='NP'||$info=='TH'||$info=='MY'||$info=='MV')
+            {
+                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
+                                ->from($db->quoteName('#__expert_charges'))
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('IN'));
+            }
+            else if($info=='UK')
+            {
+                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
+                                ->from($db->quoteName('#__expert_charges'))
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('UK'));
+            }
+            else if($info=='NZ')
+            {
+                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
+                                ->from($db->quoteName('#__expert_charges'))
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('NZ'));
+            }
+            else if($info=='CA')
+            {
+                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
+                                ->from($db->quoteName('#__expert_charges'))
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('CA'));
+            }
+            else if($info=='SG')
+            {
+                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
+                                ->from($db->quoteName('#__expert_charges'))
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('SG'));
+            }
+            else if($info=='AU')
+            {
+                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
+                                ->from($db->quoteName('#__expert_charges'))
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('AU'));
+            }
+            else if($info=='FR'||$info=='DE'||$info=='IE'||$info=='NL'||$info=='CR'||$info=='BE'
+                    ||$info=='GR'||$info=='IT'||$info=='PT'||$info=='ES'||$info=='MT'||$info=='LV'||$info=='TR')
+            {
+                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
+                                ->from($db->quoteName('#__expert_charges'))
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('EU'));
+            }
+            else if($info =='RU')
+            {
+                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
+                                ->from($db->quoteName('#__expert_charges'))
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('RU'));
+            }
+             else
+            {
+               $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
+                                ->from($db->quoteName('#__expert_charges'))
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('ROW'));
+            }
+             $db             ->setQuery($query);
+             $details           = $db->loadAssoc();
+        }
+        catch(Exception $e)
+        {
+            $details                =  array('error'=> 'Data not showing');
+        }
+        return $details;
+    }
+    function saveDetails($details)
     {
         //print_r($details);exit;
         $acc_name           = $details['acc_name'];$acc_number              = $details['acc_number'];
