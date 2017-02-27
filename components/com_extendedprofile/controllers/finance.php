@@ -25,4 +25,8 @@ class ExtendedProfileControllerFinance extends ExtendedProfileController
             $data           = $model->saveDetails($details);
         }
     }
+    function paidMember()
+    {
+        
+    }
 }

@@ -24,7 +24,7 @@ class ExtendedProfileModelFinance extends JModelItem
            $result     = $this->getLocationDetails();
         }
        
-        print_r($result);exit;
+        return $result;
     }
     function getLocationDetails()
     {
