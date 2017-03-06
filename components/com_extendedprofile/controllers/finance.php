@@ -27,6 +27,14 @@ class ExtendedProfileControllerFinance extends ExtendedProfileController
     }
     function paidMember()
     {
-        
+        if(isset($_POST['pay_submit']))
+        {
+            $choice         = $_POST['pay_choice'];
+            $currency       = $_POST['pay_currency'];
+            $country        = $_POST['pay_country'];
+            $details                = array('pay_choice'=>$choice,'pay_currency'=>$currency, 'pay_country'=>$country);
+            $model          = $this->getModel('finance');  // Add the array to model
+            $data           = $model->getPaidMembership($details);
+        }
     }
 }

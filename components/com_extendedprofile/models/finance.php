@@ -34,19 +34,19 @@ class ExtendedProfileModelFinance extends JModelItem
         $query          = $db->getQuery(true);
         try
         {
-            //$ip                     = '117.196.1.11';
-            $ip                     = '157.55.39.123';  // ip address
+            $ip                     = '117.196.1.11';
+            //$ip                     = '157.55.39.123';  // ip address
             //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
             $info                   = geoip_country_code_by_name($ip);
             $country                = geoip_country_name_by_name($ip);
            // $location 		= $geoip->lookupLocation($ip);
             //$info                   = $location->countryCode;
             //$country                = $location->countryName;
-
             if($info == "US")
             {
-                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
-                                ->from($db->quoteName('#__expert_charges'))
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
                                 ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
                                         $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
                                         $db->quoteName('country').' = '.$db->quote('US'));
@@ -54,48 +54,54 @@ class ExtendedProfileModelFinance extends JModelItem
             }
             else if($info == "IN"||$info== 'LK'||$info=='NP'||$info=='TH'||$info=='MY'||$info=='MV')
             {
-                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
-                                ->from($db->quoteName('#__expert_charges'))
+                 $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
                                 ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
                                         $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
                                         $db->quoteName('country').' = '.$db->quote('IN'));
             }
             else if($info=='UK')
             {
-                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
-                                ->from($db->quoteName('#__expert_charges'))
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
                                 ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
                                         $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
                                         $db->quoteName('country').' = '.$db->quote('UK'));
             }
             else if($info=='NZ')
             {
-                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
-                                ->from($db->quoteName('#__expert_charges'))
+                 $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
                                 ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
                                         $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
                                         $db->quoteName('country').' = '.$db->quote('NZ'));
             }
             else if($info=='CA')
             {
-                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
-                                ->from($db->quoteName('#__expert_charges'))
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
                                 ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
                                         $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
                                         $db->quoteName('country').' = '.$db->quote('CA'));
             }
             else if($info=='SG')
             {
-                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
-                                ->from($db->quoteName('#__expert_charges'))
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
                                 ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
                                         $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
                                         $db->quoteName('country').' = '.$db->quote('SG'));
             }
             else if($info=='AU')
             {
-                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
-                                ->from($db->quoteName('#__expert_charges'))
+                 $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
                                 ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
                                         $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
                                         $db->quoteName('country').' = '.$db->quote('AU'));
@@ -103,35 +109,41 @@ class ExtendedProfileModelFinance extends JModelItem
             else if($info=='FR'||$info=='DE'||$info=='IE'||$info=='NL'||$info=='CR'||$info=='BE'
                     ||$info=='GR'||$info=='IT'||$info=='PT'||$info=='ES'||$info=='MT'||$info=='LV'||$info=='TR')
             {
-                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
-                                ->from($db->quoteName('#__expert_charges'))
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
                                 ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
                                         $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
                                         $db->quoteName('country').' = '.$db->quote('EU'));
             }
             else if($info =='RU')
             {
-                $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
-                                ->from($db->quoteName('#__expert_charges'))
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
                                 ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
                                         $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
                                         $db->quoteName('country').' = '.$db->quote('RU'));
             }
              else
             {
-               $query          ->select($db->quoteName(array('country','amount','currency','curr_code','curr_full')))
-                                ->from($db->quoteName('#__expert_charges'))
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
                                 ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
                                         $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
                                         $db->quoteName('country').' = '.$db->quote('ROW'));
             }
              $db             ->setQuery($query);
-             $details           = $db->loadAssoc();
+             $country           = array("country_full"=>$country);
+             $result           = $db->loadAssoc();
+             $details           = array_merge($result,$country);
         }
         catch(Exception $e)
         {
             $details                =  array('error'=> 'Data not showing');
         }
+        
         return $details;
     }
     function saveDetails($details)
@@ -179,5 +191,9 @@ class ExtendedProfileModelFinance extends JModelItem
             $msg = 'Unable to add financial details'; 
             $app->redirect($link, $msg, $msgType='message');
         }
+    }
+    function getPaidMembership($details)
+    {
+        print_r($details);exit;
     }
 }

@@ -18,10 +18,10 @@ if(isset($_GET['terms'])&&($_GET['terms']=='no'))
 <div class="form-group">
     <label for="" class="control-label">Payment Type: </label>
 <?php 
-if($this->msg['currency'] == 'IN')
+if($this->msg['currency'] == 'INR')
 {
 ?>
-    <input type="radio" name="pay_choice" id="pay_choice1" value="online" /> <i class="fa fa-globe"></i> Online
+    <input type="radio" name="pay_choice" id="pay_choice1" value="ccavenue" /> <i class="fa fa-credit-card"></i> Credit/Debit Card/Netbanking
     <input type="radio" name="pay_choice" id="pay_choice2" value="cheque" /> Cheque
     <input type="radio" name="pay_choice" id="pay_choice10" value="direct" /> Direct Transfer
     <input type="radio" name="pay_choice" id="pay_choice3" value="paytm" />  <img src="<?php echo JURi::base() ?>images/paytm.png" />
@@ -32,17 +32,20 @@ if($this->msg['currency'] == 'IN')
 else
 {
 ?>
-    <input type="radio" name="pay_choice" id="pay_choice7" value="paypal" /> <img src="<?php echo JURi::base() ?>images/paypal.png" /> Paypal
+    <input type="radio" name="pay_choice" id="pay_choice7" value="paypal" /> <i class="fa fa-paypal"></i> Paypal
     <input type="radio" name="pay_choice" id="pay_choice9" value="paypalme" /> <img src="<?php echo JURi::base() ?>images/paypal.png" /> PaypalMe
     <input type="radio" name="pay_choice" id="pay_choice8" value="direct" /> Direct Transfer
 <?php
 }
 ?>
 </div>
+<input type="hidden" name="pay_currency" id="pay_currency" value="<?php echo $this->msg['currency'] ?>" />
+<input type="hidden" name ="pay_country" id="pay_country" value="<?php echo $this->msg['country_full']; ?>" />
+<input type="hidden" name="pay_amount" id="pay_amount" value="<?php echo $this->msg['amount'] ?>" />
 <div class="form-group">
-        <button type="submit" name="bank_submit" class="btn btn-primary" >Pay Now</button>
-        <button type="reset" name="cancel" class="btn btn-warning">Reset</button>
-        <a href="<?php echo JURI::base() ?>dashboard" class="btn btn-danger">Cancel</a>
-    </div>
+    <button type="submit" name="pay_submit" class="btn btn-primary" >Pay Now</button>
+    <button type="reset" name="cancel" class="btn btn-warning">Reset</button>
+    <a href="<?php echo JURI::base() ?>dashboard" class="btn btn-danger">Cancel</a>
+</div>
 </form>
 
