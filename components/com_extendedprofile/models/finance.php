@@ -197,13 +197,57 @@ class ExtendedProfileModelFinance extends JModelItem
         $amount     = $details['pay_amount'];
         $choice     = $details['pay_choice'];
         $currency   = $details['pay_currency'];
-        $country    = $details['pay_country'];
+        $location   = $details['pay_country'];
+        // get user details
+        $user = JFactory::getUser();
+        $uid   = $user->id;    
+        // get the data
+        $db             = JFactory::getDbo();  // Get db connection
+        $query          = $db->getQuery(true);
         
-        if($choice=="bhim"||$choice="phonepe"||$choice=="cheque"||$choice=="direct")
+        $columns        = array('UserId','amount','currency','location','paid','pay_choice');
+        $values         = array($db-quote($uid),$amount,$db->quote($currency),
+                                $db->quote($location),$db->quote('No'),$db->quote($choice));
+        $query
+                        ->insert($db->quoteName('#__user_finance'))
+                        ->columns($db->quoteName($columns))
+                        ->values(implode(',', $values));
+        $db->setQuery($query);
+        $db->execute();
+            /*$query1         = $db->getQuery(true);
+        $query          ->select(array('COUNT(*)'))
+                        ->from($db->quoteName('#__user_finance'))
+                        ->where($db->quoteName('UserId').' = '.$db->quote($uid));
+        $db             ->setQuery($query);
+        $count          = $db->loadResult();
+        if($count  >  0)
         {
-            
+            $query      ->clear();
+            $fields     = array(
+                            $db->quoteName('amount').' = '.$db->quote($amount),
+                            $db->quoteName('currency').' = '.$db->quote($currency),
+                            $db->quoteName('location').' = '.$db->quote($location),
+                            $db->quoteName('pay_choice').' = '.$db->quote($choice)
+                            );
+            $conditions = array($db->quote('UserId').' = '.$db->quote($uid));
+            $query->update($db->quoteName('#__user_finance'))->set($fields)->where($conditions);
+            $db->setQuery($query);
+            $result         = $db->execute();
         }
+        else
+        {
+            $query          ->clear();*/
             
-            
+        //}
+        /*if($result)
+        {
+            $query           ->clear();
+            $query          ->select(array('amount','currency','location','paid','pay_choice'))
+                            ->from($db->quoteName('#__user_finance'))
+                            ->where($db->quoteName('UserId').' = '.$db->quote($uid));
+            $db->setQuery($query);
+            $data           = $db->loadObject();
+            print_r($data);exit;
+        }*/
     }
 }

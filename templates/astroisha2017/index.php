@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);       // uncomment on server
+//error_reporting(0);       // uncomment on server
 defined('_JEXEC') or die;
 $app             = JFactory::getApplication();
 $doc             = JFactory::getDocument();
@@ -66,6 +66,7 @@ endif;
   })();
 </script>
 <gcse:search></gcse:search>
+<div class="mb-1"></div>
 <?php
     if ($option == 'com_content' && $view == 'article'):
     $id = JRequest::getInt('id');

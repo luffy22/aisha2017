@@ -36,7 +36,7 @@ class ExtendedProfileControllerFinance extends ExtendedProfileController
             $details                = array('pay_choice'=>$choice,'pay_currency'=>$currency,
                                             'pay_amount'=> $amount,'pay_country'=>$country);
             $model          = $this->getModel('finance');  // Add the array to model
-            $data           = $model->getPaidMembership($details);
+            $model->getPaidMembership($details);
         }
     }
 }
