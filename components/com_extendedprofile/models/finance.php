@@ -194,6 +194,16 @@ class ExtendedProfileModelFinance extends JModelItem
     }
     function getPaidMembership($details)
     {
-        print_r($details);exit;
+        $amount     = $details['pay_amount'];
+        $choice     = $details['pay_choice'];
+        $currency   = $details['pay_currency'];
+        $country    = $details['pay_country'];
+        
+        if($choice=="bhim"||$choice="phonepe"||$choice=="cheque"||$choice=="direct")
+        {
+            
+        }
+            
+            
     }
 }

@@ -84,16 +84,22 @@ foreach($toprecent as $data)
 <div>
         <div class="card" id="panel_<?php echo $data->article_id; ?>">
 <?php
-        if(!empty($images->image_intro))
+        if(!empty($images->image_intro) && empty($images->image_fulltext))
         {
 ?>
-            <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $data->title; ?>" />
+            <a href="<?php echo $data->link ?>" title="Click on link to read whole article"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $data->title; ?>" /></a>
 <?php
         }
-        else
+        else if(empty($images->image_intro) && !empty($images->image_fulltext))
         {
 ?>
-            <img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo $data->title; ?>" />
+            <a href="<?php echo $data->link ?>" title="Click on link to read whole article"><img class="img-fluid" src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo $data->title; ?>" /></a>
+<?php
+        }
+           else
+        {
+?>
+           <a href="<?php echo $data->link ?>"><img class="img-fluid" src="<?php JURI::base() ?>images/art_img/img_soon.jpg" alt="Image Soon" title="Click To Open Article" /></a>  
 <?php
         }
 ?>
