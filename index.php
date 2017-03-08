@@ -47,3 +47,4 @@ $app = JFactory::getApplication('site');
 
 // Execute the application.
 $app->execute();
+ini_set("pear_path", '/home/astroxou/php/' . ini_get("pear_path") );
