@@ -34,13 +34,16 @@ class ExtendedProfileModelFinance extends JModelItem
         $query          = $db->getQuery(true);
         try
         {
-            include_once "/home/astroxou/php/Net/GeoIP.php";
-            $geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
-            //$ip    = '157.55.39.123';  // ip address
-            $ip                     = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
-            $location               = $geoip->lookupLocation($ip);
-            $info                   = $location->countryCode;
-            $country                = $location->countryName;
+            //include_once "/home/astroxou/php/Net/GeoIP.php";
+            //$geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
+            $ip                     = '117.196.1.11';
+                //$ip                     = '157.55.39.123';  // ip address
+            //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
+            $info                   = geoip_country_code_by_name($ip);
+            $country                = geoip_country_name_by_name($ip);
+            //$location               = $geoip->lookupLocation($ip);
+            //$info                   = $location->countryCode;
+            //$country                = $location->countryName;
             
             if($info == "US")
             {
@@ -250,7 +253,7 @@ class ExtendedProfileModelFinance extends JModelItem
             $data           = $db->loadObject();
             if($data->pay_choice=="phonepe"||$data->pay_choice=="bhim"||$data->pay_choice=="cheque"||$data->pay_choice="direct")
             {
-                $config     = JFactory::getConfig();
+                /*$config     = JFactory::getConfig();
                 $sender     = array(
                                 $config->get('mailfrom'),
                                 $config->get('fromname')
@@ -258,9 +261,9 @@ class ExtendedProfileModelFinance extends JModelItem
                 $mailer     ->setSender($sender);
                 $recepient  = $email;
                 $mailer     ->addRecipient($recepient);
-                $mailer     ->addBcc('kopnite@gmail.com');
+                $mailer     ->addBcc('kopnite@gmail.com');*/
                 $body       = $this->getBody($data);
-                $mailer->isHtml(true);
+                /*$mailer->isHtml(true);
                 $mailer->Encoding = 'base64';
                 $mailer->setBody($body);
                 if($data->pay_choice=="phonepe")
@@ -285,7 +288,7 @@ class ExtendedProfileModelFinance extends JModelItem
                     $msg    =  'Please check your email to see payment details.';
                     $msgType    = "success";
                     $app->redirect($link, $msg,$msgType);
-                }
+                }*/
                 
             }
         }
@@ -295,18 +298,18 @@ class ExtendedProfileModelFinance extends JModelItem
         $user       = JFactory::getUser();
         if($data->pay_choice == "bhim"||$choice=="phonepe")
         {
-            $pay_mode   = ucfirst($choice)." App";
+            $pay_mode   = ucfirst($data->pay_choice)." App";
         }
         else if($data->pay_choice=="direct")
         {
-            $pay_mode   = ucfirst($choice)." Tranfer";
+            $pay_mode   = ucfirst($data->pay_choice)." Tranfer";
         }
         else
         {
-            $pay_mode   = ucfirst($choice);
+            $pay_mode   = ucfirst($data->pay_choice);
         }
 ?>
-        Dear <?php $user->name; ?>,
+        Dear <?php echo $user->name; ?>,
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You have applied for Paid Membership with AstroIsha(https://www.astroisha.com). 
         Once your payment is completed and authorized you would be able to avail benefits of Paid Memberships. You have chosen 
         payment by using <?php echo $pay_mode; ?>. Kindly pay the amount: <?php echo $data->amount." ".$data->currency; ?> and notify 
