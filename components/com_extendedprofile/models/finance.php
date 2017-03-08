@@ -205,6 +205,7 @@ class ExtendedProfileModelFinance extends JModelItem
         // get the data
         $db             = JFactory::getDbo();
         $query          = $db->getQuery(true);
+        $query1          = $db->getQuery(true);
         $query          ->select(array('COUNT(*)'))
                         ->from($db->quoteName('#__user_finance'))
                         ->where($db->quoteName('UserId').' = '.$db->quote($uid));
@@ -212,25 +213,25 @@ class ExtendedProfileModelFinance extends JModelItem
         $count          = $db->loadResult();
         if($count  >  0)
         {
+            //echo $uid;exit;
             $query      ->clear();
             $fields     = array(
-                            $db->quoteName('amount').' = '.$db->quote($amount),
+                            $db->quoteName('amount').' = '.$amount,
                             $db->quoteName('currency').' = '.$db->quote($currency),
                             $db->quoteName('location').' = '.$db->quote($location),
-                            $db->quoteName('token').' = '.$db->quote($token),
                             $db->quoteName('pay_choice').' = '.$db->quote($choice),
-                            $db->quoteName('paid').' = '.$db->quote('No')
+                            
                             );
-            $conditions = array($db->quote('UserId').' = '.$db->quote($uid));
+            $conditions = array($db->quote('UserId').' = '.$uid);
             $query->update($db->quoteName('#__user_finance'))->set($fields)->where($conditions);
             $db->setQuery($query);
-            $result         = $db->execute();
+            $db->execute();
            }
         else
         {
             $query          ->clear();
             $columns        = array('UserId','amount','currency','location','token','paid','pay_choice');
-            $values         = array($db-quote($uid),$db->quote($amount),$db->quote($currency),
+            $values         = array($uid,$amount,$db->quote($currency),
                                     $db->quote($location),$db->quote($token),$db->quote('No'),$db->quote($choice));
             $query
                             ->insert($db->quoteName('#__user_finance'))
