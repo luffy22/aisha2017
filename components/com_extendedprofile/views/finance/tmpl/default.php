@@ -34,7 +34,7 @@ else
 ?>
     <input type="radio" name="pay_choice" id="pay_choice7" value="paypal" /> <i class="fa fa-paypal"></i> Paypal
     <input type="radio" name="pay_choice" id="pay_choice9" value="paypalme" /> <img src="<?php echo JURi::base() ?>images/paypal.png" /> PaypalMe
-    <input type="radio" name="pay_choice" id="pay_choice8" value="direct" /> Direct Transfer
+    <input type="radio" name="pay_choice" id="pay_choice8" value="directint" /> Direct Transfer
 <?php
 }
 ?>

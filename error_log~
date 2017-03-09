@@ -1,0 +1,44 @@
+[09-Mar-2017 05:42:47 Etc/GMT] PHP Notice:  Undefined variable: email in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 270
+[09-Mar-2017 05:42:47 Etc/GMT] PHP Notice:  Undefined variable: choice in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 275
+[09-Mar-2017 05:42:47 Etc/GMT] PHP Notice:  Undefined variable: user in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 287
+[09-Mar-2017 05:42:47 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 287
+[09-Mar-2017 05:42:47 Etc/GMT] PHP Notice:  Undefined variable: body in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 287
+[09-Mar-2017 05:42:47 Etc/GMT] PHP Notice:  Undefined variable: app in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 340
+[09-Mar-2017 05:42:47 Etc/GMT] PHP Fatal error:  Call to a member function redirect() on null in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 340
+[09-Mar-2017 05:43:45 Etc/GMT] PHP Fatal error:  Class 'JFactor' not found in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 263
+[09-Mar-2017 05:45:43 Etc/GMT] PHP Fatal error:  Class 'JFactor' not found in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 264
+[09-Mar-2017 05:47:13 Etc/GMT] PHP Fatal error:  Class 'JFactor' not found in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 264
+[09-Mar-2017 05:48:22 Etc/GMT] PHP Fatal error:  Class 'JFactor' not found in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 264
+[09-Mar-2017 05:48:53 Etc/GMT] PHP Fatal error:  Class 'JFactor' not found in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 264
+[09-Mar-2017 05:55:48 Etc/GMT] PHP Notice:  Undefined variable: body in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 291
+[09-Mar-2017 05:56:23 Etc/GMT] PHP Notice:  Undefined variable: body in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 291
+[09-Mar-2017 05:56:41 Etc/GMT] PHP Notice:  Undefined variable: body in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 291
+[09-Mar-2017 05:56:53 Etc/GMT] PHP Notice:  Undefined variable: body in /home/astroxou/public_html/components/com_extendedprofile/models/finance.php on line 291
+[09-Mar-2017 07:05:02 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 211
+[09-Mar-2017 07:05:02 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 222
+[09-Mar-2017 07:05:02 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 222
+[09-Mar-2017 07:05:02 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 222
+[09-Mar-2017 07:05:02 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 222
+[09-Mar-2017 07:10:23 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/uri/uri.php on line 96
+[09-Mar-2017 07:11:46 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 211
+[09-Mar-2017 07:11:46 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 222
+[09-Mar-2017 07:11:46 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 222
+[09-Mar-2017 07:11:46 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 222
+[09-Mar-2017 07:11:46 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 222
+[09-Mar-2017 07:13:17 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/application/web.php on line 849
+[09-Mar-2017 07:13:17 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/uri/uri.php on line 85
+[09-Mar-2017 07:13:19 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/application/web.php on line 849
+[09-Mar-2017 07:13:19 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/uri/uri.php on line 85
+[09-Mar-2017 07:13:26 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/application/web.php on line 849
+[09-Mar-2017 07:13:26 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/uri/uri.php on line 85
+[09-Mar-2017 07:13:27 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/application/web.php on line 849
+[09-Mar-2017 07:13:27 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/uri/uri.php on line 85
+[09-Mar-2017 07:13:37 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/application/web.php on line 849
+[09-Mar-2017 07:13:37 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/uri/uri.php on line 85
+[09-Mar-2017 07:14:20 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/application/web.php on line 849
+[09-Mar-2017 07:14:20 Etc/GMT] PHP Notice:  Undefined index: HTTP_HOST in /home/astroxou/public_html/libraries/joomla/uri/uri.php on line 85
+[09-Mar-2017 07:29:15 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 211
+[09-Mar-2017 07:29:15 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 222
+[09-Mar-2017 07:29:15 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 222
+[09-Mar-2017 07:29:15 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 222
+[09-Mar-2017 07:29:15 Etc/GMT] PHP Notice:  Undefined index: option in /home/astroxou/public_html/components/com_content/views/article/view.html.php on line 222

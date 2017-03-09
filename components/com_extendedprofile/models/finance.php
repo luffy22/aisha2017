@@ -34,16 +34,16 @@ class ExtendedProfileModelFinance extends JModelItem
         $query          = $db->getQuery(true);
         try
         {
-            //include_once "/home/astroxou/php/Net/GeoIP.php";
-            //$geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
-            $ip                     = '117.196.1.11';
-                //$ip                     = '157.55.39.123';  // ip address
+            include_once "/home/astroxou/php/Net/GeoIP.php";
+            $geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
+            //$ip                     = '117.196.1.11';
+            $ip                         = '157.55.39.123';  // ip address
             //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
-            $info                   = geoip_country_code_by_name($ip);
-            $country                = geoip_country_name_by_name($ip);
-            //$location               = $geoip->lookupLocation($ip);
-            //$info                   = $location->countryCode;
-            //$country                = $location->countryName;
+            //$info                   = geoip_country_code_by_name($ip);
+            //$country                = geoip_country_name_by_name($ip);
+            $location               = $geoip->lookupLocation($ip);
+            $info                   = $location->countryCode;
+            $country                = $location->countryName;
             
             if($info == "US")
             {
@@ -203,7 +203,7 @@ class ExtendedProfileModelFinance extends JModelItem
         $location   = $details['pay_country'];
         $token      = uniqid('token_');
         // get user details
-        $app        = JFactory::getApplication(); 
+        
         $user       = JFactory::getUser();
         $uid        = $user->id;  
         $email      = $user->email;
@@ -242,7 +242,7 @@ class ExtendedProfileModelFinance extends JModelItem
             $db->setQuery($query);
             $result             = $db->execute();
         }
-
+        
         if($result)
         {
             $query           ->clear();
@@ -251,52 +251,34 @@ class ExtendedProfileModelFinance extends JModelItem
                             ->where($db->quoteName('UserId').' = '.$db->quote($uid));
             $db->setQuery($query);
             $data           = $db->loadObject();
-            if($data->pay_choice=="phonepe"||$data->pay_choice=="bhim"||$data->pay_choice=="cheque"||$data->pay_choice="direct")
+
+            if($data->pay_choice=="phonepe"||$data->pay_choice=="bhim"||$data->pay_choice=="cheque"
+                ||$data->pay_choice=="direct"||$data->pay_choice=="paypalme"||$data->pay_choice=="directint")
             {
-                /*$config     = JFactory::getConfig();
-                $sender     = array(
-                                $config->get('mailfrom'),
-                                $config->get('fromname')
-                                    );
-                $mailer     ->setSender($sender);
-                $recepient  = $email;
-                $mailer     ->addRecipient($recepient);
-                $mailer     ->addBcc('kopnite@gmail.com');*/
-                $body       = $this->getBody($data);
-                /*$mailer->isHtml(true);
-                $mailer->Encoding = 'base64';
-                $mailer->setBody($body);
-                if($data->pay_choice=="phonepe")
-                {
-                    $mailer->addAttachment(JPath.'images/phonepay_pay.png');
-                }
-                else if($data->pay_choice="bhim")
-                {
-                    $mailer->addAttachment(Jpath.'images/bhim_pay.png');
-                }
-                else if($data->pay_choice=="direct")
-                {
-                    $mailer->addAttachment(Jpath.'images/bank_details.pdf');
-                }
-                $send = $mailer->Send();
-                $link       = JUri::base().'dashboard';
-                if ( $send !== true ) {
-                    $msg    = 'Error sending email: Try again and if problem continues contact admin@astroisha.com.';
-                    $msgType = "error";
-                    $app->redirect($link, $msg,$msgType);
-                } else {
-                    $msg    =  'Please check your email to see payment details.';
-                    $msgType    = "success";
-                    $app->redirect($link, $msg,$msgType);
-                }*/
-                
+                $this->sendMail($data);
             }
+            
         }
     }
-    function getBody($data)
+    function sendMail($data)
     {
         $user       = JFactory::getUser();
-        if($data->pay_choice == "bhim"||$choice=="phonepe")
+        $mailer     = JFactory::getMailer();
+        $config     = JFactory::getConfig();
+        $app        = JFactory::getApplication(); 
+        $body       = "";
+        $sender     = array(
+                        $config->get('mailfrom'),
+                        $config->get('fromname')
+                            );
+        
+        $mailer     ->setSender($sender);
+        $recepient  = $user->email;
+        $mailer     ->addRecipient($recepient);
+        $mailer     ->addBcc('kopnite@gmail.com');
+        $subject    = "AstroIsha Paid Membership Token: ".$data->token;
+        $mailer     ->setSubject($subject);
+        if($data->pay_choice == "bhim"||$data->pay_choice=="phonepe")
         {
             $pay_mode   = ucfirst($data->pay_choice)." App";
         }
@@ -304,46 +286,91 @@ class ExtendedProfileModelFinance extends JModelItem
         {
             $pay_mode   = ucfirst($data->pay_choice)." Tranfer";
         }
+        else if($data->pay_choice=="paypalme")
+        {
+            $pay_mode   = "<strong>PayPal.Me</strong>";
+        }
         else
         {
             $pay_mode   = ucfirst($data->pay_choice);
         }
-?>
-        Dear <?php echo $user->name; ?>,
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You have applied for Paid Membership with AstroIsha(https://www.astroisha.com). 
-        Once your payment is completed and authorized you would be able to avail benefits of Paid Memberships. You have chosen 
-        payment by using <?php echo $pay_mode; ?>. Kindly pay the amount: <?php echo $data->amount." ".$data->currency; ?> and notify 
-        to admin@astroisha.com once payment is completed. <strong>Kindly keep some reference of your payment to avoid issues later.</strong></p><br/> 
-        <p><strong>Below Are The Payment Details:</strong></p>
-<?php
+        
+        $body       .= "<p>Dear ".$user->name.",</p>";
+        $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You have applied for Paid Membership with AstroIsha(https://www.astroisha.com). 
+                        Once your payment is completed and authorized you would be able to avail benefits of Paid Memberships. You have chosen 
+                        payment by using ".$pay_mode.". Kindly pay the amount: ".$data->amount." ".$data->currency." and notify 
+                        to admin@astroisha.com once payment is completed. <strong>Kindly keep some reference of your payment to avoid issues later.</strong></p><br/>"; 
+        $body       .= "<p><strong>Below Are The Payment Details:</strong></p>";
+
         if($data->pay_choice == "bhim")
         {
-?>
-           <p><strong>Pay To: </strong>astroisha@upi or 9727841461</p>
-           <p>Alternatively you can open Bhim App and scan the attached image to make payment.</p>
-<?php
+
+            $body       .= "<p><strong>Pay To: </strong>astroisha@upi or 9727841461</p>";
+            $body       .= "<p>Alternatively you can open Bhim App and scan the attached image to make payment.</p>";
         }
         else if($data->pay_choice == "phonepe")
         {
-?>
-           <p><strong>Pay To: </strong>astroisha@ybl or 9727841461</p>
-           <p>Alternatively you can open PhonePe App and scan the attached image to make payment.</p>
-<?php
+            $body       .= "<p><strong>Pay To: </strong>astroisha@ybl or 9727841461</p>";
+            $body       .= "<p>Alternatively you can open PhonePe App and scan the attached image to make payment.</p>";
         }
         else if($data->pay_choice == "direct")
         {
-?>
-           <p><strong>Payable To: </strong>Astro Isha</p>
-           <p><strong>Account Number: </strong>915020051554614</p>
-           <p><strong>IFSC Code: </strong>UTIB0000080</p>
-<?php
+            $body       .= "<p><strong>Payable To: </strong>Astro Isha</p>";
+            $body       .= "<p><strong>Account Number: </strong>915020051554614</p>";
+            $body       .= "<p><strong>Bank Name: </strong>Axis Bank</p>";
+            $body       .= "<p><strong>IFSC Code: </strong>UTIB0000080</p>";                  
         }
-        else if($data->pay_choice == $cheque)
+        else if($data->pay_choice == "cheque")
         {
-?>
-           <p>Write a Cheque to <strong>Astro Isha</strong> and submit it to your near Axis Bank. Keep Cheque Number as reference.</p>
-<?php
+            $body       .= "<p>Write a Cheque to <strong>Astro Isha</strong> and submit it to your near Axis Bank. Keep Cheque Number as reference.</p>";
         }
-
+        else if($data->pay_choice == "paypalme")
+        {
+            $link       = "https://www.paypal.me/AstroIsha/".$data->amount.$data->currency;
+            $body       .=  "<a href=".$link.">Pay Using Paypal.Me</a>";
+            $body       .= "<p>Click On The Above Link to finish payment. Send the payment confirmation email from Paypal to admin@astroisha.com in order to verify payment.</p>";
+        }
+        else if($data->pay_choice == "directint")
+        {
+            $body       .= "<p><strong>Payable To: </strong>Astro Isha</p>";
+            $body       .= "<p><strong>Account Number: </strong>915020051554614</p>";
+            $body       .= "<p><strong>Bank Name: </strong>Axis Bank</p>";
+            $body       .= "<p><strong>Swift Code: </strong>AXISINBB080</p>";
+        }
+        else
+        {
+            $body       .= "<p><strong>Payable To: </strong>Astro Isha</p>";
+            $body       .= "<p><strong>Account Number: </strong>915020051554614</p>";
+            $body       .= "<p><strong>Bank Name: </strong>Axis Bank</p>";
+            $body       .= "<p><strong>IFSC Code: </strong>UTIB0000080</p>";
+            $body       .= "<p><strong>Swift Code: </strong>AXISINBB080</p>";
+        }
+        $body       .= "<p>Admin At Astro Isha,<br/>Rohan Desai</p>";
+        $mailer->isHtml(true);
+        $mailer->Encoding = 'base64';
+        $mailer->setBody($body);
+        if($data->pay_choice=="phonepe")
+        {
+            $mailer->addAttachment(JPATH_BASE.'/images/phonepe_pay.png');
+        }
+        else if($data->pay_choice=="bhim")
+        {
+            $mailer->addAttachment(JPATH_BASE.'/images/bhim_pay.jpg');
+        }
+        else if($data->pay_choice == "direct"||$data->pay_choice =="directint")
+        {
+            $mailer->addAttachment(JPATH_BASE.'/images/bank_details.pdf');
+        }
+        $send = $mailer->Send();
+        $link       = JUri::base().'dashboard';
+        if ( $send !== true ) {
+            $msg    = 'Error sending email: Try again and if problem continues contact admin@astroisha.com.';
+            $msgType = "error";
+            $app->redirect($link, $msg,$msgType);
+        } else {
+            $msg    =  'Please check your email to see payment details.';
+            $msgType    = "success";
+            $app->redirect($link, $msg,$msgType);
+        }        
     }
 }
