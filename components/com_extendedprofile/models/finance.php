@@ -36,8 +36,8 @@ class ExtendedProfileModelFinance extends JModelItem
         {
             include_once "/home/astroxou/php/Net/GeoIP.php";
             $geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
-            //$ip                     = '117.196.1.11';
-            $ip                         = '157.55.39.123';  // ip address
+            $ip                     = '117.196.1.11';
+            //$ip                         = '157.55.39.123';  // ip address
             //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
             //$info                   = geoip_country_code_by_name($ip);
             //$country                = geoip_country_name_by_name($ip);
@@ -226,6 +226,7 @@ class ExtendedProfileModelFinance extends JModelItem
             $object->amount     = $amount;
             $object->currency   = $currency;
             $object->location   = $location;
+            $object->token      = $token;
             $object->pay_choice = $choice;
             $result             = $db->updateObject('#__user_finance',$object,'UserId'); 
        }
@@ -251,11 +252,17 @@ class ExtendedProfileModelFinance extends JModelItem
                             ->where($db->quoteName('UserId').' = '.$db->quote($uid));
             $db->setQuery($query);
             $data           = $db->loadObject();
-
+            $app        = JFactory::getApplication();
+            //print_r($data);exit;
             if($data->pay_choice=="phonepe"||$data->pay_choice=="bhim"||$data->pay_choice=="cheque"
                 ||$data->pay_choice=="direct"||$data->pay_choice=="paypalme"||$data->pay_choice=="directint")
             {
                 $this->sendMail($data);
+            }
+            else if($data->pay_choice=="paytm")
+            {
+                
+                $app->redirect(JUri::base().'PaytmKit/TxnTest.php?token='.$data->token.'&email='.$email.'&fees='.$data->amount); 
             }
             
         }

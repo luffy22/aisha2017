@@ -39,4 +39,8 @@ class ExtendedProfileControllerFinance extends ExtendedProfileController
             $model->getPaidMembership($details);
         }
     }
+    function orderStatus()
+    {
+        echo "calls";exit;
+    }
 }
