@@ -21,21 +21,23 @@ $isValidChecksum = verifychecksum_e($paramList, PAYTM_MERCHANT_KEY, $paytmChecks
 if($isValidChecksum == "TRUE") {
 	echo "<b>Checksum matched and following are the transaction details:</b>" . "<br/>";
 	if ($_POST["STATUS"] == "TXN_SUCCESS") {
+            //echo $_POST['STATUS'];exit;
 		$txnid          = $_POST['TXNID'];
                 $order          = $_POST['ORDERID'];
                 $bank_ref       = $_POST['BANKTXNID'];
                 $status         = $_POST['STATUS'];
-                header("Location: htts://www.astroisha.com/index.php?option=com_extendedprofile&task=finance.orderStatus?txnid=".$txnid.
+                header("Location: https://www.astroisha.com/index.php?option=com_extendedprofile&task=finance.orderStatus&txnid=".$txnid.
                         "&order=".$order."&bank_ref=".$bank_ref."&status=".$status);
 		//Process your transaction here as success transaction.
 		//Verify amount & order id received from Payment gateway with your application's order id and amount.
 	}
 	else {
+            //echo $_POST['STATUS'];exit;
 		$txnid          = $_POST['TXNID'];
                 $order          = $_POST['ORDERID'];
                 $bank_ref       = $_POST['BANKTXNID'];
                 $status         = $_POST['STATUS'];
-                header("Location: htts://www.astroisha.com/index.php?option=com_extendedprofile&task=finance.orderStatus?txnid=".$txnid.
+                header("Location: https://www.astroisha.com/index.php?option=com_extendedprofile&task=finance.orderStatus&txnid=".$txnid.
                         "&order=".$order."&bank_ref=".$bank_ref."&status=".$status);
 	}
 

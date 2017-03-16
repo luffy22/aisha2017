@@ -41,6 +41,13 @@ class ExtendedProfileControllerFinance extends ExtendedProfileController
     }
     function orderStatus()
     {
-        echo "calls";exit;
+        $txnid              = $_GET['txnid'];
+        $token              = str_replace("order_","token_", ($_GET['order']));
+        $bank_ref           = $_GET['bank_ref'];
+        $status             = $_GET['status'];
+        $details                = array('txnid'=>$txnid,'token'=>$token,
+                                            'bank_ref'=> $bank_ref,'status'=>$status);
+        $model          = $this->getModel('finance');  // Add the array to model
+        $model->confirmPaymentIn($details);
     }
 }

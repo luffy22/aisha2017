@@ -7,6 +7,7 @@ class ExtendedProfileModelDashboard extends JModelItem
 {
     public function getData()
     {
+
         $user = JFactory::getUser();
         if($user->guest)
          {
@@ -28,7 +29,7 @@ class ExtendedProfileModelDashboard extends JModelItem
         $db->execute();
         $row            = $db->getNumRows();
         $result         = $db->loadAssoc();
-        if($row > 0 && ($result['membership'] == 'Free'||$result['membership']=='Unpaid'))
+        if($row > 0 && ($result['membership'] == 'Free'))
         {
             $query          ->clear();
             $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
@@ -50,12 +51,10 @@ class ExtendedProfileModelDashboard extends JModelItem
             $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
                                         'b.membership','b.addr_1','b.addr_2','b.city',
                                         'b.state','b.country','b.postcode','b.phone','b.mobile','b.whatsapp','b.website',
-                                        'b.info','b.profile_status','b.info','b.fb_page','b.gplus_page','b.tweet_page','c.acc_holder_name','c.acc_number','c.acc_bank_name',
-                                        'c.acc_bank_addr','c.acc_iban','c.acc_swift_code','c.acc_ifsc','c.acc_paypalid',
+                                        'b.info','b.profile_status','b.info','b.fb_page','b.gplus_page','b.tweet_page',
                                         'd.img_name','d.img_new_name','d.default_img','d.img_crop')));
             $query          ->from($db->quoteName('#__users', 'a'));
             $query          ->join('INNER', $db->quoteName('#__user_astrologer','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');
-            $query          ->join('INNER', $db->quoteName('#__user_finance','c').' ON ('.$db->quoteName('a.id').' = '.$db->quoteName('c.UserId').')');
             $query          ->join('LEFT', $db->quoteName('#__user_img','d'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('d.user_id') . ')');
             $query          ->where($db->quoteName('a.id').' = '.$db->quote($id));
             $db             ->setQuery($query);

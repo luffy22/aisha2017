@@ -19,7 +19,7 @@ class ExtendedProfileModelFinance extends JModelItem
                         ->where($db->quoteName('UserId').' = '.$db->quote($id));
         $db             ->setQuery($query);
         $data           = $db->loadAssoc();
-        if($data['membership'] == 'Free'|| $data['membership']=='Unpaid')
+        if($data['membership'] == 'Free')
         {
            $result     = $this->getLocationDetails();
         }
@@ -44,7 +44,6 @@ class ExtendedProfileModelFinance extends JModelItem
             $location               = $geoip->lookupLocation($ip);
             $info                   = $location->countryCode;
             $country                = $location->countryName;
-            
             if($info == "US")
             {
                 $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
@@ -269,6 +268,7 @@ class ExtendedProfileModelFinance extends JModelItem
     }
     function sendMail($data)
     {
+        //print_r($data);exit;
         $user       = JFactory::getUser();
         $mailer     = JFactory::getMailer();
         $config     = JFactory::getConfig();
@@ -301,17 +301,38 @@ class ExtendedProfileModelFinance extends JModelItem
         {
             $pay_mode   = ucfirst($data->pay_choice);
         }
-        
-        $body       .= "<p>Dear ".$user->name.",</p>";
-        $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You have applied for Paid Membership with AstroIsha(https://www.astroisha.com). 
-                        Once your payment is completed and authorized you would be able to avail benefits of Paid Memberships. You have chosen 
-                        payment by using ".$pay_mode.". Kindly pay the amount: ".$data->amount." ".$data->currency." and notify 
-                        to admin@astroisha.com once payment is completed. <strong>Kindly keep some reference of your payment to avoid issues later.</strong></p><br/>"; 
-        $body       .= "<p><strong>Below Are The Payment Details:</strong></p>";
-
+        if($data->pay_choice=="paytm"||$data->pay_choice=="paypal"||$data->pay_choice=="ccavenue")
+        {
+            $body       .= "<p>Dear ".$user->name.",</p>";
+            if($data->status=="fail")
+            {
+                $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Online Payment to AstroIsha(https://www.astroisha.com) has failed. 
+                            Kindly re-try payment via: https://www.astroisha.com/finance or try one of the other available options. Once your payment is completed and authorized you would be able to avail benefits of Paid Memberships.</strong></p><br/>"; 
+                $body       .= "<p><strong>Below Are The Details Of Failed Payment:</strong></p>";
+            }
+            else if($data->status =="success")
+            {
+                $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Online Payment to AstroIsha(https://www.astroisha.com) is successful. You can now avail benefits of Paid Memberships. For more information please visit: https://www.astroisha.com/astrologer</strong></p><br/>"; 
+                $body       .= "<p><strong>Below Are The Details Of Successful Payment:</strong></p>";
+            }
+            else
+            {
+                $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Online Payment to AstroIsha(https://www.astroisha.com) has failed. 
+                            Kindly re-try payment via: https://www.astroisha.com/finance or try one of the other available options. Once your payment is completed and authorized you would be able to avail benefits of Paid Memberships.</strong></p><br/>"; 
+                $body       .= "<p><strong>Below Are The Details Of Failed Payment:</strong></p>";
+            }
+        }
+        else
+        {
+            $body       .= "<p>Dear ".$user->name.",</p>";
+            $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You have applied for Paid Membership with AstroIsha(https://www.astroisha.com). 
+                            Once your payment is completed and authorized you would be able to avail benefits of Paid Memberships. You have chosen 
+                            payment by using ".$pay_mode.". Kindly pay the amount: ".$data->amount." ".$data->currency." and notify 
+                            to admin@astroisha.com once payment is completed. <strong>Kindly keep some reference of your payment to avoid issues later.</strong></p><br/>"; 
+            $body       .= "<p><strong>Below Are The Payment Details:</strong></p>";
+        }    
         if($data->pay_choice == "bhim")
         {
-
             $body       .= "<p><strong>Pay To: </strong>astroisha@upi or 9727841461</p>";
             $body       .= "<p>Alternatively you can open Bhim App and scan the attached image to make payment.</p>";
         }
@@ -343,6 +364,26 @@ class ExtendedProfileModelFinance extends JModelItem
             $body       .= "<p><strong>Account Number: </strong>915020051554614</p>";
             $body       .= "<p><strong>Bank Name: </strong>Axis Bank</p>";
             $body       .= "<p><strong>Swift Code: </strong>AXISINBB080</p>";
+        }
+        else if($data->pay_choice=="paytm"&&$data->status=="fail")
+        {
+            $body       .= "<p><strong>Online Payment via Paytm has Failed. Please try again to get paid membership. Below are details: </strong></p>";
+            $body       .= "<p><strong>Amount: </strong>".$data->amount." ".$data->currency."</p>";
+            $body       .= "<p><strong>Token: </strong>".$data->token."</p>";
+            $body       .= "<p><strong>Payment Via: </strong>".$data->pay_choice."</p>";
+            $body       .= "<p><strong>Payment Status: </strong>".ucfirst($data->status)."</p>";
+            
+        }
+        else if($data->pay_choice=="paytm"&&$data->status=="success")
+        {
+            $body       .= "<p><strong>Online Payment via Paytm is Successful. Below are the details of payment: </strong></p>";
+            $body       .= "<p><strong>Amount: </strong>".$data->amount." ".$data->currency."</p>";
+            $body       .= "<p><strong>Token: </strong>".$data->token."</p>";
+            $body       .= "<p><strong>Payment Via: </strong>".$data->pay_choice."</p>";
+            $body       .= "<p><strong>Payment Status: </strong>".ucfirst($data->status)."</p>";
+            $body       .= "<p><strong>Payment Id: </strong>".$data->payment_id."</p>";
+            $body       .= "<p><strong>Bank Reference Id: </strong>".$data->bank_ref."</p>";
+            $body       .= "<br/><p><strong>Please keep this email as reference. Alternatively you can also print this email for future reference.</strong></p>";
         }
         else
         {
@@ -379,5 +420,60 @@ class ExtendedProfileModelFinance extends JModelItem
             $msgType    = "success";
             $app->redirect($link, $msg,$msgType);
         }        
+    }
+    function confirmPaymentIn($data)
+    {
+        //print_r($data);exit;
+        $txnid          = $data['txnid'];
+        $token          = $data['token'];
+        $bank_ref       = $data['bank_ref'];
+        $status         = $data['status'];
+        $db             = JFactory::getDbo();
+        $query          = $db->getQuery(true);
+        $user       = JFactory::getUser();
+        $uid        = $user->id;
+        date_default_timezone_set('Asia/Kolkata');
+        $date                   = date('d-m-Y H:i:s');
+        if($status == 'TXN_SUCCESS')
+        {
+            $object                 = new stdClass();
+            $object->UserId         = $uid;
+            $object->membership     = "Paid";
+            $result             = $db->updateObject('#__user_astrologer',$object,'UserId'); 
+            $query      ->clear();unset($result);
+            $object         = new stdClass();
+            $object->UserId     = $uid;
+            $object->paid       = "Yes";
+            $object->payment_id   = $txnid;
+            $object->bank_ref      = $bank_ref;
+            $object->token          = $token;
+            $object->status         = "success";
+            $object->date_of_order  = $date;
+            $result             = $db->updateObject('#__user_finance',$object,'UserId','token'); 
+            $query      ->clear();
+            $query          ->select(array('amount','currency','location','paid','token','payment_id','bank_ref','pay_choice','status'))
+                            ->from($db->quoteName('#__user_finance'))
+                            ->where($db->quoteName('UserId').' = '.$db->quote($uid));
+            $db->setQuery($query);
+            $data           = $db->loadObject();
+            $this->sendMail($data);
+            
+        }
+        else
+        {
+            $object                 = new stdClass();
+            $object->UserId         = $uid;
+            $object->token          = $token;
+            $object->status         = "fail";
+            $object->date_of_order  = $date;
+            $result                 = $db->updateObject('#__user_finance',$object,'UserId','token'); 
+            $query                  ->select(array('amount','currency','location','paid','token','pay_choice','status'))
+                                    ->from($db->quoteName('#__user_finance'))
+                                    ->where($db->quoteName('UserId').' = '.$db->quote($uid));
+            $db->setQuery($query);
+            $data           = $db->loadObject();
+            $this->sendMail($data);
+        }
+        
     }
 }
