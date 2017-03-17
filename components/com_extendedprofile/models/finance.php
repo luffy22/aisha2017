@@ -246,9 +246,12 @@ class ExtendedProfileModelFinance extends JModelItem
         if($result)
         {
             $query           ->clear();
-            $query          ->select(array('amount','currency','location','paid','token', 'pay_choice'))
-                            ->from($db->quoteName('#__user_finance'))
-                            ->where($db->quoteName('UserId').' = '.$db->quote($uid));
+            $query          ->select(array('a.UserId','a.amount','a.currency','a.location','a.paid','a.token', 'a.pay_choice',
+                                    'b.name','b.email','c.mobile','c.city','c.state','c.country','c.postcode'))
+                            ->from($db->quoteName('#__user_finance','a'))
+                            ->join('INNER', $db->quoteName('#__users','b').' ON (' . $db->quoteName('a.UserId').' = '.$db->quoteName('b.id') . ')')
+                            ->join('INNER', $db->quoteName('#__user_astrologer', 'c').' ON ('.$db->quoteName('a.UserId').' = '.$db->quoteName('b.id').')')
+                            ->where($db->quoteName('a.UserId').' = '.$db->quote($uid));
             $db->setQuery($query);
             $data           = $db->loadObject();
             $app        = JFactory::getApplication();
@@ -260,8 +263,7 @@ class ExtendedProfileModelFinance extends JModelItem
             }
             else if($data->pay_choice=="paytm")
             {
-                
-                $app->redirect(JUri::base().'PaytmKit/TxnTest.php?token='.$data->token.'&email='.$email.'&fees='.$data->amount); 
+                $app->redirect(JUri::base().'PaytmKit/TxnTest.php?token='.$data->token.'&name='.$data->name.'&email='.$data->email.'&fees='.$data->amount.'&mobile='.$data->mobile); 
             }
             
         }
