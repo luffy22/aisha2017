@@ -308,12 +308,10 @@ class ExtendedProfileModelFinance extends JModelItem
             {
                 $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Online Payment to AstroIsha(https://www.astroisha.com) has failed. 
                             Kindly re-try payment via: https://www.astroisha.com/finance or try one of the other available options. Once your payment is completed and authorized you would be able to avail benefits of Paid Memberships.</strong></p><br/>"; 
-                $body       .= "<p><strong>Below Are The Details Of Failed Payment:</strong></p>";
             }
             else if($data->status =="success")
             {
                 $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Online Payment to AstroIsha(https://www.astroisha.com) is successful. You can now avail benefits of Paid Memberships. For more information please visit: https://www.astroisha.com/astrologer</strong></p><br/>"; 
-                $body       .= "<p><strong>Below Are The Details Of Successful Payment:</strong></p>";
             }
             else
             {
