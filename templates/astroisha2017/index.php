@@ -1,6 +1,7 @@
 <?php
 //error_reporting(0);       // uncomment on server
 defined('_JEXEC') or die;
+echo "calls";exit;
 $app             = JFactory::getApplication();
 $doc             = JFactory::getDocument();
 $user            = JFactory::getUser();
