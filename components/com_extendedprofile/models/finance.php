@@ -242,13 +242,15 @@ class ExtendedProfileModelFinance extends JModelItem
             $db->setQuery($query);
             $result             = $db->execute();
         }
-        
         if($result)
         {
             $query           ->clear();
-            $query          ->select(array('amount','currency','location','paid','token', 'pay_choice'))
-                            ->from($db->quoteName('#__user_finance'))
-                            ->where($db->quoteName('UserId').' = '.$db->quote($uid));
+            $query          ->select(array('b.UserId','b.amount','b.currency','b.location','b.paid','b.token', 'b.pay_choice',
+                                    'a.name','a.email','c.mobile','c.city','c.state','c.country','c.postcode'))
+                            ->from($db->quoteName('#__users','a'))
+                            ->join('INNER', $db->quoteName('#__user_finance','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')')
+                            ->join('INNER', $db->quoteName('#__user_astrologer', 'c').' ON ('.$db->quoteName('a.id').' = '.$db->quoteName('c.UserId').')')
+                            ->where($db->quoteName('a.id').' = '.$db->quote($uid));
             $db->setQuery($query);
             $data           = $db->loadObject();
             $app        = JFactory::getApplication();
@@ -260,8 +262,13 @@ class ExtendedProfileModelFinance extends JModelItem
             }
             else if($data->pay_choice=="paytm")
             {
-                
-                $app->redirect(JUri::base().'PaytmKit/TxnTest.php?token='.$data->token.'&email='.$email.'&fees='.$data->amount); 
+                $app->redirect(JUri::base().'PaytmKit/TxnTest.php?token='.$data->token.'&name='.$data->name.'&email='.$data->email.'&fees='.$data->amount.'&mobile='.$data->mobile); 
+            }
+            else if($data->pay_choice=="ccavenue")
+            {
+                $link   = JUri::base().'ccavenue/nonseam/ccavenue_astrologer.php?name='.str_replace(" ","_",$data->name).'&token='.$data->token.'&email='.$data->email.'&amount='.$data->amount.'&city='.$data->city.
+                                        '&state='.$data->state.'&country='.$data->country.'&pcode='.$data->postcode.'&mobile='.$data->mobile; 
+                $app->redirect($link);
             }
             
         }
@@ -414,9 +421,18 @@ class ExtendedProfileModelFinance extends JModelItem
             $msgType = "error";
             $app->redirect($link, $msg,$msgType);
         } else {
-            $msg    =  'Please check your email to see payment details.';
-            $msgType    = "success";
-            $app->redirect($link, $msg,$msgType);
+            if($data->pay_choice=="paytm"&&$data->status=="success")
+            {
+                $msg    =  'Please check your email to see payment details.';
+                $msgType    = "success";
+                $app->redirect($link, $msg,$msgType);
+            }
+            else if($data->pay_choice=="paytm"&&$data->status=="fail")
+            {
+                $msg    =  'Payment has failed. Kindly check your email for details.';
+                $msgType    = "error";
+                $app->redirect($link, $msg,$msgType);
+            }
         }        
     }
     function confirmPaymentIn($data)
@@ -472,6 +488,64 @@ class ExtendedProfileModelFinance extends JModelItem
             $data           = $db->loadObject();
             $this->sendMail($data);
         }
-        
+    }
+    public function authorizeCCPayment($details)
+    {
+        $user = JFactory::getUser();
+        $uid        = $user->id;
+        $email      = $details['email'];
+        $token      = $details['token'];$status     = $details['status'];
+        $track_id   = $details['track_id'];
+        $db         = JFactory::getDbo();  // Get db connection
+        $query      = $db->getQuery(true);
+        $app        = JFactory::getApplication();
+        if($status == "Success")
+        {
+           $bank_ref       = $details['bank_ref'];
+           $fields          = array($db->quoteName('membership').' = '.$db->quote('Paid'));
+           $conditions      = array($db->quoteName('UserId') . ' = '.$db->quote($uid));
+           $query->update($db->quoteName('#__user_astrologer'))->set($fields)->where($conditions);
+           $db->setQuery($query);$result = $db->execute();
+           unset($result);$query->clear();unset($fields);unset($conditions);            // unset all variables
+           $fields          = array($db->quoteName('paid').'= '.$db->quote('Yes'),
+                                    $db->quoteName('payment_id').' = '.$db->quote($track_id),
+                                    $db->quoteName('bank_ref').' = '.$db->quote($bank_ref));
+           $conditions      = array($db->quoteName('UserId').' = '.$db->quote($uid).' AND '.
+                                    $db->quoteName('token').' = '.$db->quote($token));
+           $query->update($db->quoteName('#__user_finance'))->set($fields)->where($conditions);
+           $db->setQuery($query);$result = $db->execute();
+           unset($result);$query->clear();unset($fields);unset($conditions);            // unset all variables
+           //$fields          = array($db->quoteName('group_id').'='.$db->quote(10));
+           //$conditions      = array($db->quoteName('user_id').' = '.$db->quote($uid));
+           //$query->update($db->quoteName('#__user_usergroup_map'))->set($fields)->where($conditions);
+           //$db->setQuery($query);$result = $db->execute(); 
+           $query->clear();        // unset all variables
+           $query       ->select($db->quoteName(array('a.name','a.email',
+                                    'b.membership','c.amount','c.currency','c.paid','c.location',
+                                    'c.token','c.payment_id','c.bank_ref')))
+                            ->from($db->quoteName('#__users','a'))
+                            ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
+                            ->join('INNER', $db->quoteName('#__user_finance', 'c').' ON ('.$db->quoteName('a.id').' = '.$db->quoteName('c.UserId').')')
+                            ->where($db->quoteName('a.id').' = '.$db->quote($uid));
+            $db                  ->setQuery($query);
+            $data           = $db->loadObject();
+            print_r($data);exit;
+            //$this->sendMail($data);
+        }
+        else
+        {
+            $query->clear();unset($fields);unset($conditions);        // unset all variables
+            $query       ->select($db->quoteName(array('a.name','a.email','a.username',
+                                    'b.membership','b.number','c.amount','c.currency','c.paid','c.location',
+                                    'c.token','c.payment_id', 'c.bank_ref')))
+                            ->from($db->quoteName('#__users','a'))
+                            ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
+                            ->join('INNER', $db->quoteName('#__user_finance', 'c').' ON ('.$db->quoteName('a.id').' = '.$db->quoteName('c.UserId').')')
+                            ->where($db->quoteName('a.id').' = '.$db->quote($uid));
+            $db                  ->setQuery($query);
+            $data           = $db->loadObject();   
+            print_r($data);exit;
+            //$this->sendMail($data);
+        }
     }
 }

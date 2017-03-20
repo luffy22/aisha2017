@@ -32,7 +32,6 @@ if (!empty($this->items))
 	}
 }
 ?>
-
 <form action="<?php echo htmlspecialchars(JUri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm" class="form-inline">
 <?php if ($this->params->get('show_headings') || $this->params->get('filter_field') != 'hide' || $this->params->get('show_pagination_limit')) :?>
 	<fieldset class="filters btn-toolbar clearfix">
@@ -141,10 +140,10 @@ if (!empty($this->items))
                             <?php
                                 }
                             ?>
-                               <?php if (in_array($article->access, $this->user->getAuthorisedViewLevels())) : ?>
+                               <?php if($article->state=1&&in_array($article->access, $this->user->getAuthorisedViewLevels())) : ?>
 					<a href="<?php echo JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->language)); ?>">
 						<?php echo $this->escape($article->title); ?>
-					</a>
+					</a>                               
 				<?php else: ?>
 					<?php
 					echo $this->escape($article->title) . ' : ';
@@ -215,11 +214,6 @@ if (!empty($this->items))
 		</tbody>
 	</table>
 <?php endif; ?>
-
-<?php // Code to add a link to submit an article. ?>
-<?php if ($this->category->getParams()->get('access-create')) : ?>
-	<?php echo JHtml::_('icon.create', $this->category, $this->category->params); ?>
-<?php  endif; ?>
 <?php // Add pagination links ?>
 <?php if (!empty($this->items)) : ?>
 	<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>

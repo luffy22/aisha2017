@@ -24,25 +24,5 @@ class ExtendedProfileControllerDashboard extends ExtendedProfileController
         $model          = $this->getModel('dashboard');  // Add the array to model
         $model          ->authorizePayment($details);
     }
-    public function confirmCCPayment()
-    {
-        $status             = $_GET['status'];
-        $token              = $_GET['token'];
-        $email              = $_GET['email'];
-        $track_id           = $_GET['track_id'];
-        
-        if($status      == "Failure"||$status =="Aborted")
-        {
-            $details        = array('status'=>$status,'token'=>$token,'email'=>$email,'track_id'=>$track_id);
-        }
-        else if($status  == "Success")
-        {
-            $bank_ref       = $_GET['bank_ref'];
-            $details        = array('status'=>$status,'token'=>$token,'email'=>$email,'track_id'=>$track_id,
-                                    'bank_ref'=>$bank_ref);
-        }
-        //print_r($details);exit;
-        $model          = $this->getModel('dashboard');  // Add the array to model
-        $model              ->authorizeCCPayment($details);
-    }
+    
 }
