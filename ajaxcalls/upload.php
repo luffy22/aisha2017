@@ -18,8 +18,8 @@ if (!empty($_FILES)) {
     $upload		= move_uploaded_file($tempFile,$targetFile); //6
     if($upload)
     {
-        $host   = "localhost";$user = "astroxou_admin";
-        $pwd    = "*Jrp;F.=OKzG";$db   = "astroxou_jvidya";
+        $host   = "localhost";$user = "root";
+        $pwd    = "desai1985";$db   = "astroisha2017";
         $mysqli = new mysqli($host, $user, $pwd, $db);
         /* check connection */
         if (mysqli_connect_errno()) 

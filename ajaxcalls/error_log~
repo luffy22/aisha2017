@@ -1,4 +1,0 @@
-[20-Mar-2017 06:53:00 Etc/GMT] PHP Warning:  rename(naruto.png,img_2017-03-20-06-53-00_58cf7c4c496da.png): No such file or directory in /home/astroxou/public_html/ajaxcalls/upload.php on line 14
-[20-Mar-2017 06:53:00 Etc/GMT] PHP Warning:  mysqli::mysqli(): (28000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home/astroxou/public_html/ajaxcalls/upload.php on line 23
-[20-Mar-2017 06:56:37 Etc/GMT] PHP Warning:  rename(naruto.png,img_2017-03-20-06-56-37_58cf7d25603ac.png): No such file or directory in /home/astroxou/public_html/ajaxcalls/upload.php on line 14
-[20-Mar-2017 06:56:37 Etc/GMT] PHP Warning:  mysqli::mysqli(): (28000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home/astroxou/public_html/ajaxcalls/upload.php on line 23
