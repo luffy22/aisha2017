@@ -59,16 +59,37 @@ class ExtendedProfileControllerFinance extends ExtendedProfileController
         
         if($status      == "Failure"||$status =="Aborted")
         {
-            $details        = array('status'=>$status,'token'=>$token,'email'=>$email,'track_id'=>$track_id);
+            $details        = array('status'=>strtolower($status),'token'=>$token,'email'=>$email,'track_id'=>$track_id);
         }
         else if($status  == "Success")
         {
             $bank_ref       = $_GET['bank_ref'];
-            $details        = array('status'=>$status,'token'=>$token,'email'=>$email,'track_id'=>$track_id,
+            $details        = array('status'=>strtolower($status),'token'=>$token,'email'=>$email,'track_id'=>$track_id,
                                     'bank_ref'=>$bank_ref);
         }
         //print_r($details);exit;
         $model          = $this->getModel('finance');  // Add the array to model
         $model              ->authorizeCCPayment($details);
+    }
+    public function paypalPayment()
+    {
+        $status         = $_GET['status'];
+        $token          = $_GET['token'];
+        if(isset($_GET['sale_id']))
+        {
+            $sale_id    = $_GET['sale_id'];
+        }
+        $email          = $_GET['email'];
+        if($status == "success")
+        {
+            $details        = array("status"=>$status, "token"=>$token,"pay_id"=>$sale_id,"email"=>$email);
+        }
+         else 
+        {
+            $details        = array("status"=>$status, "token"=>$token,"email"=>$email);
+        }
+        print_r($details);exit;
+        //$model          = $this->getModel('finance');  // Add the array to model
+        //$model          ->authorizePayment($details);
     }
 }
