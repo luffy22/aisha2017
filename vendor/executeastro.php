@@ -55,6 +55,6 @@ else if(isset($_GET['success']) && $_GET['success'] == 'false')
     $uid                    = $_GET['user_id'];
     $email                  = $_GET['email'];
     $server                 = "https://" . $_SERVER['SERVER_NAME'];
-    header('Location:'.$server.'?option=com_extendedprofile&task=dashboard.confirmPayment&uid='.$uid.'&status=fail&token='.$token.'&email='.$email);
+    header('Location:'.$server.'?option=com_extendedprofile&task=finance.paypalPayment&status=fail&token='.$token.'&email='.$email);
 }
 ?>

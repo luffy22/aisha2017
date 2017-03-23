@@ -88,8 +88,8 @@ class ExtendedProfileControllerFinance extends ExtendedProfileController
         {
             $details        = array("status"=>$status, "token"=>$token,"email"=>$email);
         }
-        print_r($details);exit;
-        //$model          = $this->getModel('finance');  // Add the array to model
-        //$model          ->authorizePayment($details);
+        //print_r($details);exit;
+        $model          = $this->getModel('finance');  // Add the array to model
+        $model          ->authorizePayment($details);
     }
 }

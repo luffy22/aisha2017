@@ -394,6 +394,20 @@ class ExtendedProfileModelFinance extends JModelItem
             $body       .= "<p><strong>Payment Status: </strong>".ucfirst($data->status)."</p>";
             
         }
+        else if($data->pay_choice=="paypal"&& $data->status=="fail")
+        {
+            $body       .= "<p><strong>Online Payment for Astro Isha via Paypal has Failed. Please try again to get paid membership. Below are details: </strong></p>";
+            $body       .= "<p><strong>Amount: </strong>".$data->amount." ".$data->currency."</p>";
+            $body       .= "<p><strong>Token: </strong>".$data->token."</p>";
+            $body       .= "<p><strong>Payment Via: </strong>".$data->pay_choice."</p>";
+            $body       .= "<p><strong>Payment Status: </strong>".ucfirst($data->status)."</p><br/>";
+            $body       .= "<p>Alternatively you can use Direct Transfer or PaypalMe. 
+                                Below is the link to pay via PaypalMe. Just email the payment confirmation to Astro Isha
+                                and mention the token number provided and we would update your Account to Paid Membership.</p>";
+            $link       = "https://www.paypal.me/AstroIsha/".$data->amount.$data->currency;
+            $body       .=  "<a href=".$link.">Pay Using Paypal.Me</a><br/><br/>";
+            
+        }
         else if($data->pay_choice=="paytm"&&$data->status=="success")
         {
             $body       .= "<p><strong>Online Payment via Paytm is Successful. Below are the details of payment: </strong></p>";
@@ -414,6 +428,16 @@ class ExtendedProfileModelFinance extends JModelItem
             $body       .= "<p><strong>Payment Status: </strong>".ucfirst($data->status)."</p>";
             $body       .= "<p><strong>Payment Id: </strong>".$data->payment_id."</p>";
             $body       .= "<p><strong>Bank Reference Id: </strong>".$data->bank_ref."</p>";
+            $body       .= "<br/><p><strong>Please keep this email as reference. Alternatively you can also print this email for future reference.</strong></p>";
+        }
+        else if($data->pay_choice=="paypal"&&$data->status=="success")
+        {
+            $body       .= "<p><strong>Online Payment via Paypal is Successful. Below are the details of payment: </strong></p>";
+            $body       .= "<p><strong>Amount: </strong>".$data->amount." ".$data->currency."</p>";
+            $body       .= "<p><strong>Token: </strong>".$data->token."</p>";
+            $body       .= "<p><strong>Payment Via: </strong>".$data->pay_choice."</p>";
+            $body       .= "<p><strong>Payment Status: </strong>".ucfirst($data->status)."</p>";
+            $body       .= "<p><strong>Payment Id: </strong>".$data->payment_id."</p>";
             $body       .= "<br/><p><strong>Please keep this email as reference. Alternatively you can also print this email for future reference.</strong></p>";
         }
         else
@@ -449,13 +473,13 @@ class ExtendedProfileModelFinance extends JModelItem
         } else {
             if($data->pay_choice=="paytm"&&$data->status=="success")
             {
-                $msg    =  'Please check your email to see payment details.';
+                $msg    =  'Payment via Paytm is successful. Please check your email to see payment details.';
                 $msgType    = "success";
                 $app->redirect($link, $msg,$msgType);
             }
             else if($data->pay_choice=="paytm"&&$data->status=="fail")
             {
-                $msg    =  'Payment has failed. Kindly check your email for details.';
+                $msg    =  'Payment via Paytm has failed. Kindly check your email for details.';
                 $msgType    = "error";
                 $app->redirect($link, $msg,$msgType);
             }
@@ -469,6 +493,18 @@ class ExtendedProfileModelFinance extends JModelItem
             {
                 $msg    =  'Payment has failed. Kindly check your email for details.';
                 $msgType    = "error";
+                $app->redirect($link, $msg,$msgType);
+            }
+            else if($data->pay_choice=="paypal"&&$data->status=="fail")
+            {
+                $msg    =  'Payment via Paypal has failed. Kindly check your email for details.';
+                $msgType    = "error";
+                $app->redirect($link, $msg,$msgType);
+            }
+            else if($data->pay_choice=="paypal"&&$data->status=="success")
+            {
+                $msg    =  'Payment via Paypal is successfull. Please check your email to see payment details.';
+                $msgType    = "success";
                 $app->redirect($link, $msg,$msgType);
             }
             else
@@ -543,7 +579,8 @@ class ExtendedProfileModelFinance extends JModelItem
         $db         = JFactory::getDbo();  // Get db connection
         $query      = $db->getQuery(true);
         $app        = JFactory::getApplication();
-        
+        date_default_timezone_set('Asia/Kolkata');
+        $date                   = date('d-m-Y H:i:s');
         if($status == "success")
         {
             $bank_ref               = $details['bank_ref'];
@@ -552,14 +589,16 @@ class ExtendedProfileModelFinance extends JModelItem
             $query->update($db->quoteName('#__user_astrologer'))->set($fields)->where($conditions);
             $db->setQuery($query);$result = $db->execute();
             unset($result);$query->clear();unset($fields);unset($conditions);            // unset all variables
-            $fields                 = array($db->quoteName('paid').'= '.$db->quote('Yes'),
-                                            $db->quoteName('payment_id').' = '.$db->quote($track_id),
-                                            $db->quoteName('bank_ref').' = '.$db->quote($bank_ref),
-                                            $db->quoteName('status').' = '.$db->quote($status));
-            $conditions             = array($db->quoteName('UserId').' = '.$db->quote($uid).' AND '.
-                                            $db->quoteName('token').' = '.$db->quote($token));
-            $query->update($db->quoteName('#__user_finance'))->set($fields)->where($conditions);
-            $db->setQuery($query);$result = $db->execute();
+            $object         = new stdClass();
+            $object->UserId     = $uid;
+            $object->paid       = "Yes";
+            $object->payment_id   = $track_id;
+            $object->bank_ref      = $bank_ref;
+            $object->token          = $token;
+            $object->status         = "success";
+            $object->date_of_order  = $date;
+            $result             = $db->updateObject('#__user_finance',$object,'UserId','token'); 
+            $query      ->clear();
             unset($result);$query->clear();unset($fields);unset($conditions);            // unset all variables
             $query->clear();        // unset all variables
             $query                  ->select(array('amount','currency','location','paid','token','payment_id','bank_ref','pay_choice','status'))
@@ -583,6 +622,64 @@ class ExtendedProfileModelFinance extends JModelItem
                                     ->where($db->quoteName('UserId').' = '.$db->quote($uid));
             $db->setQuery($query);
             $data           = $db->loadObject();
+            $this->sendMail($data);
+        }
+    }
+    function authorizePayment($data)
+    {
+        $user = JFactory::getUser();
+        $uid        = $user->id;
+        //print_r($data);exit;
+        $status         = $data['status'];
+        $token          = $data['token'];
+        $pay_id         = $data['pay_id'];
+        $email          = $data['email'];
+        $db             = JFactory::getDbo();  // Get db connection
+        $query          = $db->getQuery(true);
+        $app            = JFactory::getApplication();
+        date_default_timezone_set('Asia/Kolkata');
+        $date                   = date('d-m-Y H:i:s');
+        if($status == "success")
+        {
+            $fields                 = array($db->quoteName('membership').' = '.$db->quote('Paid'));
+            $conditions             = array($db->quoteName('UserId') . ' = '.$db->quote($uid));
+            $query->update($db->quoteName('#__user_astrologer'))->set($fields)->where($conditions);
+            $db->setQuery($query);$result = $db->execute();
+            unset($result);$query->clear();unset($fields);unset($conditions);            // unset all variables
+            $object                 = new stdClass();
+            $object->UserId         = $uid;
+            $object->paid           = "Yes";
+            $object->payment_id     = $pay_id;
+            $object->token          = $token;
+            $object->status         = $status;
+            $object->date_of_order  = $date;
+            $result             = $db->updateObject('#__user_finance',$object,'UserId','token'); 
+            $query      ->clear();
+            unset($result);$query->clear();unset($fields);unset($conditions);            // unset all variables
+            $query->clear();        // unset all variables
+            $query                  ->select(array('amount','currency','location','paid','token','payment_id','pay_choice','status'))
+                                    ->from($db->quoteName('#__user_finance'))
+                                    ->where($db->quoteName('UserId').' = '.$db->quote($uid));
+            $db->setQuery($query);
+            $data           = $db->loadObject();
+            //print_r($data);exit;
+            $this->sendMail($data);
+        }
+        else
+        {
+            $object                 = new stdClass();
+            $object->UserId         = $uid;
+            $object->token          = $token;
+            $object->status         = "fail";
+            $object->date_of_order  = $date;
+            $result                 = $db->updateObject('#__user_finance',$object,'UserId','token'); 
+            $query->clear();        // unset all variables
+            $query                  ->select(array('amount','currency','location','paid','token','payment_id','pay_choice','status'))
+                                    ->from($db->quoteName('#__user_finance'))
+                                    ->where($db->quoteName('UserId').' = '.$db->quote($uid));
+            $db->setQuery($query);
+            $data           = $db->loadObject();
+            //print_r($data);exit;
             $this->sendMail($data);
         }
     }
