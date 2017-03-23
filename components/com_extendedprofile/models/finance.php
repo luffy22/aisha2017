@@ -34,16 +34,16 @@ class ExtendedProfileModelFinance extends JModelItem
         $query          = $db->getQuery(true);
         try
         {
-            include_once "/home/astroxou/php/Net/GeoIP.php";
-            $geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
+            //include_once "/home/astroxou/php/Net/GeoIP.php";
+            //$geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
             //$ip                     = '117.196.1.11';
             $ip                         = '157.55.39.123';  // ip address
             //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
-            //$info                   = geoip_country_code_by_name($ip);
-            //$country                = geoip_country_name_by_name($ip);
-            $location               = $geoip->lookupLocation($ip);
-            $info                   = $location->countryCode;
-            $country                = $location->countryName;
+            $info                   = geoip_country_code_by_name($ip);
+            $country                = geoip_country_name_by_name($ip);
+            //$location               = $geoip->lookupLocation($ip);
+            //$info                   = $location->countryCode;
+            //$country                = $location->countryName;
             if($info == "US")
             {
                 $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
@@ -137,16 +137,118 @@ class ExtendedProfileModelFinance extends JModelItem
                                         $db->quoteName('country').' = '.$db->quote('ROW'));
             }
              $db             ->setQuery($query);
-             $country           = array("country_full"=>$country);
              $result           = $db->loadAssoc();
-             $details           = array_merge($result,$country);
+             $subscribe         = $this->getSubscriptionFees($info, $u_id);
+             $country           = array("country_full"=>$country);
+             $details           = array_merge($result,$country,$subscribe);
         }
         catch(Exception $e)
         {
             $details                =  array('error'=> 'Data not showing');
         }
-        
+        //print_r($details);exit;
         return $details;
+    }
+    function getSubscriptionFees($info, $u_id)
+    {
+        $service                = 'year_subscribe';
+        $db                    = JFactory::getDbo();  // Get db connection
+        $query                  = $db->getQuery(true);
+        if($info == "US")
+            {
+                $query          ->select($db->quoteName('amount'))
+                                ->from($db->quoteName('#__expert_charges'))
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('US'));
+                
+            }
+            else if($info == "IN"||$info== 'LK'||$info=='NP'||$info=='TH'||$info=='MY'||$info=='MV')
+            {
+                 $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('IN'));
+            }
+            else if($info=='UK')
+            {
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('UK'));
+            }
+            else if($info=='NZ')
+            {
+                 $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('NZ'));
+            }
+            else if($info=='CA')
+            {
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('CA'));
+            }
+            else if($info=='SG')
+            {
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('SG'));
+            }
+            else if($info=='AU')
+            {
+                 $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('AU'));
+            }
+            else if($info=='FR'||$info=='DE'||$info=='IE'||$info=='NL'||$info=='CR'||$info=='BE'
+                    ||$info=='GR'||$info=='IT'||$info=='PT'||$info=='ES'||$info=='MT'||$info=='LV'||$info=='TR')
+            {
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('EU'));
+            }
+            else if($info =='RU')
+            {
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('RU'));
+            }
+             else
+            {
+                $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
+                                ->from($db->quoteName('#__expert_charges','a'))
+                                ->join('INNER', $db->quoteName('#__user_currency', 'b') . ' ON (' . $db->quoteName('a.currency_ref') . ' = ' . $db->quoteName('b.Curr_ID') . ')')
+                                ->where($db->quoteName('user_id').' = '.$db->quote($u_id).' AND '.
+                                        $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
+                                        $db->quoteName('country').' = '.$db->quote('ROW'));
+            }
+            $db             ->setQuery($query);
+            $result           = $db->loadAssoc();
+            $subscribe        = array("subscribe_fees"=>$result['amount']);
+            return $subscribe;
     }
     function saveDetails($details)
     {
@@ -196,13 +298,25 @@ class ExtendedProfileModelFinance extends JModelItem
     }
     function getPaidMembership($details)
     {
-        $amount     = $details['pay_amount'];
-        $choice     = $details['pay_choice'];
-        $currency   = $details['pay_currency'];
-        $location   = $details['pay_country'];
-        $token      = uniqid('token_');
+        //print_r($details);exit;
+        $amount             = $details['pay_amount'];
+        $choice             = $details['pay_choice'];
+        $currency           = $details['pay_currency'];
+        $location           = $details['pay_country'];
+        $token              = uniqid('token_');
+        $subscribe          = $details['subscribe'];
+        $subscribe_fees     = $details['subscribe_fees'];
+        if($subscribe == "yes")
+        {
+           $newamount         = floatval($amount)+floatval($subscribe_fees);
+        }
+        else
+        {
+            $newamount         = $amount;
+        }
+        $amount                 = number_format($newamount, 2);
+
         // get user details
-        
         $user       = JFactory::getUser();
         $uid        = $user->id;  
         $email      = $user->email;
@@ -227,14 +341,16 @@ class ExtendedProfileModelFinance extends JModelItem
             $object->location   = $location;
             $object->token      = $token;
             $object->pay_choice = $choice;
+            $obect->subscribe   = $subscribe;
             $result             = $db->updateObject('#__user_finance',$object,'UserId'); 
        }
         else
         {
             $query          ->clear();
-            $columns        = array('UserId','amount','currency','location','token','paid','pay_choice');
+            $columns        = array('UserId','amount','currency','location','token','paid','pay_choice','subscribe');
             $values         = array($uid,$amount,$db->quote($currency),
-                                    $db->quote($location),$db->quote($token),$db->quote('No'),$db->quote($choice));
+                                    $db->quote($location),$db->quote($token),$db->quote('No'),
+                                    $db->quote($choice),$db->quote($subscribe));
             $query
                             ->insert($db->quoteName('#__user_finance'))
                             ->columns($db->quoteName($columns))
@@ -245,7 +361,7 @@ class ExtendedProfileModelFinance extends JModelItem
         if($result)
         {
             $query           ->clear();
-            $query          ->select(array('b.UserId','b.amount','b.currency','b.location','b.paid','b.token', 'b.pay_choice',
+            $query          ->select(array('b.UserId','b.amount','b.currency','b.location','b.paid','b.subscription','b.token', 'b.pay_choice',
                                     'a.name','a.email','c.mobile','c.city','c.state','c.country','c.postcode'))
                             ->from($db->quoteName('#__users','a'))
                             ->join('INNER', $db->quoteName('#__user_finance','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')')
@@ -262,21 +378,20 @@ class ExtendedProfileModelFinance extends JModelItem
             }
             else if($data->pay_choice=="paytm")
             {
-                $app->redirect(JUri::base().'PaytmKit/TxnTest.php?token='.$data->token.'&name='.$data->name.'&email='.$data->email.'&fees='.$data->amount.'&mobile='.$data->mobile); 
+                $app->redirect(JUri::base().'PaytmKit/TxnTest.php?token='.$data->token.'&name='.$data->name.'&email='.$data->email.'&fees='.$data->amount.'&mobile='.$data->mobile.'&subscribe'.$data->subscription); 
             }
             else if($data->pay_choice=="ccavenue")
             {
                 $link   = JUri::base().'ccavenue/nonseam/ccavenue_astrologer.php?name='.str_replace(" ","_",$data->name).'&token='.$data->token.'&email='.$data->email.'&amount='.$data->amount.'&city='.$data->city.
-                                        '&state='.$data->state.'&country='.$data->country.'&pcode='.$data->postcode.'&mobile='.$data->mobile; 
+                                        '&state='.$data->state.'&country='.$data->country.'&pcode='.$data->postcode.'&mobile='.$data->mobile.'&subscribe='.$data->subscription; 
                 $app->redirect($link);
             }
             else if($data->pay_choice=="paypal")
             {
                 //echo $data->pay_choice;exit;
-                $link   = JUri::base().'vendor/paypal_astro.php?&token='.$data->token.'&name='.$data->name.'&email='.$data->email.'&curr='.$data->currency.'&amount='.$data->amount;
+                $link   = JUri::base().'vendor/paypal_astro.php?&token='.$data->token.'&name='.$data->name.'&email='.$data->email.'&curr='.$data->currency.'&amount='.$data->amount.'&subscribe='.$data->subscription;
                 $app->redirect($link);
             }
-            
         }
     }
     function sendMail($data)

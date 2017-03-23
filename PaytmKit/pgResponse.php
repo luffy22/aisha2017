@@ -26,8 +26,9 @@ if($isValidChecksum == "TRUE") {
                 $order          = $_POST['ORDERID'];
                 $bank_ref       = $_POST['BANKTXNID'];
                 $status         = $_POST['STATUS'];
+                $subscribe      = $_POST['subscribe'];
                 header("Location: https://www.astroisha.com/index.php?option=com_extendedprofile&task=finance.orderStatus&txnid=".$txnid.
-                        "&order=".$order."&bank_ref=".$bank_ref."&status=".$status);
+                        "&order=".$order."&bank_ref=".$bank_ref."&status=".$status.'&subscribe='.$subscribe);
 		//Process your transaction here as success transaction.
 		//Verify amount & order id received from Payment gateway with your application's order id and amount.
 	}
@@ -38,7 +39,7 @@ if($isValidChecksum == "TRUE") {
                 $bank_ref       = $_POST['BANKTXNID'];
                 $status         = $_POST['STATUS'];
                 header("Location: https://www.astroisha.com/index.php?option=com_extendedprofile&task=finance.orderStatus&txnid=".$txnid.
-                        "&order=".$order."&bank_ref=".$bank_ref."&status=".$status);
+                        "&order=".$order."&bank_ref=".$bank_ref."&status=".$status.'&subscribe='.$subscribe);
 	}
 
 	if (isset($_POST) && count($_POST)>0 )

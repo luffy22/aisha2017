@@ -805,3 +805,20 @@ function ques_det3_close()
     $('#ques_grp_det3').removeClass(" has-error");
     $('#ques_err_det3').css('visibility','hidden');
 }
+function addSubscriptionFees()
+{
+  var newamount;
+  if(document.getElementById("yearly_subscribe").checked == true)
+    {
+        newamount         = parseFloat(document.getElementById("pay_amount").value)+parseFloat(document.getElementById("pay_subscribe").value);
+        document.getElementById("amount_label").innerHTML       = parseFloat(newamount).toFixed(2)+" "+
+        document.getElementById("pay_currccode").value+" ("+document.getElementById("pay_currency").value+"-"+document.getElementById("pay_currfull").value+")";  
+    }
+    else
+    {
+        document.getElementById("amount_label").innerHTML       = document.getElementById("pay_amount").value+" "+
+        document.getElementById("pay_currccode").value+" ("+document.getElementById("pay_currency").value+"-"+document.getElementById("pay_currfull").value+")";
+      
+   }
+  
+}

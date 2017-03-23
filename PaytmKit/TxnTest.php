@@ -8,6 +8,7 @@
 		$price 			= $_GET['fees'];									// fees
 		$email			= $_GET['email'];
                 $mobile                 = $_GET['mobile']; // email is used as unique customer id
+                $subscribe              = $_GET['subscribe'];
 	}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -65,6 +66,11 @@
                                     <td>7</td>
                                     <td><label>Mobile:</label></td>
                                     <td><input type="text" title="TXN_MOBILE" name="TXN_MOBILE" value ="<?php echo $mobile; ?>"/></td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td><label>Subscribe: </label></td>
+                                    <td><input type="text" title="TXN_SUBSCRIBE" name="TXN_SUBSCRIBE" value="<?php echo $subscribe; ?>" /></td>
                                 </tr>
                                 <input type="hidden" name="CALLBACK_URL" value="https://www.astroisha.com/PaytmKit/pgResponse.php" />
 				<tr>

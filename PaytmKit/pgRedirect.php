@@ -17,6 +17,7 @@ $CHANNEL_ID = $_POST["CHANNEL_ID"];
 $TXN_AMOUNT = $_POST["TXN_AMOUNT"];
 $CALLBACK_URL   = $_POST["CALLBACK_URL"];
 $mobile         = $_POST['TXN_MOBILE'];
+$subscribe      = $_POST['TXN_SUBSCRIBE'];
 if($mobile  == "0")
 {
     $mobile     = 7777777777;
@@ -40,6 +41,7 @@ $paramList["WEBSITE"] = PAYTM_MERCHANT_WEBSITE;
 $paramList["MSISDN"] = $mobile; //Mobile number of customer
 $paramList["EMAIL"] = $CUST_ID;  //Email ID of customer
 $paramList["CALLBACK_URL"]  = $CALLBACK_URL;
+$paramList["subscribe"]     = $subscribe;
 //print_r($paramList);exit;
 $checkSum = getChecksumFromArray($paramList,PAYTM_MERCHANT_KEY);
 //print_r($checkSum);exit;
