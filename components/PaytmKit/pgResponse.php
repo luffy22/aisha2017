@@ -37,7 +37,6 @@ if($isValidChecksum == "TRUE") {
                 $order          = $_POST['ORDERID'];
                 $bank_ref       = $_POST['BANKTXNID'];
                 $status         = $_POST['STATUS'];
-                $subscribe      = $_POST['ORDER_DETAILS'];
                 header("Location: https://www.astroisha.com/index.php?option=com_extendedprofile&task=finance.orderStatus&txnid=".$txnid.
                         "&order=".$order."&bank_ref=".$bank_ref."&status=".$status);
 	}
