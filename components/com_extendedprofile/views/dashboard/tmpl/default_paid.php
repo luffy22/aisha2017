@@ -10,7 +10,10 @@ $u_id         = $this->msg['id'];
 ?>
 <div class="spacer"></div>
 <h3>Expert: Paid Account</h3>
-<div class="float-xs-right"><a href="<?php echo JUri::base() ?>astro/<?php echo $this->msg['username'] ?>" title="Check how your page looks to others"><i class="fa fa-user"></i> Profile</a>   |  <a href="<?php echo JURI::base() ?>details" title="Edit Details"><i class="fa fa-pencil"></i> Details</a></div>
+<div class="float-xs-right"><?php if($this->msg['profile_status'] == "hidden"){ ?>
+    <i class="fa fa-user-secret"></i> Profile Hidden
+    <?php }else{ ?>
+    <a href="<?php echo JUri::base(); ?>astro/<?php echo $this->msg['username'] ?>" title="Check how your page looks to others"><i class="fa fa-user"></i> Profile</a><?php } ?>    |  <a href="<?php echo JURI::base() ?>details" title="Edit Details"><i class="fa fa-pencil"></i> Edit Details</a></div>
 <div class="mb-3"></div>
 <?php if($this->msg['profile_status'] == "hidden"){ ?>
 <p><i class="fa fa-user-secret"></i> Your Profile is currently hidden at front-end. Go into Edit Details section to make it visible again.</p>

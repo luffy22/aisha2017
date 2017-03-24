@@ -29,22 +29,12 @@ class ExtendedProfileControllerFinance extends ExtendedProfileController
     {
         if(isset($_POST['pay_submit']))
         {
-            $choice                 = $_POST['pay_choice'];
-            $currency               = $_POST['pay_currency'];
-            $country                = $_POST['pay_country'];
-            $amount                 = $_POST['pay_amount'];
-            $subscribe_fees         = $_POST['pay_subscribe'];
-            if(isset($_POST['yearly_subscribe']))
-            {
-                $subscribe      = "yes";
-            }
-            else
-            {
-                $subscribe      = "no";
-            }
+            $choice         = $_POST['pay_choice'];
+            $currency       = $_POST['pay_currency'];
+            $country        = $_POST['pay_country'];
+            $amount         = $_POST['pay_amount'];
             $details                = array('pay_choice'=>$choice,'pay_currency'=>$currency,
-                                            'pay_amount'=> $amount,'pay_country'=>$country,
-                                            'subscribe_fees'=>$subscribe_fees,'subscribe'=>$subscribe);
+                                            'pay_amount'=> $amount,'pay_country'=>$country);
             $model          = $this->getModel('finance');  // Add the array to model
             $model->getPaidMembership($details);
         }
