@@ -8,7 +8,6 @@ class ExtendedProfileModelFinance extends JModelItem
 {
     public function getData()
     {
-
         $user = JFactory::getUser();
         $id   = $user->id;$name = $user->name;       
         // get the data
@@ -31,7 +30,6 @@ class ExtendedProfileModelFinance extends JModelItem
             $msg        = 'You are already a Paid Member. You need not visit payment page.'; 
             $app->redirect($link, $msg, $msgType);
         }
-       
         return $result;
     }
     function getLocationDetails()

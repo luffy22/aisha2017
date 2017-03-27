@@ -1,7 +1,7 @@
 <?php
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-echo $this->msg;
+print_r($this->msg);
 ?>
 <h3>Ask An Expert</h3>
 <form name="ask_expert" method="post" enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('?option=com_astrologin&task=astroask.chooseExpert'); ?>">

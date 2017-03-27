@@ -9,11 +9,16 @@ class AstrologinModelAstroask extends JModelItem
     {
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        $query          ->select($db->quoteName(array('a.id','a.name','b.img_name','b.img_new_name')));
-        $query          ->from($db->quoteName('#__users'));
-        $query          ->where($db->quoteName('UserId').' = '.$db->quote($id));
+        $query          ->select($db->quoteName(array('a.id','a.name','b.img_name','b.img_new_name','c.info')));
+        $query          ->from($db->quoteName('#__users','a'));
+        $query          ->join('RIGHT', $db->quoteName('#__user_img','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.user_id') . ')');
+        $query          ->join('RIGHT', $db->quoteName('#__user_astrologer','c'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('c.UserId') . ')');
+        $query          ->where($db->quoteName('c.membership').' = '.$db->quote('Paid').' AND '.
+                                $db->quoteName('c.profile_status').' = '.$db->quote('visible'));
         $db             ->setQuery($query);
         $db->execute();
+        $result         = $db->loadObjectList();
+        return $result;
     }
 public function askQuestions($details)
 {

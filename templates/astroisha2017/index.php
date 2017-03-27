@@ -34,7 +34,7 @@ $doc->setGenerator("Astro Isha Inc.");
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
 </head>
 <body>
-    <?php
+<?php
  // Get option and view
 $option = JRequest::getVar('option');
 $view = JRequest::getVar('view');
