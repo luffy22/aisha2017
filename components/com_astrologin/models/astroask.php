@@ -5,6 +5,16 @@ defined('_JEXEC') or die;  // No direct Access
 jimport('joomla.application.component.modelitem');
 class AstrologinModelAstroask extends JModelItem
 {
+    function getData()
+    {
+        $db             = JFactory::getDbo();  // Get db connection
+        $query          = $db->getQuery(true);
+        $query          ->select($db->quoteName(array('a.id','a.name','b.img_name','b.img_new_name')));
+        $query          ->from($db->quoteName('#__users'));
+        $query          ->where($db->quoteName('UserId').' = '.$db->quote($id));
+        $db             ->setQuery($query);
+        $db->execute();
+    }
 public function askQuestions($details)
 {
 
