@@ -98,9 +98,9 @@ class PlgContentVote extends JPlugin
 				$html .= '</span>';
 				$html .= '</form>';
 				$html .= "<br/><div class ='container'>";
-                                $html .= '<a href="https://www.facebook.com/AstroIsha" target="_blank" title="Official Facebook Page"><i class="fa fa-2x fa-facebook-official"></i></a> ';
-                                $html .= '<a href="https://plus.google.com/+JyotishividyaCoInplus" target="_blank" title="Official Google Plus Page"><i class="fa fa-2x fa-google-plus-official"></i></a> ';
-                                $html .= '<a href="https://twitter.com/astroishaweb" target="_blank" title="Offical Twitter Page"><i class="fa fa-2x fa-twitter"></i></a> ';
+                                $html .= '<a href="https://www.facebook.com/AstroIsha" target="_blank" title="Official Facebook Page"><i class="fa fa-3x fa-facebook-official"></i></a> ';
+                                $html .= '<a href="https://plus.google.com/+JyotishividyaCoInplus" target="_blank" title="Official Google Plus Page"><i class="fa fa-3x fa-google-plus-official"></i></a> ';
+                                $html .= '<a href="https://twitter.com/astroishaweb" target="_blank" title="Offical Twitter Page"><i class="fa fa-3x fa-twitter"></i></a> ';
                                 $html .= '<div class="fb-like" data-layout="box_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>&nbsp;&nbsp;';
                                 $html .= '<div class="g-plusone" data-size="tall"></div> ';
                                 $html .= '</div><div class="mb-1"></div>';
