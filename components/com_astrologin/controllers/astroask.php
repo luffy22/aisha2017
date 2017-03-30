@@ -140,5 +140,19 @@ class AstrologinControllerAstroask extends AstroLoginController
         $model          = $this->getModel('astroask');  // Add the array to model
         $model          ->confirmCCPayment($details);
     }
+    public function askExpert()
+    {
+        if(isset($_POST['expert_submit']))
+        {
+            $expert_id          = $_POST['expert_id'];
+            $no_of_ques         = $_POST['expert_max_ques'];
+            $order_type         = $_POST['expert_order_type'];
+            
+            $details            = array('expert_id'=>$expert_id,'no_of_ques'=>$no_of_ques,'order_type'=>$order_type);
+        }
+        $view           = $this->getView('astroask','html');
+        $view->data     = $details;
+        $view->page2();
+    }
 }
 ?>
