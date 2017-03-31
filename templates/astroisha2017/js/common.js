@@ -126,6 +126,7 @@ $(function()
     
 $(function() 
 {
+
    var result       = "";
    $("#ques_pob").autocomplete({
       source: 
@@ -192,7 +193,7 @@ $(function()
 });
 $(function() {
 $( "#ques_dob" ).datepicker({yearRange: "1900:2050",changeMonth: true,
-  changeYear: true, dateFormat: "yy/mm/dd"});
+  changeYear: true, dateFormat: "yy-mm-dd"});
 });
 
 function addSubscriptionFees()

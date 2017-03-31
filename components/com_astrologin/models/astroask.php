@@ -20,7 +20,7 @@ class AstrologinModelAstroask extends JModelItem
         $result         = $db->loadObjectList();
         return $result;
     }
-public function askQuestions($details)
+public function insertDetails($details)
 {
 
     $token              = uniqid('token_');
@@ -31,43 +31,19 @@ public function askQuestions($details)
     $dob                = $details['dob'];
     $tob                = $details['tob'];
     $pob                = $details['pob'];
-    $fees               = $details['fees'];
-    
-    $paytype            = $details['pay_type'];
-    //echo $paytype;exit;
-    $user_loc           = $details['user_loc'];
-    $user_curr          = $details['user_curr'];
-    $user_curr_full     = $details['user_curr_full'];
-    $choice             = $details['choice'];
-    $opt1               = $details['opt1'];
-    $ques1              = $details['ques1'];
-    $ques_det1          = $details['ques_det1'];
-    $opt2               = $details['opt2'];
-    $ques2              = $details['ques2'];
-    $ques_det2          = $details['ques_det2'];
-    $opt3               = $details['opt3'];
-    $ques3              = $details['ques3'];
-    $ques_det3          = $details['ques_det3'];
-
+    $expert             = $details['expert'];
+    $no_of_ques         = $details['no_of_ques'];
+    $order_type         = $details['order_type'];
 
     $db             = JFactory::getDbo();  // Get db connection
     $query          = $db->getQuery(true);
     $query1         = $db->getQuery(true);
     $columns        = array('UniqueID','name','email','gender', 'dob', 'tob', 
-                            'pob','fees','choice','explain_choice','payment_type',
-                            'user_location','user_currency','user_curr_full',
-                            'ques_topic1','ques_1','ques_1_explain',
-                            'ques_topic2','ques_2','ques_2_explain',
-                            'ques_topic3','ques_3','ques_3_explain'
+                            'pob'
                             );
     $values         = array(
                             $db->quote($token), $db->quote($name), $db->quote($email),
-                            $db->quote($gender), $db->quote($dob), $db->quote($tob),$db->quote($pob),$db->quote($fees),
-                            $db->quote($choice),$db->quote($explain),$db->quote($paytype),
-                            $db->quote($user_loc),$db->quote($user_curr),$db->quote($user_curr_full),
-                            $db->quote($opt1), $db->quote($ques1), $db->quote($ques_det1),
-                            $db->quote($opt2), $db->quote($ques2), $db->quote($ques_det2),
-                            $db->quote($opt3), $db->quote($ques3), $db->quote($ques_det3),
+                            $db->quote($gender), $db->quote($dob), $db->quote($tob),$db->quote($pob)
                             );
     $column1        =  array('UniqueID', 'status');
     $values1         = array($db->quote($token), $db->quote('Pending'));

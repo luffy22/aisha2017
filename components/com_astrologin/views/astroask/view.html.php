@@ -16,17 +16,22 @@ class AstroLoginViewAstroAsk extends JViewLegacy
     public $data;
     public function display($tpl = null)
     {
-        // Assign data to the view
+     
         $this->msg = $this->get('Data');
+        
         // Check for errors.
         if (count($errors = $this->get('Errors')))
         {
             JError::raiseError(500, implode('<br />', $errors));
             return false;
         }
-        if(!empty($this->msg))
+        if(!empty($this->msg)&&(!isset($_GET['uname']))&&(!isset($_GET['ques']))&&(!isset($_GET['type'])))
         {
             $tpl        = null;
+        }
+        else if(!empty($this->msg)&&isset($_GET['uname'])&&isset($_GET['ques'])&&isset($_GET['type']))
+        {
+             $tpl       = 'details';
         }
         parent::display($tpl);
     }

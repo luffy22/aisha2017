@@ -5,111 +5,24 @@ class AstrologinControllerAstroask extends AstroLoginController
 {
     public function askQuestions()
     { 
-
+            $expert         = $_POST['ques_expert'];
+            $no_of_ques     = $_POST['ques_no'];
+            $order_type     = $_POST['ques_order_type'];
             $name           = $_POST['ques_name'];
             $email          = $_POST['ques_email'];
             $gender         = $_POST['ques_gender'];
             $dob            = $_POST['ques_dob'];
             $pob            = $_POST['ques_pob'];
             $tob            = $_POST['lagna_hr'].":".$_POST['lagna_min'].":".$_POST['lagna_sec']." ".$_POST['lagna_time'];
-            $fees           = $_POST['ques_charge'];
-            $user_loc       = $_POST['user_loc'];
-            $user_curr      = $_POST['user_curr'];
-            $user_curr_full = $_POST['user_curr_full'];
-            $choice         = $_POST['ques_choice'];
-            if(isset($_POST['pay_type']))
-            {
-                $pay_type   = $_POST['pay_type'];
-            }
-            else
-            {
-                $pay_type   = "paypal";
-            }
-            //echo $pay_type;exit;
-            $explain        = $_POST['ques_explain'];
-            if($explain == "short"&&$choice=="1")
-            {
-                $option1    = $_POST['ques_1_option'];
-                $ques1      = $_POST['ques_ask_1'];
-                $ques_det1  = "0";
-                $option2    = "0";
-                $ques2      = "0";
-                $ques_det2  = "0";
-                $option3    = "0";
-                $ques3      = "0";
-                $ques_det3  = "0";         
-            }
-            else if($explain=="short"&&$choice=="2")
-            {
-                $option1    = $_POST['ques_1_option'];
-                $ques1      = $_POST['ques_ask_1'];
-                $ques_det1  = "0";
-                $option2    = $_POST['ques_2_option'];
-                $ques2      = $_POST['ques_ask_2'];
-                $ques_det2  = "0";
-                $option3    = "0";
-                $ques3      = "0";
-                $ques_det3  = "0";
-            }
-            else if($explain=="short"&&$choice=="3")
-            {
-                $option1    = $_POST['ques_1_option'];
-                $ques1      = $_POST['ques_ask_1'];
-                $ques_det1  = "0";
-                $option2    = $_POST['ques_2_option'];
-                $ques2      = $_POST['ques_ask_2'];
-                $ques_det2  = "0";
-                $option3    = $_POST['ques_3_option'];
-                $ques3      = $_POST['ques_ask_3'];
-                $ques_det3  = "0";
-            }
-            else if($explain=="detail"&&$choice=="1")
-            {
-                $option1    = $_POST['ques_1_option'];
-                $ques1      = $_POST['ques_ask_1'];
-                $ques_det1  = $_POST['ques_detail_1'];
-                $option2    = "0";
-                $ques2      = "0";
-                $ques_det2  = "0";
-                $option3    = "0";
-                $ques3      = "0";
-                $ques_det3  = "0";
-            }
-            else if($explain=="detail"&&$choice=="2")
-            {
-                $option1    = $_POST['ques_1_option'];
-                $ques1      = $_POST['ques_ask_1'];
-                $ques_det1  = $_POST['ques_detail_1'];
-                $option2    = $_POST['ques_2_option'];
-                $ques2      = $_POST['ques_ask_2'];
-                $ques_det2  = $_POST['ques_detail_2'];
-                $option3    = "0";
-                $ques3      = "0";
-                $ques_det3  = "0";
-            }
-            else if($explain=="detail"&&$choice=="3")
-            {
-                $option1    = $_POST['ques_1_option'];
-                $ques1      = $_POST['ques_ask_1'];
-                $ques_det1  = $_POST['ques_detail_1'];
-                $option2    = $_POST['ques_2_option'];
-                $ques2      = $_POST['ques_ask_2'];
-                $ques_det2  = $_POST['ques_detail_2'];
-                $option3    = $_POST['ques_3_option'];
-                $ques3      = $_POST['ques_ask_3'];
-                $ques_det3  = $_POST['ques_detail_3'];
-           }
-           $details    = array(
+            
+            $details    = array(
+                                "expert"=>$expert,"no_of_ques"=>$no_of_ques,"order_type"=>$order_type,
                                 "name"=>$name,"email"=>$email,"gender"=>$gender,"explain"=>$explain,
-                                "dob"=>$dob,"pob"=>$pob, "tob"=>$tob, "choice"=>$choice, "pay_type"=>$pay_type,
-                                "fees"=>$fees,"user_loc"=>$user_loc,"user_curr"=>$user_curr,"user_curr_full"=>$user_curr_full,
-                                "opt1"=>$option1,"ques1"=>$ques1,"ques_det1"=>$ques_det1,
-                                "opt2"=>$option2,"ques2"=>$ques2,"ques_det2"=>$ques_det2,
-                                "opt3"=>$option3,"ques3"=>$ques3,"ques_det3"=>$ques_det3,
+                                "dob"=>$dob,"pob"=>$pob, "tob"=>$tob
                                 );
-           //print_r($details);exit;
+            //print_r($details);exit;
             $model          = $this->getModel('astroask');  // Add the array to model
-            $model->askQuestions($details);
+            $model->insertDetails($details);
         
     }
     public function confirmPayment()
@@ -144,15 +57,14 @@ class AstrologinControllerAstroask extends AstroLoginController
     {
         if(isset($_POST['expert_submit']))
         {
-            $expert_id          = $_POST['expert_id'];
-            $no_of_ques         = $_POST['expert_max_ques'];
+            $uname              = $_POST['expert_uname'];
+            $ques               = $_POST['expert_max_ques'];
             $order_type         = $_POST['expert_order_type'];
             
-            $details            = array('expert_id'=>$expert_id,'no_of_ques'=>$no_of_ques,'order_type'=>$order_type);
         }
-        $view           = $this->getView('astroask','html');
-        $view->data     = $details;
-        $view->page2();
+        $app                    = JFactory::getApplication();
+        
+        $app        ->redirect(JUri::base().'ask-question?uname='.$uname.'&ques='.$ques.'&type='.$order_type);        
     }
 }
 ?>

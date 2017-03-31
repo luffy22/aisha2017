@@ -62,7 +62,7 @@ class PlgContentAskExpert extends JPlugin
                 {
                     $content        .= "<p class='lead'>Get Online Consultation</p>";
                     $content        .= "<form name='askexpert' method='post' enctype='application/x-www-form-urlencoded' action='".JRoute::_('?option=com_astrologin&task=astroask.askExpert')."'>";
-                    $content        .= "<input type='hidden' value='".$result->id."' name='expert_id' />";
+                    $content        .= "<input type='hidden' value='".$result->username."' name='expert_uname' />";
                     $content        .=  "<div class='form-group'>";
                     $content        .= "<label for='max_ques'>Number Of Questions</label>";
                     $content        .= "<select class='form-control' name='expert_max_ques' id='max_ques'>";
