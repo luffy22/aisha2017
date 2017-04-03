@@ -1,5 +1,4 @@
 <?php
-
 defined('_JEXEC') or die;  // No direct Access
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
@@ -22,12 +21,10 @@ class AstrologinModelAstroask extends JModelItem
     }
 public function insertDetails($details)
 {
-
     $token              = uniqid('token_');
     $name               = ucfirst($details['name']);
     $email              = $details['email'];
     $gender             = ucfirst($details['gender']);
-    $explain            = $details['explain'];
     $dob                = $details['dob'];
     $tob                = $details['tob'];
     $pob                = $details['pob'];
@@ -265,8 +262,8 @@ public function failPayment($details)
             $app                =&JFactory::getApplication();
             $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm&payment=false');
             
+            }
     }
-}
 }
 public function confirmCCPayment($details)
 {
