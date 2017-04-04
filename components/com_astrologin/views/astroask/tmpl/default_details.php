@@ -3,7 +3,7 @@ defined('_JEXEC') or die();
 $uname                  = $_GET['uname'];
 $ques                   = $_GET['ques'];
 $order_type             = $_GET['type'];
-//print_r($this->data);exit;
+
 ?>
 <h3>Enter Your Details</h3>
 <form id="ques_form" role="form" enctype="application/x-www-form-urlencoded" method="post" 
@@ -32,7 +32,7 @@ $order_type             = $_GET['type'];
     <label>Time Of Birth:</label><br/>
     <select class="select2" id="lagna_tob_hr" name="lagna_hr">
     <?php
-         for($i=0;$i<12;$i++)
+         for($i=0;$i<24;$i++)
          {
              if($i<10)
              {
@@ -86,10 +86,6 @@ $order_type             = $_GET['type'];
             }
         }
     ?>
-    </select>
-    <select class="select2" id="lagna_tob_am-pm" name="lagna_time">
-        <option>AM</option>
-        <option>PM</option>
     </select>
 </div>
 <div class="form-group" id="ques_grp_5">

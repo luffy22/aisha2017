@@ -21,77 +21,121 @@ class AstrologinModelAstroask extends JModelItem
     }
 public function insertDetails($details)
 {
+    $app                = JFactory::getApplication();
     $token              = uniqid('token_');
     $name               = ucfirst($details['name']);
     $email              = $details['email'];
     $gender             = ucfirst($details['gender']);
     $dob                = $details['dob'];
-    $tob                = $details['tob'];
+    $tob                = explode(":",$details['tob']);
+    
     $pob                = $details['pob'];
     $expert             = $details['expert'];
     $no_of_ques         = $details['no_of_ques'];
     $order_type         = $details['order_type'];
-
-    $db             = JFactory::getDbo();  // Get db connection
-    $query          = $db->getQuery(true);
-    $query1         = $db->getQuery(true);
-    $columns        = array('UniqueID','name','email','gender', 'dob', 'tob', 
-                            'pob'
+    $date               = new DateTime($dob);
+    $date               ->setTime($tob[0],$tob[1],$tob[2]);
+    $dob_tob            = strtotime($date->format('Y-m-d H:i:s'));
+    $date1              = new DateTime('now');
+    $date1              ->setTimezone('Asia/Kolkata');
+    $ques_ask_date      = $date1->format('Y-m-d H:i:s');
+    $db                 = JFactory::getDbo();  // Get db connection
+    $query              = $db->getQuery(true);
+    $query              ->select($db->quoteName(array('id')))
+                        ->from($db->quoteName('#__users'))
+                        ->where($db->quoteName('username').' = '.$db->quote($expert));
+    $db                 ->setQuery($query);
+    $row                = $db->loadAssoc();
+    $expert_id          = $row['id'];   
+       //print_r($details);exit;
+    //$query1         = $db->getQuery(true);
+    $columns        = array('UniqueID','expert_id','no_of_ques','name','email','gender', 'dob_tob', 
+                            'pob','order_type','ques_ask_date'
                             );
     $values         = array(
-                            $db->quote($token), $db->quote($name), $db->quote($email),
-                            $db->quote($gender), $db->quote($dob), $db->quote($tob),$db->quote($pob)
+                            $db->quote($token),$db->quote($expert_id),$db->quote($no_of_ques), 
+                            $db->quote($name), $db->quote($email),$db->quote($gender), 
+                            $db->quote($dob_tob),$db->quote($pob),$db->quote($order_type),$db->quote($ques_ask_date)
                             );
-    $column1        =  array('UniqueID', 'status');
-    $values1         = array($db->quote($token), $db->quote('Pending'));
     // Prepare the insert query
-    $query    ->insert($db->quoteName('#__questions'))
+    $query          ->insert($db->quoteName('#__question_details'))
                     ->columns($db->quoteName($columns))
                     ->values(implode(',', $values));
     // Set the query using our newly populated query object and execute it
     $db             ->setQuery($query);
     $result          = $db->query();
-    // sending notification email via function
     if($result)
     {
-       
-        $query              ->select($db->quoteName(array('UniqueID','name','email',
-                                    'gender','dob','pob','tob','fees','choice', 'explain_choice',
-                                    'payment_type','user_currency','user_curr_full','user_location',
-                                    'ques_topic1','ques_1','ques_1_explain',
-                                    'ques_topic2','ques_2','ques_2_explain',
-                                    'ques_topic3','ques_3','ques_3_explain')))
-                            ->from($db->quoteName('#__questions'))
-                            ->where($db->quoteName('UniqueID').'='.$db->quote($token));
-       $db                  ->setQuery($query);
-       $row                 = $db->loadAssoc();
-       $details             = array(
-                                        'token'=>$row['UniqueID'],'name'=>$row['name'],'email'=>$row['email'],'payment_type'=>$row['payment_type'],
-                                        'gender'=>$row['gender'],'dob'=>$row['dob'],'pob'=>$row['pob'],'tob'=>$row['tob'], 'location'=>$row['user_location'],
-                                        'fees'=>$row['fees'],'choice'=>$row['choice'],'explain'=>$row['explain_choice'],
-                                        'user_curr'=>$row['user_currency'],'user_curr_full'=>$row['user_curr_full'],
-                                        'ques_topic_1'=>$row['ques_topic1'],'ques_1'=>$row['ques_1'],'ques_1_explain'=>$row['ques_1_explain'],
-                                        'ques_topic_2'=>$row['ques_topic2'],'ques_2'=>$row['ques_2'],'ques_2_explain'=>$row['ques_2_explain'],
-                                        'ques_topic_3'=>$row['ques_topic3'],'ques_3'=>$row['ques_3'],'ques_3_explain'=>$row['ques_3_explain']
-                                  );
-       //print_r($details);exit;
-       if($details['location']=="IN"&& $paytype == "ccavenue")
-       {
-            header('Location:'.JUri::base().'ccavenue/nonseam/ccavenue_payment.php?token='.$details['token'].'&name='.$details['name'].'&email='.$details['email'].'&curr='.$details['user_curr'].'&fees='.$details['fees']); 
-       }
-       if($details['location']=="IN"&& $paytype == "paytm")
-       {
-            header('Location:'.JUri::base().'PaytmKit/TxnTest.php?token='.$details['token'].'&email='.$details['email'].'&fees='.$details['fees']); 
-       }
-       else
-       {
-            header('Location:'.JUri::base().'vendor/paypal.php?token='.$details['token'].'&name='.$details['name'].'&email='.$details['email'].'&curr='.$details['user_curr'].'&fees='.$details['fees']); 
-       }
+        
+        $query          ->clear();
+        $query          ->select($db->quoteName(array('UniqueID','no_of_ques')))
+                        ->from('#__question_details')
+                        ->where($db->quoteName('email').' = '.$db->quote($email).' AND '.
+                                $db->quoteName('UniqueID').' = '.$db->quote($token));
+        $db                  ->setQuery($query);
+        $details        = $db->loadAssoc();
+        $uniqID         = $details['UniqueID'];
+        $no_of_ques     = $details['no_of_ques'];       
+        $app            ->redirect(JUri::base().'ask-question?uniq_id='.$uniqID.'&no_of_ques='.$no_of_ques.'&expert='.$expert);
     }
     else
     {
-        $app        ->redirect('index.php?option=com_astrologin&view=astroask&failure=fail'); 
+        $msg            = 'warning';
+        $msgType        = 'Something went wrong. Please try again later.';
+        $app            ->redirect(Juri::base().'ask-expert',$msg,$msgType);
     }
+    
+}
+public function getExpert()
+{
+    
+    $jinput             = JFactory::getApplication()->input;
+    $expert             = $jinput->get('expert',  'default_value', 'string');
+    $db                 = JFactory::getDbo();  // Get db connection
+    $query              = $db->getQuery(true);
+    $query2              = $db->getQuery(true);
+    $query              ->select($db->quoteName(array('id')))
+                        ->from($db->quoteName('#__users'))
+                        ->where($db->quoteName('username').' = '.$db->quote($expert));
+    $db                     ->setQuery($query);
+    $id                     = $db->loadResult();
+    $query                  ->clear();
+    $query              ->clear();
+    $query                  =   "SELECT DISTINCT(main_expert) from jv_role_astro where astro_id ='".$id."'";
+    $db                     ->setQuery($query);
+    $main                    = $db->loadColumn();     
+    $main_exp               = array();
+    foreach($main as $mainexp)
+    {
+        $query2                 ->select($db->quoteName(array('role_id','role_name','role_super')))
+                                ->from($db->quoteName('#__role'))
+                                ->where($db->quoteName('role_id') . ' = '. $db->quote($mainexp));
+        $db                     ->setQuery($query2);
+        $row                    = $db->loadObjectList();
+        $main_exp               = array_merge($main_exp,$row);
+        $query2                 ->clear();
+
+    }
+    $query2                     ->select($db->quoteName('sub_expert'))
+                                ->from($db->quoteName('#__role_astro'))
+                                ->where($db->quoteName('astro_id').' = '.$db->quote($id));
+    $db                         ->setQuery($query2);
+    $sub                        = $db->loadColumn();
+    $sub_exp                    = array();
+    foreach($sub as $subexp)
+    {
+        $query2                 ->clear();
+        $query2                  ->select($db->quoteName(array('role_id','role_name','role_super')))
+                                ->from($db->quoteName('#__role'))
+                                ->where($db->quoteName('role_id') . ' = '. $db->quote($subexp));
+        $db                     ->setQuery($query2);
+        $row                    = $db->loadObjectList();
+        $sub_exp               = array_merge($sub_exp,$row);
+
+    }
+    $exp                      = array_merge($main_exp, $sub_exp);
+    return $exp;
+    
 }
 // paypal authorize Order
 public function authorizePayment($details)

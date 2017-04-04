@@ -13,7 +13,7 @@ class AstrologinControllerAstroask extends AstroLoginController
             $gender         = $_POST['ques_gender'];
             $dob            = $_POST['ques_dob'];
             $pob            = $_POST['ques_pob'];
-            $tob            = $_POST['lagna_hr'].":".$_POST['lagna_min'].":".$_POST['lagna_sec']." ".$_POST['lagna_time'];
+            $tob            = $_POST['lagna_hr'].":".$_POST['lagna_min'].":".$_POST['lagna_sec'];
             
             $details    = array(
                                 "expert"=>$expert,"no_of_ques"=>$no_of_ques,"order_type"=>$order_type,
@@ -24,6 +24,25 @@ class AstrologinControllerAstroask extends AstroLoginController
             $model          = $this->getModel('astroask');  // Add the array to model
             $model->insertDetails($details);
         
+    }
+    public function askQuestions2()
+    { 
+            $uniq_id        = $_POST['ques_id'];
+            $ques_no        = $_POST['ques_no'];
+            $quest           = array();
+            for($i=1;$i<=$ques_no;$i++)
+            {
+                $ques_select_.$i               = $_POST['ques_select_'.$i] ;
+                $ques_.$i                      = $_POST['ques_'.$i];
+                $ques_details_.$i              = $_POST['ques_details_'.$i];
+                $ques_new                         = array("select_".$i=>$ques_select_.$i,
+                                                        "ask_".$i=>$$ques_.$i,
+                                                        "details_".$i=>$ques_details_.$i);
+                print_r($ques_new);exit;
+            }
+            print_r($quest);exit;
+            $details                    = array("uniq_id"=>$uniq_id,"ques_no"=>$ques_no,$quest);
+            print_r($details);exit;
     }
     public function confirmPayment()
     {
