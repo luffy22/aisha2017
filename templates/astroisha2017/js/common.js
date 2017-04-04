@@ -16,7 +16,7 @@ $(document).ready(function()
 $(document).ready(function()
   {
       //var id = $('.accordion-id').attr('id');
-      $('#about-us, #paid_dash, #free_dash, #dashboard_free').accordion({
+      $('#about-us, #paid_dash, #free_dash, #dashboard_free, #ques_accordion').accordion({
             heightStyle : "content",
             collapsible : true
         });
@@ -208,8 +208,18 @@ function addSubscriptionFees()
     else
     {
         document.getElementById("amount_label").innerHTML       = document.getElementById("pay_amount").value+" "+
-        document.getElementById("pay_currccode").value+" ("+document.getElementById("pay_currency").value+"-"+document.getElementById("pay_currfull").value+")";
-      
+        document.getElementById("pay_currccode").value+" ("+document.getElementById("pay_currency").value+"-"+document.getElementById("pay_currfull").value+")"; 
    }
   
+}
+function changefees()
+{
+    var fees            = document.getElementById("expert_fees").value;
+    var no_of_ques      = document.getElementById("max_ques").value;
+    var curr_code       = document.getElementById("expert_curr_code").value;
+    var currency        = document.getElementById("expert_currency").value;
+    var curr_full       = document.getElementById("expert_curr_full").value;
+    var new_fees        = parseFloat(fees)*parseFloat(no_of_ques);
+    document.getElementById("fees_id").innerHTML    = new_fees+"<html>&nbsp;</html>"+curr_code+"("+currency+"-"+curr_full+")"
+    document.getElementById("expert_final_fees").value    = new_fees.toFixed(2);
 }

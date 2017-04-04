@@ -3,7 +3,8 @@ defined('_JEXEC') or die();
 $uname                  = $_GET['uname'];
 $ques                   = $_GET['ques'];
 $order_type             = $_GET['type'];
-
+$fees                   = explode("_",$_GET['fees']);
+$pay_mode               = $_GET['pay_mode'];
 ?>
 <h3>Enter Your Details</h3>
 <form id="ques_form" role="form" enctype="application/x-www-form-urlencoded" method="post" 
@@ -11,6 +12,9 @@ $order_type             = $_GET['type'];
 <input type="hidden" name="ques_expert" value="<?php echo $uname; ?>" />
 <input type="hidden" name="ques_no" value="<?php echo $ques; ?>" />
 <input type="hidden" name="ques_order_type" value="<?php echo $order_type; ?>" />
+<input type="hidden" name="ques_fees" value="<?php echo $fees[0]; ?>" />
+<input type="hidden" name="ques_currency" value="<?php echo $fees[1]; ?>" />
+<input type="hidden" name="ques_pay_mode" value="<?php echo $pay_mode; ?>" />
 <div class="form-group" id="ques_grp_1">
     <label for="ques_1">Name:</label>
     <input type="text" name="ques_name" class="form-control" id="ques_1" placeholder="Enter your full name" required />

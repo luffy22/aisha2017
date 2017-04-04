@@ -10,10 +10,14 @@ $no_of_ques             = $_GET['no_of_ques'];
       action="<?php echo JRoute::_('index.php?option=com_astrologin&task=astroask.askQuestions2'); ?>">
 <input type="hidden" name="ques_id" id="ques_id" value="<?php echo $uniq_id; ?>" />
 <input type="hidden" name="ques_no" id="ques_no" value="<?php echo $no_of_ques; ?>" />
+<div class="mb-2"></div>
+<div id="ques_accordion">
 <?php
 for($i=0;$i<$no_of_ques;$i++)
  {
 ?>
+<h3>Question <?php echo $i+1; ?></h3>
+<div>
 <div class="form-group">
     <label>Choose Subject:</label><br/>
     <select name="ques_select_<?php echo $i+1; ?>" class="form-control">
@@ -51,13 +55,15 @@ for($i=0;$i<$no_of_ques;$i++)
     <label for="ques_details_<?php echo $i+1; ?>">Kindly Share Some Details:</label>
     <textarea name="ques_details_<?php echo $i+1; ?>" id="ques_details_<?php echo $i+1 ?>" rows="10" class="form-control"></textarea>
 </div>
-<?php            
+</div>
+<?php 
 }
 ?>
+</div>
+<div class="mb-2"></div>
 <div class="form-group">
     <button type="reset" class="btn btn-danger">Reset</button>
-    <button class="btn btn-primary" type="submit">Submit Questions</button>
-        
+    <button class="btn btn-success" type="submit">$ Pay Now</button>
 </div>
 </form>
 <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>

@@ -28,11 +28,14 @@ public function insertDetails($details)
     $gender             = ucfirst($details['gender']);
     $dob                = $details['dob'];
     $tob                = explode(":",$details['tob']);
-    
+    $fees               = $details['fees'];
+    $currency           = $details['currency'];
     $pob                = $details['pob'];
     $expert             = $details['expert'];
     $no_of_ques         = $details['no_of_ques'];
     $order_type         = $details['order_type'];
+    $pay_mode           = $details['pay_mode'];
+    
     $date               = new DateTime($dob);
     $date               ->setTime($tob[0],$tob[1],$tob[2]);
     $dob_tob            = strtotime($date->format('Y-m-d H:i:s'));
@@ -49,11 +52,12 @@ public function insertDetails($details)
     $expert_id          = $row['id'];   
        //print_r($details);exit;
     //$query1         = $db->getQuery(true);
-    $columns        = array('UniqueID','expert_id','no_of_ques','name','email','gender', 'dob_tob', 
+    $columns        = array('UniqueID','expert_id','no_of_ques','fees','currency','pay_mode','name','email','gender', 'dob_tob', 
                             'pob','order_type','ques_ask_date'
                             );
     $values         = array(
-                            $db->quote($token),$db->quote($expert_id),$db->quote($no_of_ques), 
+                            $db->quote($token),$db->quote($expert_id),$db->quote($no_of_ques),
+                            $db->quote($fees),$db->quote($currency),$db->quote($pay_mode),
                             $db->quote($name), $db->quote($email),$db->quote($gender), 
                             $db->quote($dob_tob),$db->quote($pob),$db->quote($order_type),$db->quote($ques_ask_date)
                             );
@@ -80,11 +84,40 @@ public function insertDetails($details)
     }
     else
     {
-        $msg            = 'warning';
-        $msgType        = 'Something went wrong. Please try again later.';
-        $app            ->redirect(Juri::base().'ask-expert',$msg,$msgType);
+        $msg            = "Something went wrong. Please try again.";
+        $type           = "error";
+        $app            ->redirect(Juri::base().'ask-expert',$msg,$type);
     }
     
+}
+public function insertQuestions($details)
+{
+    $app                = JFactory::getApplication();
+    $db                 = JFactory::getDbo();  // Get db connection
+    $query              = $db->getQuery(true);
+    $token              = $details['uniq_id'];
+    $no_of_ques         = $details['ques_no'];
+    for($i=1;$i<=$no_of_ques;$i++)
+    {
+        ${"select_".$i}                     = $details['select_'.$i];
+        ${"ask_".$i}                        = $details['ask_'.$i];
+        ${"ques_details_".$i}               = $details['details_'.$i];
+        $query                              = "INSERT INTO jv_question (order_id,ques_topic,ques_ask,ques_details) 
+                                                VALUES ('".$token."','".${"select_".$i}."','".${"ask_".$i}."','".${"ques_details_".$i}."')";
+        // Set the query using our newly populated query object and execute it
+        $db             ->setQuery($query);
+        $result          = $db->query();
+    }
+    if($result)
+    {
+        $app            ->redirect(Juri::base().'ask-expert?payment=pay');
+    }
+    else
+    {
+        $msg            = "Something went wrong. Please try again.";
+        $type           = "error";
+        $app            ->redirect(Juri::base().'ask-expert',$msg,$type);
+    }
 }
 public function getExpert()
 {
