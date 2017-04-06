@@ -18,7 +18,7 @@ use PayPal\Api\Transaction;
 if(isset($_GET['token']))
 {
 
-$name               = $_GET['name'];
+$name               = str_replace("_"," ",$_GET['name']);
 $token              = $_GET['token'];
 $token1             = substr($token,6);
 $email              = $_GET['email'];

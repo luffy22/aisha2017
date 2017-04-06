@@ -26,9 +26,9 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
     $relatedResources       = $transactions[0]->getRelatedResources();
     $auth                   = $relatedResources[0]->getAuthorization();
     $auth_id                = $auth->getId();
-    $server            = "http://" . $_SERVER['SERVER_NAME'];
+    $server                 = "http://" . $_SERVER['SERVER_NAME'];
              //echo $server;exit;
-    header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.confirmPayment&id='.$paymentId.'&auth_id='.$auth_id.'&token='.$token);
+    header('Location:'.$server.'/aisha2017/index.php?option=com_astrologin&task=astroask.confirmPayment&id='.$paymentId.'&auth_id='.$auth_id.'&token='.$token);
     //$execution = new PaymentExecution();
     //$execution->setPayerId($_GET['PayerID']);
     //if($execution)
@@ -39,7 +39,6 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
 else if(isset($_GET['success']) && $_GET['success'] == 'false')
 {
     $token                  = $_GET['uniq_id'];
-    $failid                 = $_GET['token']; 
-    header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.failPayment&failid='.$failid.'&token='.$token);
+    header('Location:'.$server.'/aisha2017/index.php?option=com_astrologin&task=astroask.failPayment&token='.$token);
 }
 ?>

@@ -63,8 +63,7 @@ class AstrologinControllerAstroask extends AstroLoginController
     public function failPayment()
     {
         $token              = $_GET['token'];
-        $failid             = $_GET['failid'];
-        $details        = array("token"=>$token, "fail_id"=>$failid);
+        $details        = array("token"=>$token);
         $model          = $this->getModel('astroask');  // Add the array to model
         $model          ->failPayment($details);
     }

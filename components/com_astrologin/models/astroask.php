@@ -92,25 +92,46 @@ public function insertDetails($details)
 }
 public function insertQuestions($details)
 {
+    //print_r($details);exit;
     $app                = JFactory::getApplication();
     $db                 = JFactory::getDbo();  // Get db connection
     $query              = $db->getQuery(true);
+    $query1             = $db->getQuery(true);
     $token              = $details['uniq_id'];
     $no_of_ques         = $details['ques_no'];
     for($i=1;$i<=$no_of_ques;$i++)
     {
         ${"select_".$i}                     = $details['select_'.$i];
-        ${"ask_".$i}                        = $details['ask_'.$i];
-        ${"ques_details_".$i}               = $details['details_'.$i];
+        ${"ask_".$i}                        = addslashes($details['ask_'.$i]);
+        ${"ques_details_".$i}               = addslashes($details['details_'.$i]);
         $query                              = "INSERT INTO jv_question (order_id,ques_topic,ques_ask,ques_details) 
                                                 VALUES ('".$token."','".${"select_".$i}."','".${"ask_".$i}."','".${"ques_details_".$i}."')";
         // Set the query using our newly populated query object and execute it
         $db             ->setQuery($query);
         $result          = $db->query();
     }
+    
     if($result)
     {
-        $app            ->redirect(Juri::base().'ask-expert?payment=pay');
+        $query1              ->select($db->quoteName(array('UniqueID','name','email',
+                                    'pay_mode','fees','currency')))
+                            ->from($db->quoteName('#__question_details'))
+                            ->where($db->quoteName('UniqueID').'='.$db->quote($token));
+       $db                  ->setQuery($query1);
+       $row                 = $db->loadAssoc();
+       $token               = $row['UniqueID'];
+       $name                = str_replace(" ","_",$row['name']);
+       $email               = $row['email'];
+       $currency            = $row['currency'];
+       $fees                = $row['fees'];
+       if($currency == 'INR')
+       {
+            echo "Indian Currency";exit;
+       }
+       else
+       {
+           $app->redirect(JUri::base().'vendor/paypal.php?token='.$token.'&name='.$name.'&email='.$email.'&curr='.$currency.'&fees='.$fees); 
+       }
     }
     else
     {
@@ -176,171 +197,64 @@ public function authorizePayment($details)
     $paypal_id      = $details['paypal_id'];
     $auth_id       = $details['auth_id'];
     $token          = $details['token'];
+    $data           = array();
     $db = JFactory::getDbo();
     $query = $db->getQuery(true);
     // Fields to update.
-    $fields = array(
-        $db->quoteName('paypal_id').'='.$db->quote($paypal_id),
-        $db->quoteName('authorize_id').'='.$db->quote($auth_id),
-        $db->quoteName('status').'='.$db->quote('Authorized'));
+    $columns = array('paypal_id','authorize_id','status','UniqueID');
     // Conditions for which records should be updated.
-    $conditions = array(
-        $db->quoteName('UniqueID').'='.$db->quote($token)
-    );
-    $query->update($db->quoteName('#__paypal_info'))->set($fields)->where($conditions);
+    $values     = array($db->quote($paypal_id),$db->quote($auth_id),$db->quote('Authorized'),$db->quote($token));
+    
+    //$query          ->insert($db->quoteName('#__paypal_info'))
+                    //->columns($db->quoteName($columns))
+                    //->values(implode(',', $values));
+    // Set the query using our newly populated query object and execute it
+    //$db             ->setQuery($query);
+    //$result          = $db->query();
  
-    $db->setQuery($query);
- 
-    $result = $db->execute();
-        $query      ->clear();
-        $query              ->select($db->quoteName(array('a.UniqueID','a.name','a.email',
-                                    'a.gender','a.dob','a.pob','a.tob','a.fees','a.choice','a.explain_choice',
-                                    'a.user_currency','a.user_curr_full',
-                                    'a.ques_topic1','a.ques_1','a.ques_1_explain',
-                                    'a.ques_topic2','a.ques_2','a.ques_2_explain',
-                                    'a.ques_topic3','a.ques_3','a.ques_3_explain','b.paypal_id','b.status')))
-                            ->from($db->quoteName('#__questions','a'))
+     $query      ->clear();
+        $query              ->select($db->quoteName(array('a.UniqueID','a.expert_id','a.no_of_ques','a.name','a.email',
+                                    'a.gender','a.dob_tob','a.pob','a.fees','a.currency','b.paypal_id','b.status')))
+                            ->from($db->quoteName('#__question_details','a'))
                               ->join('INNER', $db->quoteName('#__paypal_info', 'b') . ' ON (' . $db->quoteName('a.UniqueID').' = '.$db->quoteName('b.UniqueID') . ')')
                             ->where($db->quoteName('b.paypal_id').'='.$db->quote($paypal_id));
        $db                  ->setQuery($query);
-       $details                 = $db->loadAssoc();
-       $fees                = $details['fees'];
-       $choice              = $details['choice'];
-
-        $bcc                = 'kopnite@gmail.com';
-        $subject            = "Ask AstroIsha Quesion Token No: ".$details['UniqueID'];
-        $ques_topic1        = $details['ques_topic1'];
-        $ques_1             = $details['ques_1'];
-        $ques_explain1      = $details['ques_1_explain'];
-        $ques_topic2        = $details['ques_topic2'];
-        $ques_2             = $details['ques_2'];
-        $ques_explain2      = $details['ques_2_explain'];
-        $ques_topic3        = $details['ques_topic3'];
-        $ques_3             = $details['ques_3'];
-        $ques_explain3      = $details['ques_3_explain'];
-        
-        $body               = "Dear ".$details['name'].",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Also your payment of ".$fees." ".$details['user_currency']."(".$details['user_curr_full'].")".
-                                " has been authorized. We would process your query and give a detailed answer with logical solution to your questions in 7 Working Days. Your money would only be deducted once we have finished the report and mailed it to you.<br/><br/>";
-        $body               .= "Your Details are as below.<br/><br/>";
-        $body               .= "Name: ".$details['name']."<br/>";
-        $body               .= "Email: ".$details['email']."<br/>";
-        $body               .= "Gender: ".$details['gender']."<br/>";
-        $body               .= "Date Of Birth: ".$details['dob']."<br/>";
-        $body               .= "Time Of Birth: ".$details['tob']."<br/>";
-        $body               .= "Place Of Birth: ".$details['pob']."<br/>";
-        $body               .= "Token Number: ".$details['UniqueID']."<br/>";
-        $body               .= "Payment ID: ".$details['paypal_id']."<br/>";
-        $body               .= "Status: ".$details['status']."<br/>";
-        $body               .= "Number Of Questions: ".$details['choice']."<br/>";
-        $body               .= "Explanation (Detail/Short): ".ucfirst($details['explain_choice'])."<br/><br/>";
-        if($details['explain_choice'] == 'short')
-        {
-            for($i=0;$i<$choice;$i++)
-            {
-                $j              = $i+1;
-                $body               .= "<strong>Question ".$j.":</strong><br/>";
-                $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
-                $body               .= "Question: ".${"ques_".$j}."<br/><br/>";
-            }
-        }
-        else if($details['explain_choice']== 'detail')
-        {
-            for($i=0;$i<$choice;$i++)
-            {
-                $j=$i+1;
-                $body               .= "<strong>Question ".$j.":</strong><br/>";
-                $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
-                $body               .= "Question: ".${"ques_".$j}."<br/>";
-                $body               .= "Background: ".${"ques_explain".$j}."<br/><br/>";
-            }
-        }
-    $body               .= "<br/><div style='align:right'>Admin At Astro Isha,<br/>Rohan Desai</div>";        
-    $mailer             = JFactory::getMailer();
-    $config             = JFactory::getConfig();
-    $sender             = array( 
-                                    $config->get( 'mailfrom' ),
-                                    $config->get( 'fromname' ) 
-                                );
-
-    $mailer             ->setSender($sender);
-    $mailer             ->addRecipient($details['email']);
-    $mailer             ->addBCC($bcc, 'Rohan Desai');
-    $mailer             ->setSubject($subject);
-    $mailer             ->isHTML(true);
-    $mailer             ->Encoding = 'base64';
-    $mailer             ->setBody($body);
-
-    $send = $mailer->Send();
-    if ( $send !== true ) {
-        echo 'Error sending email: ' . $send->__toString();
-    } else {
-        $app                =&JFactory::getApplication();
-        $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm&payment=paypal'); 
-    }
-
+       $data1                = $db->loadObject();
+       print_r($data1);exit;
+       $expert_id           = $data1->expert_id;
+       $no_of_ques          = $data1->no_of_ques;
+       $query              ->clear();
+       $query              ->select($db->quoteName(array('name','username')))
+                            ->from($db->quoteName('#__users'))
+                            ->where($db->quoteName('id').' = '.$db->quote($expert_id));
+       $db                  ->setQuery($query);
+       $data2                = $db->loadObject();
+       $data                = array_merge($data, $data2);
+       $query               ->clear();
+       $query              ->select($db->quoteName(array('ques_topic','ques_ask','ques_details')))
+                            ->from($db->quoteName('#__question'))
+                            ->where($db->quoteName('order_id').' = '.$db->quote($token));
+       $db                  ->setQuery($query);
+       $data3               = $db->loadObjectList();
+       
+       $data                = array_merge($data,$data3);
+       print_r($data);exit;
+       $this->sendMail($data);
+       
 }
 public function failPayment($details)
 {
+    //print_r($details);exit;
     $token          = $details['token'];
-    $fail_id        = $details['fail_id'];
     $db         = JFactory::getDbo();
     $query      = $db->getQuery(true);
-     $db = JFactory::getDbo();
-    $query = $db->getQuery(true);
-    // Fields to update.
-    $fields = array(
-        $db->quoteName('authorize_id') . ' = ' . $db->quote('no'),
-        $db->quoteName('paypal_id').'='.$db->quote($fail_id),
-        $db->quoteName('status').'='.$db->quote('Cancelled'));
-    // Conditions for which records should be updated.
-    $conditions = array(
-        $db->quoteName('UniqueID').'='.$db->quote($token)
-    );
-    $query->update($db->quoteName('#__paypal_info'))->set($fields)->where($conditions);
- 
-    $db->setQuery($query);
- 
-    $result = $db->execute();
-    if($result)
-    {
-        $query      ->clear();
-        $query              ->select($db->quoteName(array('UniqueID','name','email')))
-                            ->from($db->quoteName('#__questions'))
+    $query              ->select($db->quoteName(array('UniqueID','expert_id','name','email',
+                                    'gender','dob_tob','pob','order_type','pay_mode','fees','currency','paid')))
+                            ->from($db->quoteName('#__question_details'))
                             ->where($db->quoteName('UniqueID').'='.$db->quote($token));
-        $db                  ->setQuery($query);
-        $details                 = $db->loadAssoc();
-
-        $bcc                = 'kopnite@gmail.com';
-        $subject            = "Astro Isha Failed Transaction ID: ".$details['UniqueID'];
-            
-        $body               = "Dear ".$details['name'].",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>Your order with Astro Isha was cancelled. Please try again if you wish your query to be resolved by Astro Isha. If you 
-                               do not wish paid consultation please ignore this email.<br/><br/>";
-        
-        $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";        
-        $mailer             = JFactory::getMailer();
-        $config             = JFactory::getConfig();
-        $sender             = array( 
-                                    $config->get( 'mailfrom' ),
-                                    $config->get( 'fromname' ) 
-                                );
-
-        $mailer             ->setSender($sender);
-        $mailer             ->addRecipient($details['email']);
-        $mailer             ->addBCC($bcc, 'Rohan Desai');
-        $mailer             ->setSubject($subject);
-        $mailer             ->isHTML(true);
-        $mailer             ->Encoding = 'base64';
-        $mailer             ->setBody($body);
-
-        $send = $mailer->Send();
-        if ( $send !== true ) {
-            echo 'Error sending email: ' . $send->__toString();
-        } else {
-            $app                =&JFactory::getApplication();
-            $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm&payment=false');
-            
-            }
-    }
+    $db                  ->setQuery($query);
+    $data                 = $db->loadObject();
+    $this->sendMail($data);
 }
 public function confirmCCPayment($details)
 {
@@ -498,6 +412,239 @@ else
         $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm&payment=ccavenue'); 
     }
 }
+function sendMail($data)
+    {
+        print_r($data);exit;
+        $user       = JFactory::getUser();
+        $mailer     = JFactory::getMailer();
+        $config     = JFactory::getConfig();
+        $app        = JFactory::getApplication(); 
+        $body       = "";
+        $sender     = array(
+                        $config->get('mailfrom'),
+                        $config->get('fromname')
+                            );
+        
+        $mailer     ->setSender($sender);
+        $recepient  = $user->email;
+        $mailer     ->addRecipient($recepient);
+        $mailer     ->addBcc('kopnite@gmail.com');
+        $subject    = "AstroIsha Paid Membership Token: ".$data->UniqueId;
+        $mailer     ->setSubject($subject);
+        if($data->pay_mode == "bhim"||$data->pay_mode=="phonepe")
+        {
+            $pay_mode   = ucfirst($data->pay_mode)." App";
+        }
+        else if($data->pay_mode=="direct")
+        {
+            $pay_mode   = ucfirst($data->pay_mode)." Tranfer";
+        }
+        else if($data->pay_mode=="paypalme")
+        {
+            $pay_mode   = "<strong>PayPal.Me</strong>";
+        }
+        else
+        {
+            $pay_mode   = ucfirst($data->pay_mode);
+        }
+        if($data->pay_mode=="paytm"||$data->pay_mode=="paypal"||$data->pay_mode=="ccavenue")
+        {
+            $body       .= "<p>Dear ".$data->name.",</p>";
+            if($data->paid=="no")
+            {
+                $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Online Payment to AstroIsha(https://www.astroisha.com) has failed. Kindly retry again if you wish your an answer to your questions. If you have Cancelled the Order then kindly ignore this email.</p>";
+            }
+            else if($data->paid =="yes")
+            {
+                $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Online Payment to AstroIsha(https://www.astroisha.com) is successful. The answers to your questions would be resolved and mailed to you.</p><br/>"; 
+            }
+            else
+            {
+                $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Online Payment to AstroIsha(https://www.astroisha.com) has failed. Kindly retry again if you wish your an answer to your questions. If you have Cancelled the Order then kindly ignore this email.</p>";
+            }
+        }
+        else
+        {
+            $body       .= "<p>Dear ".$data->name.",</p>";
+            $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You have applied for Paid Membership with AstroIsha(https://www.astroisha.com). 
+                            Once your payment is completed and authorized you would be able to avail benefits of Paid Memberships. You have chosen 
+                            payment by using ".$pay_mode.". Kindly pay the amount: ".$data->amount." ".$data->currency." and notify 
+                            to admin@astroisha.com once payment is completed. <strong>Kindly keep some reference of your payment to avoid issues later.</strong></p><br/>"; 
+            $body       .= "<p><strong>Below Are The Payment Details:</strong></p>";
+        }    
+        if($data->pay_mode == "bhim")
+        {
+            $body       .= "<p><strong>Pay To: </strong>astroisha@upi or 9727841461</p>";
+            $body       .= "<p>Alternatively you can open Bhim App and scan the attached image to make payment.</p>";
+        }
+        else if($data->pay_mode == "phonepe")
+        {
+            $body       .= "<p><strong>Pay To: </strong>astroisha@ybl or 9727841461</p>";
+            $body       .= "<p>Alternatively you can open PhonePe App and scan the attached image to make payment.</p>";
+        }
+        else if($data->pay_mode == "direct")
+        {
+            $body       .= "<p><strong>Payable To: </strong>Astro Isha</p>";
+            $body       .= "<p><strong>Account Number: </strong>915020051554614</p>";
+            $body       .= "<p><strong>Bank Name: </strong>Axis Bank</p>";
+            $body       .= "<p><strong>IFSC Code: </strong>UTIB0000080</p>";                  
+        }
+        else if($data->pay_mode == "cheque")
+        {
+            $body       .= "<p>Write a Cheque to <strong>Astro Isha</strong> and submit it to your near Axis Bank. Keep Cheque Number as reference.</p>";
+        }
+        else if($data->pay_mode == "paypalme")
+        {
+            $link       = "https://www.paypal.me/AstroIsha/".$data->fees.$data->currency;
+            $body       .=  "<a href=".$link.">Pay Using Paypal.Me</a>";
+            $body       .= "<p>Click On The Above Link to finish payment. Send the payment confirmation email from Paypal to admin@astroisha.com in order to verify payment.</p>";
+        }
+        else if($data->pay_mode == "directint")
+        {
+            $body       .= "<p><strong>Payable To: </strong>Astro Isha</p>";
+            $body       .= "<p><strong>Account Number: </strong>915020051554614</p>";
+            $body       .= "<p><strong>Bank Name: </strong>Axis Bank</p>";
+            $body       .= "<p><strong>Swift Code: </strong>AXISINBB080</p>";
+        }
+        else if($data->pay_mode=="paytm"&&$data->paid=="no")
+        {
+            $body       .= "<p><strong>Online Payment via Paytm has Failed. Please try again to get paid membership. Below are details: </strong></p>";
+            $body       .= "<p><strong>Amount: </strong>".$data->fees." ".$data->currency."</p>";
+            $body       .= "<p><strong>Token: </strong>".$data->token."</p>";
+            $body       .= "<p><strong>Payment Via: </strong>".$data->pay_mode."</p>";
+            $body       .= "<p><strong>Payment Status: </strong>Failed</p>";
+            
+        }
+        else if($data->pay_mode=="ccavenue"&& $data->paid=="no")
+        {
+            $body       .= "<p><strong>Online Payment for Astro Isha has Failed. Please try again to get paid membership. Below are details: </strong></p>";
+            $body       .= "<p><strong>Amount: </strong>".$data->fees." ".$data->currency."</p>";
+            $body       .= "<p><strong>Token: </strong>".$data->token."</p>";
+            $body       .= "<p><strong>Payment Via: </strong>".$data->pay_mode."</p>";
+            $body       .= "<p><strong>Payment Status: </strong>Failed</p>";
+            
+        }
+        else if($data->pay_mode=="paypal"&& $data->paid=="no")
+        {
+            $body       .= "<p><strong>Online Payment for Astro Isha via Paypal has Failed. Please try again to get paid membership. Below are details: </strong></p>";
+            $body       .= "<p><strong>Amount: </strong>".$data->fees." ".$data->currency."</p>";
+            $body       .= "<p><strong>Token: </strong>".$data->token."</p>";
+            $body       .= "<p><strong>Payment Via: </strong>".$data->pay_mode."</p>";
+            $body       .= "<p><strong>Payment Status: </strong>Failed</p><br/>";
+            $body       .= "<p>Alternatively you can use Direct Transfer or PaypalMe. 
+                                Below is the link to pay via PaypalMe. Just email the payment confirmation to Astro Isha
+                                and mention the token number provided and we would update your Account to Paid Membership.</p>";
+            $link       = "https://www.paypal.me/AstroIsha/".$data->fees.$data->currency;
+            $body       .=  "<a href=".$link.">Pay Using Paypal.Me</a><br/><br/>";
+            
+        }
+        else if($data->pay_choice=="paytm"&&$data->paid=="yes")
+        {
+            $body       .= "<p><strong>Online Payment via Paytm is Successful. Below are the details of payment: </strong></p>";
+            $body       .= "<p><strong>Amount: </strong>".$data->fees." ".$data->currency."</p>";
+            $body       .= "<p><strong>Token: </strong>".$data->token."</p>";
+            $body       .= "<p><strong>Payment Via: </strong>".$data->pay_mode."</p>";
+            $body       .= "<p><strong>Payment Status: </strong>Success</p>";
+            $body       .= "<p><strong>Payment Id: </strong>".$data->payment_id."</p>";
+            $body       .= "<p><strong>Bank Reference Id: </strong>".$data->bank_ref."</p>";
+            $body       .= "<br/><p><strong>Please keep this email as reference. Alternatively you can also print this email for future reference.</strong></p>";
+        }
+        else if($data->pay_choice=="ccavenue"&&$data->paid=="yes")
+        {
+            $body       .= "<p><strong>Online Payment via Paytm is Successful. Below are the details of payment: </strong></p>";
+            $body       .= "<p><strong>Amount: </strong>".$data->fees." ".$data->currency."</p>";
+            $body       .= "<p><strong>Token: </strong>".$data->token."</p>";
+            $body       .= "<p><strong>Payment Via: </strong>".$data->pay_mode."</p>";
+            $body       .= "<p><strong>Payment Status: </strong>Success</p>";
+            $body       .= "<p><strong>Payment Id: </strong>".$data->payment_id."</p>";
+            $body       .= "<p><strong>Bank Reference Id: </strong>".$data->bank_ref."</p>";
+            $body       .= "<br/><p><strong>Please keep this email as reference. Alternatively you can also print this email for future reference.</strong></p>";
+        }
+        else if($data->pay_choice=="paypal"&&$data->paid=="yes")
+        {
+            $body       .= "<p><strong>Online Payment via Paypal is Successful. Below are the details of payment: </strong></p>";
+            $body       .= "<p><strong>Amount: </strong>".$data->fees." ".$data->currency."</p>";
+            $body       .= "<p><strong>Token: </strong>".$data->token."</p>";
+            $body       .= "<p><strong>Payment Via: </strong>".$data->pay_mode."</p>";
+            $body       .= "<p><strong>Payment Status: </strong>Success</p>";
+            $body       .= "<p><strong>Payment Id: </strong>".$data->payment_id."</p>";
+            $body       .= "<br/><p><strong>Please keep this email as reference. Alternatively you can also print this email for future reference.</strong></p>";
+        }
+        else
+        {
+            $body       .= "<p><strong>Payable To: </strong>Astro Isha</p>";
+            $body       .= "<p><strong>Account Number: </strong>915020051554614</p>";
+            $body       .= "<p><strong>Bank Name: </strong>Axis Bank</p>";
+            $body       .= "<p><strong>IFSC Code: </strong>UTIB0000080</p>";
+            $body       .= "<p><strong>Swift Code: </strong>AXISINBB080</p>";
+        }
+        $body       .= "<p>Admin At Astro Isha,<br/>Rohan Desai</p>";
+        $mailer->isHtml(true);
+        $mailer->Encoding = 'base64';
+        $mailer->setBody($body);
+        if($data->pay_mode=="phonepe")
+        {
+            $mailer->addAttachment(JPATH_BASE.'/images/phonepe_pay.png');
+        }
+        else if($data->pay_mode=="bhim")
+        {
+            $mailer->addAttachment(JPATH_BASE.'/images/bhim_pay.jpg');
+        }
+        else if($data->pay_mode == "direct"||$data->pay_choice =="directint")
+        {
+            $mailer->addAttachment(JPATH_BASE.'/images/bank_details.pdf');
+        }
+        $send = $mailer->Send();
+        $link       = JUri::base().'ask-expert';
+        if ( $send !== true ) {
+            $msg    = 'Error sending email: Try again and if problem continues contact admin@astroisha.com.';
+            $msgType = "error";
+            $app->redirect($link, $msg,$msgType);
+        } else {
+            if($data->pay_mode=="paytm"&&$data->paid=="yes")
+            {
+                $msg    =  'Payment via Paytm is successful. Please check your email to see payment details.';
+                $msgType    = "success";
+                $app->redirect($link, $msg,$msgType);
+            }
+            else if($data->pay_mode=="paytm"&&$data->paid=="no")
+            {
+                $msg    =  'Payment via Paytm has failed. Kindly check your email for details.';
+                $msgType    = "error";
+                $app->redirect($link, $msg,$msgType);
+            }
+            else if($data->pay_mode=="ccavenue"&&$data->paid=="yes")
+            {
+                $msg    =  'Please check your email to see payment details.';
+                $msgType    = "success";
+                $app->redirect($link, $msg,$msgType);
+            }
+            else if($data->pay_mode=="ccavenue"&&$data->paid=="no")
+            {
+                $msg    =  'Payment has failed. Kindly check your email for details.';
+                $msgType    = "error";
+                $app->redirect($link, $msg,$msgType);
+            }
+            else if($data->pay_mode=="paypal"&&$data->paid=="no")
+            {
+                $msg    =  'Payment via Paypal has failed. Kindly check your email for details.';
+                $msgType    = "error";
+                $app->redirect($link, $msg,$msgType);
+            }
+            else if($data->pay_mode=="paypal"&&$data->paid=="yes")
+            {
+                $msg    =  'Payment via Paypal is successfull. Please check your email to see payment details.';
+                $msgType    = "success";
+                $app->redirect($link, $msg,$msgType);
+            }
+            else
+            {
+                $msg    =  'Please check your email for more information about payment.';
+                $msgType    = "success";
+                $app->redirect($link, $msg,$msgType);
+            }
+        }        
+    }
     
 }
 ?>
