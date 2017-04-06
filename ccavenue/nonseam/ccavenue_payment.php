@@ -11,6 +11,7 @@
 <?php
         if(isset($_GET['token']))
 {
+        $token              = $_GET['token'];
         $name               = $_GET['name'];
         $token              = $_GET['token'];
         $token1             = substr($token,6);
@@ -19,6 +20,7 @@
         $currency           = $_GET['curr'];
         $fees               = $_GET['fees'];
         $server             = 'http://'.$_SERVER['SERVER_NAME'];
+
 
 ?>
     <form method="post" id="customerData" name="customerData" action="ccavRequestHandler.php">
@@ -43,7 +45,7 @@
 }
 ?>
 </form>
-    <script language='javascript'>document.customerData.submit();</script>
+<script language='javascript'>document.customerData.submit();</script>
 	</body>
 </html>
 
