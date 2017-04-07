@@ -40,16 +40,16 @@ class ExtendedProfileModelFinance extends JModelItem
         $query          = $db->getQuery(true);
         try
         {
-            include_once "/home/astroxou/php/Net/GeoIP.php";
-            $geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
-            //$ip                     = '117.196.1.11';
+            //include_once "/home/astroxou/php/Net/GeoIP.php";
+            //$geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
+            $ip                     = '117.196.1.11';
             //$ip                         = '157.55.39.123';  // ip address
-            $ip                     = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
-            //$info                   = geoip_country_code_by_name($ip);
-            //$country                = geoip_country_name_by_name($ip);
-            $location               = $geoip->lookupLocation($ip);
-            $info                   = $location->countryCode;
-            $country                = $location->countryName;
+            //$ip                     = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
+            $info                   = geoip_country_code_by_name($ip);
+            $country                = geoip_country_name_by_name($ip);
+            //$location               = $geoip->lookupLocation($ip);
+            //$info                   = $location->countryCode;
+            //$country                = $location->countryName;
             if($info == "US")
             {
                 $query          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))

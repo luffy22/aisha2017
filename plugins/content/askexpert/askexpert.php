@@ -6,9 +6,7 @@
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-
 defined('_JEXEC') or die;
-
 /**
  * Pagenavigation plugin class.
  *
@@ -26,16 +24,16 @@ class PlgContentAskExpert extends JPlugin
             $app                = JFactory::getApplication();
             $view               = $app->input->get('view');
             $path               = JPluginHelper::getLayoutPath('content', 'askexpert');
-            //include_once "/home/astroxou/php/Net/GeoIP.php";
-            //$geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
-            $ip                         = '117.196.1.11';
-            //$ip                         = '157.55.39.123';  // ip address
+            include_once "/home/astroxou/php/Net/GeoIP.php";
+            $geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
+            //$ip                         = '117.196.1.11';
+            $ip                         = '157.55.39.123';  // ip address
             //$ip                       = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
-            $info                       = geoip_country_code_by_name($ip);
-            $country                    = geoip_country_name_by_name($ip);
-            //$location               = $geoip->lookupLocation($ip);
-            //$info                   = $location->countryCode;
-            //$country                = $location->countryName;
+            //$info                       = geoip_country_code_by_name($ip);
+            //$country                    = geoip_country_name_by_name($ip);
+            $location               = $geoip->lookupLocation($ip);
+            $info                   = $location->countryCode;
+            $country                = $location->countryName;
             if(($context === 'com_content.article')&&($view=='article'))
             {
                 $text           = $article->introtext;

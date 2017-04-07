@@ -3,7 +3,7 @@
 
 if(isset($_GET['payment']))
 {
-    header('Location:http://www.astroisha.com/index.php?option=com_astrologin&view=quesconfirm&payment_success=false');
+    header('Location:http://www.astroisha.com/ask-expert?payment_success=false');
 }
 else
 {
