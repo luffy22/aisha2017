@@ -146,26 +146,27 @@ class PlgContentAskExpert extends JPlugin
                                             $db->quoteName('service_for_charge').' = '.$db->quote($service).' AND '.
                                             $db->quoteName('country').' = '.$db->quote('ROW'));
                 }
-                $db             ->setQuery($query1);
-                $country           = array("country_full"=>$country);
-                $result1           = $db->loadAssoc();
-                $details           = array_merge($result1,$country);
-                $content        = "<div class='card card-outline-info mb-3 text-center'>";
-                $content        .= "<div class='card-block'>";
-                $content        .= "<h3><a title='Click to get more info' href='#' data-toggle='modal' data-target='#astroinfo'><img src='".JURi::base()."images/profiles/".$result->img_new_name."' height='50px' width='50px' title='".$result->img_name."' />".$result->name."</a></h3>";
-                $content        .= "<div class='modal fade' id='astroinfo' tabindex='-1' role='dialog' aria-hidden='true' aria-labelledby='astrolabel'>";
-                $content        .= "<div class='modal-dialog' role='document'>";
-                $content        .= "<div class='modal-content'>";
-                $content        .= "<div class='modal-header'><h5 class='modal-title' id='astrolabel'>Expert Info</h5>
-                                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                                    <span aria-hidden='true'>&times;</span></button></div>";
-                $content        .= "<div class='modal-body'>";
-                $content        .= "<img src='".JURi::base().'images/profiles/'.$result->img_new_name."' height='50px' width='50px' title='".$result->img_name."' />".$result->name;
-                $content        .= "<p>Location: ".$result->city.", ".$result->country."</p>";
-                $content        .= "<p>".$result->info."</p>";
-                $content        .= "</div>";
-                $content        .= "<div class='modal-footer'>
-                                    <button type='button' class='btn btn-secondary btn-danger' data-dismiss='modal'>Close</button></div></div></div></div>";
+                $db                 ->setQuery($query1);
+                $country            = array("country_full"=>$country);
+                $result1            = $db->loadAssoc();
+                $details            = array_merge($result1,$country);
+                $content            = "<div class='card card-outline-info mb-3 text-center'>";
+                $content            .= "<div class='card-block'>";
+                $content            .= "<h3><a title='Click to get more info' href='#' data-toggle='modal' data-target='#astroinfo'><img src='".JURi::base()."images/profiles/".$result->img_new_name."' height='50px' width='50px' title='".$result->img_name."' />".$result->name."</a></h3>";
+                $content           .= "<div class='modal fade' id='astroinfo' tabindex='-1' role='dialog' aria-hidden='true' aria-labelledby='astrolabel'>";
+                $content            .= "<div class='modal-dialog' role='document'>";
+                $content            .= "<div class='modal-content'>";
+                $content            .= "<div class='modal-header'><h5 class='modal-title' id='astrolabel'>Expert Info</h5>
+                                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                        <span aria-hidden='true'>&times;</span></button></div>";
+                $content            .= "<div class='modal-body'>";
+                $content            .= "<img src='".JURi::base().'images/profiles/'.$result->img_new_name."' height='50px' width='50px' title='".$result->img_name."' />".$result->name;
+                $content            .= "<p>Location: ".$result->city.", ".$result->country."</p>";
+                $content            .= "<p>".$result->info."</p>";
+                $content            .= "</div>";
+                $content            .= "<div class='modal-footer'>
+                                        <button type='button' class='btn btn-secondary btn-danger' data-dismiss='modal'>Close</button></div>";
+                $content            .= "</div></div></div>";
                 if($result->profile_status=="visible"&&$result->membership=="Paid")
                 {
                     $content        .= "<p class='lead'>Get Online Consultation</p>";
@@ -197,7 +198,8 @@ class PlgContentAskExpert extends JPlugin
                         $content        .= " <input type='radio' name='expert_order_type' id='expert_order_type' value='report' /> <i class='fa fa-file-pdf-o'></i> Report";
                         $content        .= "</div>";
                     }
-                    else {
+                    else 
+                    {
                         $content        .= "<div class='form-group'><label for='phone_or_report'>Order Type: </label> <i class='fa fa-file-pdf-o'></i> Report</div>";
                         $content        .= "<input type='hidden' name='expert_order_type' id='expert_order_type' value='report' />";
    
@@ -227,8 +229,9 @@ class PlgContentAskExpert extends JPlugin
                         $content            .= " <input type='radio' name='expert_choice' id='expert_choice8' value='directint' /> Direct Transfer";
 
                     }
-                    $content            .= "<div class='form-group'><button type='submit' class='btn btn-primary' name='expert_submit'><i class='fa fa-globe'></i> Ask</button></div>";
-                    $content            .= "</form>";
+                    $content                .= "</div>";
+                    $content                .= "<div class='form-group'><button type='submit' class='btn btn-primary' name='expert_submit'><i class='fa fa-globe'></i> Ask</button></div>";
+                    $content                .= "</form>";
                 }
                 $content            .= "</div></div>";
                 return $content;

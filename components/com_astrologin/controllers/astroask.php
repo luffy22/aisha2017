@@ -48,6 +48,7 @@ class AstrologinControllerAstroask extends AstroLoginController
             //print_r($ques);exit;
             $details                    = array("uniq_id"=>$uniq_id,"ques_no"=>$ques_no);
             $details                    = array_merge($details,$ques);
+            //print_r($details);exit;
             $model          = $this->getModel('astroask');  // Add the array to model
             $model          ->insertQuestions($details);
     }
