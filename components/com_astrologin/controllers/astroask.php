@@ -70,6 +70,14 @@ class AstrologinControllerAstroask extends AstroLoginController
     }
     public function confirmCCPayment()
     {
+        if((isset($_GET['payment']))&&($_GET['payment'] == 'fail'))
+        {
+            $app           = JFactory::getApplication();
+            $link          = JUri::base();
+            $msg           = 'You have Cancelled your order.';
+            $msgType       = 'error';
+            $app           ->redirect($link,$msg,$msgType);
+        }
         $token             = $_GET['token'];
         $track_id          = $_GET['track_id'];
         $bank_ref          = $_GET['bank_ref'];

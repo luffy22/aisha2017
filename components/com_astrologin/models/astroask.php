@@ -281,24 +281,33 @@ public function confirmCCPayment($details)
     $status             = $details['status'];
     $db = JFactory::getDbo();
     $query = $db->getQuery(true);
+    if($status      == 'Success'||$status =='TXN_SUCCESS')
+    {
     // Fields to update.
-    $object                 = new stdClass();
-    $object->paid           = "yes";
-    $object->UniqueId       = $token;
-    // Update their details in the users table using id as the primary key.
-    $result                 = JFactory::getDbo()->updateObject('#__question_details', $object, 'UniqueId');
+        $object                 = new stdClass();
+        $object->paid           = "yes";
+        $object->UniqueId       = $token;
+        // Update their details in the users table using id as the primary key.
+        $result                 = JFactory::getDbo()->updateObject('#__question_details', $object, 'UniqueId');
+    }
+    if($status == 'TXN_SUCCESS')
+    {
+        $status = "Success";
+    }
+    else if($status == 'TXN_FAILURE')
+    {
+        $status     = "Failure";
+    }
     $columns                = array('pay_token','track_id','bank_ref','pay_status');
     // Conditions for which records should be updated.
     $values                 = array($db->quote($token),$db->quote($trackid),$db->quote($bankref),$db->quote($status));
     
-    $query              ->insert($db->quoteName('#__paypal_info'))
+    $query              ->insert($db->quoteName('#__ccavenue_paytm'))
                         ->columns($db->quoteName($columns))
                         ->values(implode(',', $values));  
     $db                 ->setQuery($query);
     $result             = $db->query();
-        $db                 ->setQuery($query);
-    $result             = $db->query();
- 
+    
     $query              ->clear();
     $query                  ->select($db->quoteName(array('a.UniqueID','a.expert_id','a.no_of_ques','a.name','a.email',
                                     'a.gender','a.dob_tob','a.pob','a.pay_mode','a.order_type','a.fees','a.currency','a.paid','b.track_id',
@@ -311,7 +320,7 @@ public function confirmCCPayment($details)
                             ->where($db->quoteName('a.UniqueID').' = '.$db->quote($token));
     $db                     ->setQuery($query);
     $data                   = $db->loadObject();
-       //print_r($data);exit;
+    //print_r($data);exit;
     $this->sendMail($data);
 }
 function sendMail($data)
@@ -341,9 +350,9 @@ function sendMail($data)
     {
         $pay_mode   = ucfirst($data->pay_mode)." App";
     }
-    else if($data->pay_mode=="direct")
+    else if($data->pay_mode=="direct"||$data->pay_mode=="directint")
     {
-        $pay_mode   = ucfirst($data->pay_mode)." Tranfer";
+        $pay_mode   = "Direct Tranfer";
     }
     else if($data->pay_mode=="paypalme")
     {
@@ -373,7 +382,7 @@ function sendMail($data)
     {
         $body       .= "<p>Dear ".$data->name.",</p>";
         $body       .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your have placed an Order with AstroIsha(https://www.astroisha.com). 
-                        You have applied to pay via: ".ucfirst($data->pay_mode).". Kindly pay the amount: ".$data->fees." ".$data->currency." and notify 
+                        You have applied to pay via: ".$pay_mode.". Kindly pay the amount: ".$data->fees." ".$data->currency." and notify 
                         to admin@astroisha.com once payment is completed. <strong>Kindly keep some reference of your payment to avoid issues later.</strong></p><br/>"; 
 
     }  
@@ -403,12 +412,12 @@ function sendMail($data)
     $body           .= "<p>Place Of Birth: ".$data->pob."</p><br/>";
     $body           .= "<p><strong>Below Are The Payment Details:</strong></p>";
     $body           .= "<p>Fees: ".$data->fees."&nbsp;".$data->currency."</p>";
-    $body           .= "<p>Payment Via: ".ucfirst($data->pay_mode)."</p>";
+    $body           .= "<p>Payment Via: ".$pay_mode."</p>";
     if($data->pay_mode == "bhim")
     {
 
         $body       .= "<p>Pay To: astroisha@upi or 9727841461</p>";
-        $body       .= "<p>Alternatively you can open Bhim App and scan the attached image to make payment.</p>";
+        
     }
     else if($data->pay_mode == "phonepe")
     {
@@ -454,10 +463,10 @@ function sendMail($data)
         $body       .= "<p>Payment Status: Failed</p><br/>";
 
     }
-    else if($data->paymode=="paytm"&&$data->paid=="yes")
+    else if($data->pay_mode=="paytm"&&$data->paid=="yes")
     {
         $body       .= "<p>Payment Status: Success</p>";
-        $body       .= "<p>Payment Id: ".$data->payment_id."</p>";
+        $body       .= "<p>Payment Id: ".$data->track_id."</p>";
         $body       .= "<p>Bank Reference Id: ".$data->bank_ref."</p>";
         $body       .= "<br/><p><strong>Please keep this email as reference. Alternatively you can also print this email for future reference.</strong></p>";
         $body       .= "<p><strong>In case the order is not completed in ten working days you would be refunded full amount back into your bank account. Kindly keep this email as reference.</strong></p><br/>";
@@ -465,7 +474,7 @@ function sendMail($data)
     else if($data->pay_mode=="ccavenue"&&$data->paid=="yes")
     {
         $body       .= "<p>Payment Status: Success</p>";
-        $body       .= "<p>Payment Id: ".$data->payment_id."</p>";
+        $body       .= "<p>Payment Id: ".$data->track_id."</p>";
         $body       .= "<p>Bank Reference Id: ".$data->bank_ref."</p>";
         $body       .= "<br/><p><strong>Please keep this email as reference. Alternatively you can also print this email for future reference.</strong></p>";
         $body       .= "<p><strong>In case the order is not completed in ten working days you would be refunded full amount back into your bank account. Kindly keep this email as reference.</strong></p><br/>";
@@ -494,10 +503,6 @@ function sendMail($data)
     if($data->pay_mode=="phonepe")
     {
         $mailer->addAttachment(JPATH_BASE.'/images/phonepe_pay.png');
-    }
-    else if($data->pay_mode=="bhim")
-    {
-        $mailer->addAttachment(JPATH_BASE.'/images/bhim_pay.jpg');
     }
     else if($data->pay_mode == "direct"||$data->pay_mode =="directint")
     {

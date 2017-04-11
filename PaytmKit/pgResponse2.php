@@ -23,7 +23,7 @@ if($isValidChecksum == "TRUE") {
 	if ($_POST["STATUS"] == "TXN_SUCCESS") {
             //echo $_POST['STATUS'];exit;
 		$txnid          = $_POST['TXNID'];
-                $order          = $_POST['ORDERID'];
+                $order          = str_replace("order_","token_",$_POST['ORDERID']);
                 $bank_ref       = $_POST['BANKTXNID'];
                 $status         = $_POST['STATUS'];
                 header("Location: https://www.astroisha.com/index.php?option=com_astrologin&task=astroask.confirmCCPayment&track_id=".$txnid.
@@ -34,7 +34,7 @@ if($isValidChecksum == "TRUE") {
 	else {
             //echo $_POST['STATUS'];exit;
 		$txnid          = $_POST['TXNID'];
-                $order          = $_POST['ORDERID'];
+                $order          = str_replace("order_","token_",$_POST['ORDERID']);
                 $bank_ref       = $_POST['BANKTXNID'];
                 $status         = $_POST['STATUS'];
                 header("Location: https://www.astroisha.com/index.php?option=com_astrologin&task=astroask.confirmCCPayment&track_id=".$txnid.

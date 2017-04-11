@@ -18,3 +18,4 @@
 2017-03-07T09:46:15+00:00	INFO 127.0.0.1	joomlafailure	Username and password do not match or you do not have an account yet.
 2017-03-20T05:50:39+00:00	INFO 127.0.0.1	joomlafailure	Username and password do not match or you do not have an account yet.
 2017-03-23T10:43:27+00:00	INFO 127.0.0.1	cookiefailure	Empty password not allowed.
+2017-04-08T12:01:34+00:00	INFO 127.0.0.1	joomlafailure	Username and password do not match or you do not have an account yet.

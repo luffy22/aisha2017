@@ -24,16 +24,18 @@ class PlgContentAskExpert extends JPlugin
             $app                = JFactory::getApplication();
             $view               = $app->input->get('view');
             $path               = JPluginHelper::getLayoutPath('content', 'askexpert');
-            include_once "/home/astroxou/php/Net/GeoIP.php";
-            $geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
+            //include_once "/home/astroxou/php/Net/GeoIP.php";
+            //$geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
             //$ip                         = '117.196.1.11';
             $ip                         = '157.55.39.123';  // ip address
             //$ip                       = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
-            //$info                       = geoip_country_code_by_name($ip);
-            //$country                    = geoip_country_name_by_name($ip);
-            $location               = $geoip->lookupLocation($ip);
-            $info                   = $location->countryCode;
-            $country                = $location->countryName;
+          
+            $info                       = geoip_country_code_by_name($ip);
+            $country                    = geoip_country_name_by_name($ip);
+            //$location               = $geoip->lookupLocation($ip);
+            //$info                   = $location->countryCode;
+            //$country                = $location->countryName;
+            
             if(($context === 'com_content.article')&&($view=='article'))
             {
                 $text           = $article->introtext;
@@ -195,7 +197,7 @@ class PlgContentAskExpert extends JPlugin
                     {
                         $content        .= "<div class='form-group'><label>Order Type: </label>";
                         $content        .= " <input type='radio' name='expert_order_type' id='expert_order_type' value='phone' /> <i class='fa fa-phone'></i> Phone";
-                        $content        .= " <input type='radio' name='expert_order_type' id='expert_order_type' value='report' /> <i class='fa fa-file-pdf-o'></i> Report";
+                        $content        .= " <input type='radio' name='expert_order_type' id='expert_order_type' value='report' checked /> <i class='fa fa-file-pdf-o'></i> Report";
                         $content        .= "</div>";
                     }
                     else 
@@ -218,8 +220,8 @@ class PlgContentAskExpert extends JPlugin
                                                 <input type='radio' name='expert_choice' id='expert_choice2' value='cheque' /> Cheque
                                                 <input type='radio' name='expert_choice' id='expert_choice3' value='direct' /> Direct Transfer
                                                 <input type='radio' name='expert_choice' id='expert_choice4' value='paytm' />  <img src='".JURi::base()."images/paytm.png' />";
-                        $content            .=  " <input type='radio' name='expert_choice' id='expert_choice5' value='bhim' /> <img src='".JURi::base()."images/bhim.png' />Bhim App";
-                        $content            .=  " <input type='radio' name='expert_choice' id='expert_choice6' value='phonepe' /> <img src='".JURi::base()."images/phonepe.png' />PhonePe</div>";
+                        $content            .=  " <input type='radio' name='expert_choice' id='expert_choice5' value='bhim' /> <img src='".JURi::base()."images/bhim.png' /> Bhim App";
+                        $content            .=  " <input type='radio' name='expert_choice' id='expert_choice6' value='phonepe' /> <img src='".JURi::base()."images/phonepe.png' /> PhonePe";
        
                     }
                     else

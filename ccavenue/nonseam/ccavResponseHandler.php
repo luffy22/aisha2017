@@ -3,7 +3,7 @@
 
 if(isset($_GET['payment']))
 {
-    header('Location:'.$server.'/index.php?payment=false');
+    header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.confirmCCPayment&payment=fail&token='.$token.'&email='.$email);
 }
 else
 {

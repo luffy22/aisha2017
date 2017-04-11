@@ -11,15 +11,15 @@
 <?php
         if(isset($_GET['token']))
 {
-        $name               = $_GET['name'];
-        $token              = $_GET['token'];
-        $token1             = substr($token,6);
-        $email              = $_GET['email'];
-        $quantity           = (int)1;
-        $currency           = $_GET['curr'];
-        $fees               = $_GET['amount'];
-        //  $server             = 'http://'.$_SERVER['SERVER_NAME'];  // uncomment on server
-        $server             = 'https://www.astroisha.com';
+    $name               = $_GET['name'];
+    $token              = $_GET['token'];
+    $token1             = substr($token,6);
+    $email              = $_GET['email'];
+    $quantity           = (int)1;
+    $currency           = $_GET['curr'];
+    $fees               = $_GET['amount'];
+    //  $server             = 'http://'.$_SERVER['SERVER_NAME'];  // uncomment on server
+    $server             = 'https://www.astroisha.com';
 
 ?>
     <form method="post" id="customerData" name="customerData" action="ccavRequestHandler.php">
@@ -28,7 +28,7 @@
         <input type="text" name="order_id" value="<?php echo trim($token1); ?>"/>
         <input type="text" name="amount" value="<?php echo trim($fees); ?>"/>
         <input type="text" name="currency" value="<?php echo trim($currency); ?>"/>
-        <input type="text" name="redirect_url" value="<?php echo $server.'/ccavenue/nonseam/ccavResponseHandler.php' ?>"/>
+        <input type="text" name="redirect_url" value="<?php echo $server.'/ccavenue/nonseam/ccavResponseHandler.php?payment=success&email='.$email.'&token='.$token; ?>"/>
         <input type="text" name="cancel_url" value="<?php echo $server.'/ccavenue/nonseam/ccavResponseHandler.php?payment=fail&token='.$token.'&email='.$email ?>"/>
         <input type="text" name="language" value="EN"/>
         <input type="text" name="billing_name" value="<?php echo trim($name); ?>"/>
