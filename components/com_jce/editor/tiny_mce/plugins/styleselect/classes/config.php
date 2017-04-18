@@ -43,6 +43,21 @@ class WFStyleselectPluginConfig
                 $blocks = array('section', 'nav', 'article', 'aside', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'footer', 'address', 'main', 'p', 'pre', 'blockquote', 'figure', 'figcaption', 'div');
 
                 foreach ((array) $custom_styles as $style) {
+                    // clean up title
+                    if (isset($style->title)) {
+                        $style->title = self::cleanString($style->title);
+                    }
+
+                    // clean up classes
+                    if (isset($style->selector)) {
+                        $style->selector = self::cleanString($style->selector);
+                    }
+
+                    // clean up classes
+                    if (isset($style->classes)) {
+                        $style->classes = self::cleanString($style->classes);
+                    }
+                    
                     if (isset($style->styles)) {
                         $style->styles = self::cleanJSON($style->styles);
                     }
@@ -58,23 +73,38 @@ class WFStyleselectPluginConfig
                         } else {
                             $style->inline = $style->element;
                         }
-                        // remove element
-                        unset($style->element);
 
                         // remove element
                         $style->remove = 'all';
                     }
 
-                    // match all if not set
-                    if (!isset($style->selector)) {
-                        $style->selector = '*';
+                    // edge case for forced_root_block=false
+                    if ($settings['forced_root_block'] === false) {
+                        if (!isset($style->element)) {
+                            $style->inline = 'span';
+                            $style->selector = '*';
+                        }
+                    } else {
+                        // match all if not set
+                        if (!isset($style->selector)) {
+
+                            $style->selector = '*';
+
+                            // set to element
+                            if (isset($style->element)) {
+                                $style->selector = $style->element;
+                            }
+                        }
                     }
+
+                    // remove element
+                    unset($style->element);
 
                     $styles[] = $style;
                 }
 
                 if (!empty($styles)) {
-                    $settings['style_formats'] = htmlentities(json_encode($styles, JSON_UNESCAPED_SLASHES), ENT_NOQUOTES, 'UTF-8');
+                    $settings['style_formats'] = json_encode($styles, JSON_UNESCAPED_SLASHES);
                 }
             }
         }
@@ -85,6 +115,10 @@ class WFStyleselectPluginConfig
         }
 
         $settings['styleselect_sort'] = $wf->getParam('styleselect.sort', 1, 1);
+    }
+
+    protected static function cleanString($string) {
+        return htmlentities($string, ENT_NOQUOTES, 'UTF-8');
     }
 
     protected static function cleanJSON($string, $delim1 = ';', $delim2 = ':')
@@ -105,7 +139,10 @@ class WFStyleselectPluginConfig
             $parts = preg_replace('#^["\']#', '', $parts);
             $parts = preg_replace('#["\']$#', '', $parts);
 
-            $ret[trim($parts[0])] = trim($parts[1]);
+            $key    = trim(self::cleanString($parts[0]));
+            $value  = trim(self::cleanString($parts[1])); 
+
+            $ret[$key] = $value;
         }
 
         return $ret;
@@ -138,7 +175,7 @@ class WFStyleselectPluginConfig
         if (count($remove)) {
             foreach ($fonts as $key => $value) {
                 foreach ($remove as $gone) {
-                    if ($gone && preg_match('/^'.$gone.'=/i', $value)) {
+                    if ($gone && preg_match('/^' . $gone . '=/i', $value)) {
                         // Remove family
                         unset($fonts[$key]);
                     }
