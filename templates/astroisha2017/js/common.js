@@ -7,7 +7,7 @@
 $(document).ready(function()
   {
       //var id = $('.accordion-id').attr('id');
-      $('#topcontent-1, #top-1, #top-2, #topcontent-2').accordion({
+      $('#topcontent-1, #top-1, #top-2, #topcontent-2, #payments-accordion, #payments-accordion1').accordion({
             heightStyle : "content",
             collapsible : true,
             active      : false
@@ -222,4 +222,35 @@ function changefees()
     var new_fees        = parseFloat(fees)*parseFloat(no_of_ques);
     document.getElementById("fees_id").innerHTML    = new_fees+"<html>&nbsp;</html>"+curr_code+"("+currency+"-"+curr_full+")"
     document.getElementById("expert_final_fees").value    = new_fees.toFixed(2);
+}
+function getExpertDetails(country)
+{
+
+    var expert      = document.getElementById("select_expert").value;
+    var location    = country;
+
+    $("#expert_alert").show();
+    document.getElementById("expert_alert").innerHTML = "";
+    if(expert == "default_select")
+    {
+        document.getElementById("expert_alert").innerHTML   = "<span style='color:red'>Kindly Select An Expert From Options.</span>";
+        setTimeout(function() {
+        $("#expert_alert").hide('blind', {}, 500)
+        }, 4000);
+    }
+    else
+    {
+        var request = $.ajax({
+            url: "ajaxcalls/getInfo.php",
+            type: "POST",
+            data: {expert : expert, locate: location},
+            cache: false  
+        });
+        request.done(function(msg){
+            alert(msg)
+        });
+        request.fail(function(jqXHR, textStatus) {
+            alert( "Request failed: " + textStatus );
+        });
+    }
 }
