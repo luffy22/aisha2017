@@ -14,6 +14,21 @@ $country                    = geoip_country_name_by_name($ip);
 //$country                  = $location->countryName;
 //print_r($this->msg);exit;
 ?>
+<style>#info_expert{visibility: hidden;}</style>
+<div class='card card-outline-info text-center' id="info_expert">
+<div class='card-block'>
+<p><a title='Click to get more info' href='#' data-toggle='modal' data-target='#astroinfo'>Click For More Information</a></p>
+<div class='modal fade' id='astroinfo' tabindex='-1' role='dialog' aria-hidden='true' aria-labelledby='astrolabel'>
+<div class='modal-dialog' role='document'>
+<div class='modal-content'>
+    <div class='modal-header'><h5 class='modal-title' id='astrolabel'>Expert Info</h5>
+    <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
+    <div class='modal-body' id="modal_body">
+    </div>
+<div class='modal-footer'>
+    <button type='button' class='btn btn-secondary btn-danger' data-dismiss='modal'>Close</button></div>
+</div></div></div>
+</div></div>
 <h3>Ask An Expert</h3>
 <form name="ask_expert" method="post" enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('?option=com_astrologin&task=astroask.chooseExpert'); ?>">
 <div class="form-group">
@@ -31,12 +46,14 @@ $country                    = geoip_country_name_by_name($ip);
 ?>
 </select>
 </div>
+
 <div class="form-group">
 <label for="select_expert">Choose Number Of Questions</label>
-<select class="form-control" name="select_ques" id="select_ques">
-    
-</select>
+<select class="form-control" name="select_ques" id="select_ques"></select>
 </div>
+<div class="form-control" id="order_type"></div>
+<div class="mb-2"></div>
+<div class="form-control"></div>
 <div class="form-group">
     <button type="submit" name="ask_submit" class="btn btn-primary" onclick="checkValues();return false;">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
     <button type="reset" name="ask_reset" id="ask_reset" class="btn btn-danger">Reset</button>

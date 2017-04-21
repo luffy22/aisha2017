@@ -225,7 +225,7 @@ function changefees()
 }
 function getExpertDetails(country)
 {
-
+    document.getElementById("info_expert").style.visibility = 'hidden';
     var expert      = document.getElementById("select_expert").value;
     var location    = country;
 
@@ -240,6 +240,7 @@ function getExpertDetails(country)
     }
     else
     {
+        document.getElementById("info_expert").style.visibility = 'visible';
         var request = $.ajax({
             url: "ajaxcalls/getInfo.php",
             type: "POST",
@@ -247,7 +248,36 @@ function getExpertDetails(country)
             cache: false  
         });
         request.done(function(msg){
-            alert(msg)
+            var obj         = jQuery.parseJSON(msg);
+            for(var i=1; i<=obj.max_no_ques;i++)
+            {
+                document.getElementById("select_ques").innerHTML += "<option value ='"+i+"'>"+i+"</option>";
+            }
+            if(obj.phone_or_report == "phone")
+            {
+                 document.getElementById("order_type").innerHTML       += "<label for='phone_or_report'>Order Type: </label> <i class='fa fa-phone'></i> Phone";
+                 document.getElementById("order_type").innerHTML       += "<input type='hidden' name='expert_order_type' id='expert_order_type' value='phone' />";
+            }
+            else if(obj.phone_or_report == "report")
+            {
+                document.getElementById("order_type").innerHTML       += "<label for='phone_or_report'>Order Type: </label> <i class='fa fa-file-pdf-o'></i> Report";
+                document.getElementById("order_type").innerHTML       += "<input type='hidden' name='expert_order_type' id='expert_order_type' value='report' />";
+            }
+            else if(obj.phone_or_report == "both")
+            {
+                document.getElementById("order_type").innerHTML        += "<label>Order Type: </label>";
+                document.getElementById("order_type").innerHTML        += " <input type='radio' name='expert_order_type' id='expert_order_type' value='phone' /> <i class='fa fa-phone'></i> Phone";
+                document.getElementById("order_type").innerHTML        += " <input type='radio' name='expert_order_type' id='expert_order_type' value='report' checked /> <i class='fa fa-file-pdf-o'></i> Report";
+            }
+            else
+            {
+                document.getElementById("order_type").innerHTML       += "<label for='phone_or_report'>Order Type: </label> <i class='fa fa-file-pdf-o'></i> Report";
+                document.getElementById("order_type").innerHTML       += "<input type='hidden' name='expert_order_type' id='expert_order_type' value='report' />";
+            }
+            document.getElementById("modal_body").innerHTML           += "<img src= '"+window.location.hostname+'/images/profiles/'+obj.img_new_name+"' height='50px' width='50px' title='Click To Get More Information' />"+obj.name;  
+            document.getElementById("modal_body").innerHTML           += "<p>Location: "+obj.city+", "+obj.country+"</p>"
+            document.getElementById("modal_body").innerHTML           += "<p>"+obj.info+"</p>";
+            
         });
         request.fail(function(jqXHR, textStatus) {
             alert( "Request failed: " + textStatus );

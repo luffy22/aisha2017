@@ -1,9 +1,8 @@
 <?php
-
-//if(isset($_POST['expert']))
-//{
-    //$country        = $_POST['locate'];
-    $country        = "IN";
+if(isset($_POST['expert']))
+{
+    $country        = $_POST['locate'];
+    //$country        = "IN";
     $host   = "localhost";$user = "root";
     $pwd    = "desai1985";$db   = "astroisha2017";
     $conn   = new mysqli($host, $user, $pwd, $db);
@@ -16,20 +15,27 @@
     else
     {
         $expert         =       substr($_POST['expert'],9);
-        $query          = "SELECT jv_users.name as astro_name,jv_user.username as astro_uname, jv_user_astrologer.max_no_ques as max_ques, 
-                            jv_user_astrologer.phone_or_report as phone_or_report, jv_expert_charges.amount AS expert_amount, jv_expert_charges.currency_ref as currency_ref FROM jv_users 
-                            INNER JOIN  jv_expert_charges ON jv_expert_charges.user_id = jv_users.id 
-                            INNER JOIN jv_user_astrologer.UserId = jv_users.id 
-                            WHERE 
-                            jv_expert_charges.country = '".$country."' AND jv_users.id = '".$expert."' AND 
-                            AND jv_expert_charges='expert_fees' ";
-        $result         = mysqli_query($mysqli, $query);
-        print_r($result);exit;
+        $query          =       "SELECT jv_users.name as name,jv_users.username as uname, jv_user_img.img_new_name as img_new_name,
+                                    jv_user_img.img_name as img_name, jv_user_astrologer.city as city, jv_user_astrologer.country as country,
+                                    jv_user_astrologer.info as info, jv_user_astrologer.max_no_ques as max_no_ques
+                                    ,jv_user_astrologer.phone_or_report as phone_or_report FROM jv_users RIGHT JOIN jv_user_astrologer ON jv_user_astrologer.UserId = jv_users.id 
+                                    RIGHT JOIN jv_user_img ON jv_user_img.user_id = jv_users.id WHERE jv_users.id = '".$expert."'";
+        $query         = mysqli_query($conn, $query);
+        $result         = mysqli_fetch_object($query);
+        echo json_encode($result);
     }
-//}
-//else
-//{
-    //echo "error";
-    //exit;
-//}
+}
+else
+{
+    echo "error";
+    exit;
+}
+ /* 
+ * $query          = "SELECT jv_users.id as user_id, jv_users.name as name,jv_users.username as uname, jv_user_img.img_new_name as img_new_name,
+                            jv_user_img.img_name as img_name, jv_user_astrologer.city as city, jv_user_astrologer.country as country,
+                            jv_user_astrologer.info as info, jv_user_astrologer.max_no_ques as max_no_ques
+                            ,jv_user_astrologer.phone_or_report as phone_or_report FROM jv_users RIGHT JOIN jv_user_astrologer ON jv_user_astrologer.UserId = jv_users.id 
+                            RIGHT JOIN jv_user_img ON jv_user_img.user_id = jv_users.id WHERE jv_users.id = '".$expert."'";
+ */
+    
 ?>
