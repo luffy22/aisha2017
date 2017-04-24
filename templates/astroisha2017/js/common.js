@@ -231,6 +231,7 @@ function getExpertDetails(country)
 
     $("#expert_alert").show();
     document.getElementById("expert_alert").innerHTML = "";
+    document.getElementById("modal_body").innerHTML  = "";
     if(expert == "default_select")
     {
         document.getElementById("expert_alert").innerHTML   = "<span style='color:red'>Kindly Select An Expert From Options.</span>";
@@ -241,6 +242,10 @@ function getExpertDetails(country)
     else
     {
         document.getElementById("info_expert").style.visibility = 'visible';
+        document.getElementById("select_ques").innerHTML        = "";
+        document.getElementById("order_type").innerHTML         = "";
+        document.getElementById("fees_id").innerHTML            = "";
+        document.getElementById("payment_type").innerHTML            = "";
         var request = $.ajax({
             url: "ajaxcalls/getInfo.php",
             type: "POST",
@@ -277,6 +282,22 @@ function getExpertDetails(country)
             document.getElementById("modal_body").innerHTML           += "<img src= '"+window.location.hostname+'/images/profiles/'+obj.img_new_name+"' height='50px' width='50px' title='Click To Get More Information' />"+obj.name;  
             document.getElementById("modal_body").innerHTML           += "<p>Location: "+obj.city+", "+obj.country+"</p>"
             document.getElementById("modal_body").innerHTML           += "<p>"+obj.info+"</p>";
+            document.getElementById("fees_id").innerHTML               = obj.amount+"&nbsp;"+obj.curr_code+"("+obj.currency+"-"+obj.curr_full+")";
+            if(obj.currency == "INR")
+            {
+                document.getElementById("payment_type").innerHTML               += "<input type='radio' name='expert_choice' id='expert_choice1' value='ccavenue' /> <i class='fa fa-credit-card'></i> Credit/Debit Card/Netbanking";
+                document.getElementById("payment_type").innerHTML               += "&nbsp;<input type='radio' name='expert_choice' id='expert_choice2' value='cheque' /> Cheque";
+                document.getElementById("payment_type").innerHTML               += "&nbsp;<input type='radio' name='expert_choice' id='expert_choice3' value='direct' /> Direct Transfer";
+                document.getElementById("payment_type").innerHTML               += "&nbsp;<input type='radio' name='expert_choice' id='expert_choice4' value='paytm' />  <img src='"+window.location.hostname+"/images/paytm.png' />";
+                document.getElementById("payment_type").innerHTML               +=  "&nbsp;<input type='radio' name='expert_choice' id='expert_choice5' value='bhim' /> <img src='"+window.location.hostname+"/images/bhim.png' /> Bhim App";
+                document.getElementById("payment_type").innerHTML               +=  "&nbsp;<input type='radio' name='expert_choice' id='expert_choice6' value='phonepe' /> <img src='"+window.location.hostname+"/images/phonepe.png' /> PhonePe";
+            }
+            else
+            {
+                document.getElementById("payment_type").innerHTML               +=  "<input type='radio' name='expert_choice' id='expert_choice7' value='paypal' /> <i class='fa fa-paypal'></i> Paypal";
+                document.getElementById("payment_type").innerHTML               += "&nbsp;<input type='radio' name='expert_choice' id='expert_choice9' value='paypalme' /> <img src='"+window.location.hostname+"images/paypal.png' /> PaypalMe";
+                document.getElementById("payment_type").innerHTML               += "&nbsp;<input type='radio' name='expert_choice' id='expert_choice8' value='directint' /> Direct Transfer";
+            }   
             
         });
         request.fail(function(jqXHR, textStatus) {

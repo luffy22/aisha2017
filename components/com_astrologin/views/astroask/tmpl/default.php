@@ -3,8 +3,8 @@
 defined('_JEXEC') or die('Restricted access');
 //include_once "/home/astroxou/php/Net/GeoIP.php";
 //$geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
-$ip                         = '117.196.1.11';
-//$ip                         = '157.55.39.123';  // ip address
+//$ip                         = '117.196.1.11';
+$ip                         = '157.55.39.123';  // ip address
 //$ip                       = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
 
 $info                       = geoip_country_code_by_name($ip);
@@ -53,7 +53,13 @@ $country                    = geoip_country_name_by_name($ip);
 </div>
 <div class="form-control" id="order_type"></div>
 <div class="mb-2"></div>
-<div class="form-control"></div>
+<div class="form-control"><label>Fees:</label> <div id='fees_id'></div></div>
+<div class="mb-2"></div>
+<div class="form-control">
+    <label for='expert_choice' class='control-label'>Payment Type: </label>
+    <div id="payment_type"></div>
+</div>
+<div class="mb-2"></div>
 <div class="form-group">
     <button type="submit" name="ask_submit" class="btn btn-primary" onclick="checkValues();return false;">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
     <button type="reset" name="ask_reset" id="ask_reset" class="btn btn-danger">Reset</button>
