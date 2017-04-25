@@ -30,7 +30,7 @@ $country                    = geoip_country_name_by_name($ip);
 </div></div></div>
 </div></div>
 <h3>Ask An Expert</h3>
-<form name="ask_expert" method="post" enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('?option=com_astrologin&task=astroask.chooseExpert'); ?>">
+<form name="ask_expert" method="post" enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('?option=com_astrologin&task=astroask.askExpert') ?>">
 <div class="form-group">
     <div id="expert_alert"></div>
 <label for="select_expert">Choose Expert</label>
@@ -46,12 +46,17 @@ $country                    = geoip_country_name_by_name($ip);
 ?>
 </select>
 </div>
-
+<input type='hidden' name='expert_uname' id="expert_uname" />
 <div class="form-group">
 <label for="select_expert">Choose Number Of Questions</label>
-<select class="form-control" name="select_ques" id="select_ques"></select>
+<select class="form-control" name="expert_max_ques" id="select_ques" onchange="javascript:changefees2();"></select>
 </div>
 <div class="form-control" id="order_type"></div>
+<input type="hidden" name="expert_fees" id="expert_fees"  />
+<input type="hidden" name="expert_curr_code" id="expert_curr_code"  />
+<input type="hidden" name="expert_currency" id="expert_currency"  />
+<input type="hidden" name="expert_curr_full" id="expert_curr_full" />
+<input type="hidden" name="expert_final_fees" id="expert_final_fees" />
 <div class="mb-2"></div>
 <div class="form-control"><label>Fees:</label> <div id='fees_id'></div></div>
 <div class="mb-2"></div>
@@ -61,7 +66,7 @@ $country                    = geoip_country_name_by_name($ip);
 </div>
 <div class="mb-2"></div>
 <div class="form-group">
-    <button type="submit" name="ask_submit" class="btn btn-primary" onclick="checkValues();return false;">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+    <button type="submit" name="expert_submit" id="ask_submit" class="btn btn-primary" >Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
     <button type="reset" name="ask_reset" id="ask_reset" class="btn btn-danger">Reset</button>
 </div>
 </form>

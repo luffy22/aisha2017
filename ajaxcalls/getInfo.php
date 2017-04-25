@@ -4,8 +4,8 @@ if(isset($_POST['expert']))
     $country        = $_POST['locate'];
 
     //$country        = "IN";
-    $host   = "localhost";$user = "root";
-    $pwd    = "desai1985";$db   = "astroisha2017";
+    $host   = "localhost";$user = "astroxou_admin";
+    $pwd    = "*Jrp;F.=OKzG";$db   = "astroxou_jvidya";
     $conn   = new mysqli($host, $user, $pwd, $db);
     /* check connection */
     if (mysqli_connect_errno()) 
@@ -32,8 +32,26 @@ if(isset($_POST['expert']))
                                  jv_expert_charges.user_id = '".$expert."' AND jv_expert_charges.service_for_charge='".$service."' AND 
                                  jv_expert_charges.country = '".$country."'";
         $query1         =       mysqli_query($conn, $query1);
-        $result1        =       mysqli_fetch_array($query1);
-        $array          = array_merge($result, $result1);
+        $row            = mysqli_num_rows($query1);
+        if($row > 0)
+        {
+            $result1        =       mysqli_fetch_array($query1);
+            $array          = array_merge($result, $result1);
+        }
+        else
+        {
+            flush($query1);
+            $query1         =       "SELECT jv_expert_charges.country as country, jv_expert_charges.amount as amount, 
+                                    jv_user_currency.currency as currency, jv_user_currency.curr_code as curr_code, 
+                                    jv_user_currency.curr_full as curr_full FROM jv_expert_charges RIGHT JOIN 
+                                    jv_user_currency ON jv_expert_charges.currency_ref = jv_user_currency.Curr_ID WHERE
+                                    jv_expert_charges.user_id = '".$expert."' AND jv_expert_charges.service_for_charge='".$service."' AND 
+                                    jv_expert_charges.country = 'ROW'";
+            $query1         =       mysqli_query($conn, $query1);
+            $result1        =       mysqli_fetch_array($query1);
+            $array          = array_merge($result, $result1);
+        }
+        
         $json           = json_encode($array);
         echo $json;
     }

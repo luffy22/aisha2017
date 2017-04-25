@@ -33,9 +33,9 @@ if($data->geobytesinternet == 'IN')
 <h3>Authorization And Payment</h3>
 <div>
           <p>&nbsp;&nbsp;Clients can place an Order for a Jyotishi(Vedic Astrology) based reading
-              on <a href="http://www.astroisha.com/ask-question" target="_blank">Ask An Expert</a> Page. On submission of Question Form, client would be redirected to a third party Payment Gateway: <a href="http://www.ccavenue.com/" target="_blank" title="CCAvenue Home Page">CCAvenue</a>. There the client can pay using 
-          one of the payment options provided to complete the Order. On successful completion of order a confirmation email would be provided 
-          with Payment Details and Details Of Question/Questions. Clients are requested to keep the Confirmation Email until Order is Completed to avoid issues later.</p>
+              on <a href="http://www.astroisha.com/ask-question" target="_blank">Ask An Expert</a> Page. On submission of Question Form, client would be either be transferred to Third Party Payment Gateway(Paytm or CCAvenues) in case the client has applied for Online Payment. If he has applies for payment via Cheque, Direct Transfer or Unified Payment Interface(UPI) then an email with details for payment would be provided to the client. 
+              Clients are advised to keep a reference of payment and notify <strong>Astro Isha</strong> via email: admin@astroisha.com. There the client can pay using 
+          one of the payment options provided to complete the Order. On successful completion of order a confirmation email would be provided to the client. Clients are requested to keep the Confirmation Email until Order is Completed to avoid issues later.</p>
           <p>&nbsp;&nbsp;The money debited from Clients Bank Account is safe with Third Party Payment Gateway. Astro Isha does not 
           press for Remittance of Client Payment until the Client Query has been resolved.</p>
       </div>
@@ -73,70 +73,22 @@ else
 <div id="payments-accordion1">
 <h3>Authorization And Payments</h3>
 <div>
-          <p>&nbsp;&nbsp;Clients can place an Order on <a href="http://www.astroisha.com/ask-question" target="_blank">Ask An Expert</a> Page. On successful 
-          completion of the Question Form, client would be redirected to <a href="http://www.paypal.com" targe="_blank" title="Paypal Home Page">Paypal</a> which is one of the most preferred and safe 
-          payment gateway for International Transactions. There the client can pay using 
-          one of the payment options provided by Paypal to complete the Order. On successful completion of order a confirmation email would be provided 
-          with Payment Details and Question Details. Clients are requested to keep the Confirmation Email until Order is Completed to avoid issues later.</p>
-          <p>&nbsp;&nbsp;The money debited from Clients Bank Account is safe with Paypal. Astro Isha does not 
-          press for Remittance of Client Payment until the Client Query has been resolved.</p>
-      </div>
-<h3>Currencies Accepted</h3>
- <div>
-          <table class="table table-condensed table-bordered">
-              <tr>
-              <th>Location</th>
-              <th>Currency</th>
-              <th>Symbol</th>
-              </tr>
-              <tr>
-                  <td>United States</td>
-                  <td>US Dollars</td>
-                  <td>US &#36;</td>
-              </tr>
-              <tr>
-                  <td>United Kingdom</td>
-                  <td>British Sterling Pound</td>
-                  <td>GBP &#8356;</td>
-              </tr>
-              <tr>
-                  <td>Europe</td>
-                  <td>Euro</td>
-                  <td>&#8364;</td>
-              </tr>
-              <tr>
-                  <td>Canada</td>
-                  <td>Canadian Dollars</td>
-                  <td>CAD &#36;</td>
-              </tr>
-              <tr>
-                  <td>Australia</td>
-                  <td>Australian Dollars</td>
-                  <td>AUD &#36;</td>
-              </tr>
-              <tr>
-                  <td>Singapore</td>
-                  <td>Singapore Dollars</td>
-                  <td>SGD &#36;</td>
-              </tr>
-              <tr>
-                  <td>New Zealand</td>
-                  <td>New Zealand Dollars</td>
-                  <td>NZD &#36;</td>
-              </tr>
-              <tr>
-                  <td>Rest Of The World</td>
-                  <td>US Dollars</td>
-                  <td>US &#36;</td>
-              </tr>
-          </table>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Clients can place an Order on <a href="http://www.astroisha.com/ask-question" target="_blank">Ask An Expert</a> Page. For International Clients there are three mode of payments available: 
+          <ol>
+              <li>Paypal: Client would be redirected to Paypal to complete the Order. Confirmation Email would be provided on completion of payment.</li>
+              <li>PaypalMe: Client can pay via Paypal Me also which offers Paypal Payment Services but in a much simplified format. Customer would be provided a link in 
+              an email to Pay Online. All the customer needs to do is pay and email confirmation of payment to admin@astroisha.com once payment is complete. Astro Isha would process the order on confirmation of payment.</li>
+              <li>Direct Transfer: Customers can also transfer the amount directly to our Bank. Details for International Transfer would be provided in confirmation email. Customers are requested to 
+              keep some reference of payment to avoid issues later.</li>
+          </ol>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On successful completion of order a confirmation email would be provided. Clients are requested to keep the Confirmation Email until Order is Completed to avoid issues later.</p>
       </div>
 <h3>Order Cancellation And Refunds</h3>
 <div>
           <p>&nbsp;&nbsp;If the Client has a change of mind and wishes to Cancel the Order he has 24 Working Hours to do so. Kindly notify us at <?php echo JHtml::_('email.cloak', 'admin@astroisha.com'); ?> 
-              and also mention the token number or Paypal Transaction ID or Paypal Order ID provided in the confirmation email. Astro Isha would Cancel the Order and money would be credited back to your account. 
-              A confirmation of Cancellation of Order would be provided to Client. As money is still with Paypal during this time it is 
-              advised that the Client asks Paypal about the duration of time before money is credited back into his/her account.
+              and also mention the token number or Paypal Transaction ID or Paypal Order ID provided in the confirmation email in case order is done via Paypal or Paypal.Me. Astro Isha would Cancel the Order and money would be credited back to your account. 
+              In case for Direct Transfer clients would need to provide Bank Details with Account Name, Account Number and Swift Code for Astro Isha refund back the amount into your account. 
+              Bear in mind Astro Isha does not hold liability to Transaction Charges applied to Online Transfer. We can only pay the amount we have received. A confirmation of Cancellation of Order would be provided to Client. 
           </p>
           <p>&nbsp;&nbsp;After 24 Hours since order has been confirmed, Astro Isha reserves the right to proceed with the Order and Client Requests for Cancellation of Order 
           cannot be entertained.</p>
