@@ -26,8 +26,8 @@ class PlgContentAskExpert extends JPlugin
             $path               = JPluginHelper::getLayoutPath('content', 'askexpert');
             //include_once "/home/astroxou/php/Net/GeoIP.php";
             //$geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
-            //$ip                         = '117.196.1.11';
-            $ip                         = '157.55.39.123';  // ip address
+            $ip                         = '117.196.1.11';
+            //$ip                         = '157.55.39.123';  // ip address
             //$ip                       = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
           
             $info                       = geoip_country_code_by_name($ip);
@@ -66,7 +66,7 @@ class PlgContentAskExpert extends JPlugin
                                             $db->quoteName('country').' = '.$db->quote('US'));
 
                 }
-                else if($info == "IN"||$info== 'LK'||$info=='NP'||$info=='TH'||$info=='MY'||$info=='MV')
+                else if($info == "IN"||$info=='NP')
                 {
                      $query1          ->select($db->quoteName(array('a.country','a.amount','b.currency','b.curr_code','b.curr_full')))
                                     ->from($db->quoteName('#__expert_charges','a'))
@@ -216,7 +216,7 @@ class PlgContentAskExpert extends JPlugin
                     $content            .= "<label for='expert_choice' class='control-label'>Payment Type: </label>";
                     if($details['currency'] == 'INR')
                     {
-                        $content            .= "<input type='radio' name='expert_choice' id='expert_choice1' value='ccavenue' /> <i class='fa fa-credit-card'></i> Credit/Debit Card/Netbanking
+                        $content            .= "<input type='radio' name='expert_choice' id='expert_choice1' value='ccavenue' checked /> <i class='fa fa-credit-card'></i> Credit/Debit Card/Netbanking
                                                 <input type='radio' name='expert_choice' id='expert_choice2' value='cheque' /> Cheque
                                                 <input type='radio' name='expert_choice' id='expert_choice3' value='direct' /> Direct Transfer
                                                 <input type='radio' name='expert_choice' id='expert_choice4' value='paytm' />  <img src='".JURi::base()."images/paytm.png' />";
@@ -226,7 +226,7 @@ class PlgContentAskExpert extends JPlugin
                     }
                     else
                     {
-                        $content            .= "<input type='radio' name='expert_choice' id='expert_choice7' value='paypal' /> <i class='fa fa-paypal'></i> Paypal";
+                        $content            .= "<input type='radio' name='expert_choice' id='expert_choice7' value='paypal' checked /> <i class='fa fa-paypal'></i> Paypal";
                         $content            .= " <input type='radio' name='expert_choice' id='expert_choice9' value='paypalme' /> <img src='".JURi::base()."images/paypal.png' /> PaypalMe";
                         $content            .= " <input type='radio' name='expert_choice' id='expert_choice8' value='directint' /> Direct Transfer";
 

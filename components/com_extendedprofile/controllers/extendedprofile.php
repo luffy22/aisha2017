@@ -49,7 +49,6 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
                 
         }
     }
-    
     public function saveAstro()
     {
         $id         = $_POST['profile_id'];

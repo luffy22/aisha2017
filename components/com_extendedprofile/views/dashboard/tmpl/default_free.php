@@ -47,7 +47,7 @@ $u_id         = $this->msg['id'];
     </div>
     <div class="mt-1"></div>
     <p class="lead">Little About Me:</p>
-        <p class="text-left"><?php echo $this->msg['info']; ?></p>
+        <p class="text-left"><?php echo stripslashes($this->msg['info']); ?></p>
 </div>
 <h3>Location Details</h3>
 <div>

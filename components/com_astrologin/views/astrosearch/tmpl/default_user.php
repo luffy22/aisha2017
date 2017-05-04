@@ -41,7 +41,7 @@ $username   = $user->username;
             }
       ?>
           <div class="mb-1"></div>
-          <p class="text-lead"><?php echo $data->info; ?></p>
+          <p class="text-lead"><?php echo stripslashes($data->info); ?></p>
           <h3>Expertise: </h3>
 <?php
       foreach($this->expert as $expert)

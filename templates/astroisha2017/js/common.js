@@ -236,7 +236,6 @@ function changefees2()
 }
 function getExpertDetails(country)
 {
-    document.getElementById("info_expert").style.visibility = 'hidden';
     var expert      = document.getElementById("select_expert").value;
     var location    = country;
 
@@ -245,6 +244,7 @@ function getExpertDetails(country)
     document.getElementById("modal_body").innerHTML  = "";
     if(expert == "default_select")
     {
+        $("#info_expert,#choose_ques,#order_type,#fees_type,#pay_id,#btn_grp").css("display", "none");
         document.getElementById("expert_alert").innerHTML   = "<span style='color:red'>Kindly Select An Expert From Options.</span>";
         setTimeout(function() {
         $("#expert_alert").hide('blind', {}, 500)
@@ -252,7 +252,7 @@ function getExpertDetails(country)
     }
     else
     {
-        document.getElementById("info_expert").style.visibility = 'visible';
+        $("#info_expert,#choose_ques,#order_type,#fees_type,#pay_id,#btn_grp").css("display", "block");
         document.getElementById("select_ques").innerHTML        = "";
         document.getElementById("order_type").innerHTML         = "";
         document.getElementById("fees_id").innerHTML            = "";

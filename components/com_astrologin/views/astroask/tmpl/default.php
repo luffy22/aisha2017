@@ -1,20 +1,21 @@
+
 <?php
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-//include_once "/home/astroxou/php/Net/GeoIP.php";
-//$geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
+include_once "/home/astroxou/php/Net/GeoIP.php";
+$geoip                  = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
 //$ip                         = '117.196.1.11';
-$ip                         = '157.55.39.123';  // ip address
-//$ip                       = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
+//$ip                         = '157.55.39.123';  // ip address
+$ip                       = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
 
-$info                       = geoip_country_code_by_name($ip);
-$country                    = geoip_country_name_by_name($ip);
-//$location                 = $geoip->lookupLocation($ip);
-//$info                     = $location->countryCode;
-//$country                  = $location->countryName;
+//$info                       = geoip_country_code_by_name($ip);
+//$country                    = geoip_country_name_by_name($ip);
+$location                 = $geoip->lookupLocation($ip);
+$info                     = $location->countryCode;
+$country                  = $location->countryName;
 //print_r($this->msg);exit;
 ?>
-<style>#info_expert{visibility: hidden;}</style>
+<style type="text/css">#info_expert,#choose_ques,#order_type,#fees_type,#pay_id,#btn_grp{ display: none; }</style>
 <div class='card card-outline-info text-center' id="info_expert">
 <div class='card-block'>
 <p><a title='Click to get more info' href='#' data-toggle='modal' data-target='#astroinfo'>Click For More Information</a></p>
@@ -47,7 +48,7 @@ $country                    = geoip_country_name_by_name($ip);
 </select>
 </div>
 <input type='hidden' name='expert_uname' id="expert_uname" />
-<div class="form-group">
+<div class="form-group" id="choose_ques">
 <label for="select_expert">Choose Number Of Questions</label>
 <select class="form-control" name="expert_max_ques" id="select_ques" onchange="javascript:changefees2();"></select>
 </div>
@@ -58,14 +59,14 @@ $country                    = geoip_country_name_by_name($ip);
 <input type="hidden" name="expert_curr_full" id="expert_curr_full" />
 <input type="hidden" name="expert_final_fees" id="expert_final_fees" />
 <div class="mb-2"></div>
-<div class="form-control"><label>Fees:</label> <div id='fees_id'></div></div>
+<div class="form-control" id="fees_type"><label>Fees:</label> <div id='fees_id'></div></div>
 <div class="mb-2"></div>
-<div class="form-control">
+<div class="form-control" id="pay_id">
     <label for='expert_choice' class='control-label'>Payment Type: </label>
     <div id="payment_type"></div>
 </div>
 <div class="mb-2"></div>
-<div class="form-group">
+<div class="form-group" id="btn_grp">
     <button type="submit" name="expert_submit" id="ask_submit" class="btn btn-primary" >Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
     <button type="reset" name="ask_reset" id="ask_reset" class="btn btn-danger">Reset</button>
 </div>

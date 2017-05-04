@@ -135,7 +135,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $state          = $details['state'];$country    = $details['country'];
         $pcode          = $details['pcode'];$phone      = $details['phone'];
         $mobile         = $details['mobile'];$whatsapp  = $details['whatsapp'];
-        $website        = $details['website'];$info     = $details['info'];$status  = 'visible';
+        $website        = $details['website'];$info     = addslashes($details['info']);$status  = 'visible';
         $upload         = JFile::upload($src, $dest);
         if($upload)
         {
@@ -192,7 +192,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $mobile         = $details['mobile'];$whatsapp  = $details['whatsapp'];
         $website        = $details['website'];$fb       = $details['fb_page'];
         $gplus          = $details['gplus'];$tweet      = $details['tweet'];
-        $info           = $details['info'];$status      = $details['status'];
+        $info           = addslashes($details['info']);$status      = $details['status'];
         
         $fields         = array(
                                 $db->quoteName('addr_1').'='.$db->quote($addr1),

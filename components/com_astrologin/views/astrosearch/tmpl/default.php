@@ -41,7 +41,7 @@ $astro      = $this->astro;
         ?>
             </div>
             <div class="col-md-10"><strong>Location:</strong> <?php echo $data->city.", ",$data->state.", ".$data->country;  ?><br/>
-                <strong>Little About Me:</strong><br/> <?php if(strlen($data->info) > 1000){echo substr($data->info,0,1000)."...";}else{echo $data->info;} ?>
+                <strong>Little About Me:</strong><br/> <?php if(strlen($data->info) > 1000){echo stripslashes(substr($data->info,0,1000))."...";}else{echo stripslashes($data->info);} ?><br/>
                 <a class="btn btn-primary" href="<?php echo JRoute::_('index.php?view=astrosearch&user='.$user); ?>"><i class="fa fa-address-card-o"></i> Get Full Details</a>
             </div>
         </div>
