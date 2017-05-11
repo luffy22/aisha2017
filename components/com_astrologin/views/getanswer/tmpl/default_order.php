@@ -1,4 +1,3 @@
-
 <?php
 defined('_JEXEC') or die;
 if(isset($_GET['order']))
@@ -9,14 +8,14 @@ if(isset($_GET['ref']))
 {
     $refemail   = $_GET['ref'];
 }
-  
+ //print_r($this->order);exit;
 ?>
 <div class="mb-2"></div>
 <div class="card card-outline-info">
     <div class="card-header"><strong>Get Answer For Order</strong></div>
    <ul class="list-group list-group-flush">
     <li class="list-group-item">Order ID: <?php echo $this->order->UniqueID; ?></li>
-    <li class="list-group-item">Expert Who Would Answer: <a href="<?php echo JUri::base() ?>astro/<?php echo $this->order->expertname ?>" title="<?php echo "Click To View Profile Of Expert" ?>"><?php echo $this->order->expertname; ?></a></li>
+    <li class="list-group-item">Expert Who Would Answer: <a href="<?php echo JUri::base() ?>astro/<?php echo $this->order->username ?>" title="<?php echo "Click To View Profile Of Expert" ?>"><?php echo $this->order->expertname; ?></a></li>
     <li class="list-group-item">
       <?php
             if(isset($refemail) && $refemail==$this->order->email)

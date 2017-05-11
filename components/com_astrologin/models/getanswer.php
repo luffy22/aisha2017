@@ -17,6 +17,7 @@ class AstrologinModelGetAnswer extends JModelItem
                                         'a.email','a.gender','a.dob_tob','a.pob','a.order_type', 
                                         'a.ques_ask_date')))
                         ->select($db->quoteName('b.name','expertname'))
+                        ->select($db->quoteName('b.username','username'))
                         ->from($db->quoteName('#__question_details','a'))
                         ->join('INNER', $db->quoteName('#__users', 'b') . ' ON (' . $db->quoteName('b.id').' = '.$db->quoteName('a.expert_id') . ')')
                                 ->where($db->quoteName('a.UniqueID').' = '.$db->quote($order));

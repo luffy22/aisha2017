@@ -26,7 +26,7 @@ class AstrologinControllerAstroask extends AstroLoginController
                                 );
             //print_r($details);exit;
             $model          = $this->getModel('astroask');  // Add the array to model
-            $model->insertDetails($details);
+            $model          ->insertDetails($details);
         
     }
     public function askQuestions2()

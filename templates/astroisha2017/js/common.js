@@ -262,6 +262,7 @@ function getExpertDetails(country)
         document.getElementById("expert_currency").value            = "";
         document.getElementById("expert_curr_full").value           = "";
         document.getElementById("expert_uname").value               = "";
+        document.getElementById("expert_final_fees").value          = "";
         var request = $.ajax({
             url: "ajaxcalls/getInfo.php",
             type: "POST",
@@ -304,6 +305,7 @@ function getExpertDetails(country)
             document.getElementById("expert_curr_code").value           = obj.curr_code;
             document.getElementById("expert_currency").value            = obj.currency;
             document.getElementById("expert_curr_full").value           = obj.curr_full
+            document.getElementById("expert_final_fees").value          = obj.amount;
             if(obj.currency == "INR")
             {
                 document.getElementById("payment_type").innerHTML               += "<input type='radio' name='expert_choice' id='expert_choice1' value='ccavenue' checked /> <i class='fa fa-credit-card'></i> Credit/Debit Card/Netbanking";
