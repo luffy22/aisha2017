@@ -252,7 +252,7 @@ function getExpertDetails(country)
     }
     else
     {
-        $("#info_expert,#choose_ques,#order_type,#fees_type,#pay_id,#btn_grp").css("display", "block");
+        $("#ajax_load").css("display", "block");
         document.getElementById("select_ques").innerHTML        = "";
         document.getElementById("order_type").innerHTML         = "";
         document.getElementById("fees_id").innerHTML            = "";
@@ -270,6 +270,8 @@ function getExpertDetails(country)
             cache: false  
         });
         request.done(function(msg){
+              $("#ajax_load").css("display", "none");
+              $("#info_expert,#choose_ques,#order_type,#fees_type,#pay_id,#btn_grp").css("display", "block");
             var obj         = jQuery.parseJSON(msg);
             document.getElementById("expert_uname").value       = obj.uname;
             for(var i=1; i<=obj.max_no_ques;i++)

@@ -15,7 +15,8 @@ $country                    = geoip_country_name_by_name($ip);
 //$country                  = $location->countryName;
 //print_r($this->msg);exit;
 ?>
-<style type="text/css">#info_expert,#choose_ques,#order_type,#fees_type,#pay_id,#btn_grp{ display: none; }</style>
+<style type="text/css">#info_expert,#choose_ques,#order_type,#fees_type,#pay_id,#btn_grp,#ajax_load{ display: none; }</style>
+<div id="ajax_load"><img src="<?php echo JUri::base(); ?>images/ajaxloader.gif" title="Loading... Please Wait" /><h3>Data Loading. Please Wait a Moment...</h3></div>
 <div class='card card-outline-info text-center' id="info_expert">
 <div class='card-block'>
 <p><a title='Click to get more info' href='#' data-toggle='modal' data-target='#astroinfo'>Click For More Information</a></p>
