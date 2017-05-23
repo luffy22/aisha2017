@@ -3,7 +3,7 @@
  * @Copyright
  * @package     EasyCalcCheck Plus - ECC+ for Joomla! 3
  * @author      Viktor Vogel <admin@kubik-rubik.de>
- * @version     3.1.1 - 2015-12-22
+ * @version     3.1.2 - 2017-05-21
  * @link        https://joomla-extensions.kubik-rubik.de/ecc-easycalccheck-plus
  *
  * This is a PHP library that handles calling reCAPTCHA.

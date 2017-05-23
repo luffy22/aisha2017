@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="plugin" version="3.2" group="system" method="upgrade">
     <name>PLG_ECC</name>
-    <version>3.1.1</version>
-    <creationDate>2015-12-22</creationDate>
+    <version>3.1.2</version>
+    <creationDate>2017-05-21</creationDate>
     <license>http://www.gnu.org/licenses/gpl</license>
-    <copyright>Copyright 2015 Viktor Vogel. All rights reserved.</copyright>
+    <copyright>Copyright 2017 Viktor Vogel. All rights reserved.</copyright>
     <author>Viktor Vogel</author>
     <authoremail>admin@kubik-rubik.de</authoremail>
     <authorurl>https://joomla-extensions.kubik-rubik.de/</authorurl>
@@ -23,7 +23,7 @@
         <language tag="de-DE">de-DE/de-DE.plg_system_easycalccheckplus.sys.ini</language>
     </languages>
     <updateservers>
-        <server type="extension" priority="1" name="PLG_ECC">https://check.kubik-rubik.de/updates/ecc.xml</server>
+        <server type="extension" priority="1" name="PLG_ECC">https://check.kubik-rubik.de/updates/ecc_legacy.xml</server>
     </updateservers>
     <config>
         <fields name="params" addfieldpath="/plugins/system/easycalccheckplus/fields">
@@ -43,7 +43,7 @@
                     <option value="2">2</option>
                     <option value="3">3</option>
                 </field>
-                <field name="negativ" type="list" default="0" label="PLG_ECC_NEGATIV" description="PLG_ECC_NEGATIVDESC">
+                <field name="negative" type="list" default="0" label="PLG_ECC_NEGATIVE" description="PLG_ECC_NEGATIVEDESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>

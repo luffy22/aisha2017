@@ -3,7 +3,7 @@
  * @Copyright
  * @package     Field - Donation Code Check
  * @author      Viktor Vogel <admin@kubik-rubik.de>
- * @version     Joomla! 3 - 3.1.1 - 2015-07-31
+ * @version     Joomla! 3 - 3.1.2 - 2016-06-03
  * @link        https://joomla-extensions.kubik-rubik.de/
  *
  * @license     GNU/GPL
@@ -57,7 +57,7 @@ class JFormFieldKRDonationCodeCheck extends JFormField
 
 			if($this->id == 'jform_params_donation' OR $this->id == 'jform_donation')
 			{
-				$field_value .= '<div class="'.$this->randomClassName($session, 'success').'">'.JTEXT::_('KR_DONATION_CODE_CHECK_SUCCESS').'</div>';
+				$field_value .= '<div class="'.$this->randomClassName($session, 'success').'">'.JText::_('KR_DONATION_CODE_CHECK_SUCCESS').'</div>';
 				$this->setHeadDataSession($session);
 			}
 
@@ -74,16 +74,16 @@ class JFormFieldKRDonationCodeCheck extends JFormField
 		$session->clear('field_value_head', 'krdonationcodecheck');
 		$session->clear('donation_code', 'krdonationcodecheck');
 
-		$host = JURI::getInstance()->getHost();
+		$host = JUri::getInstance()->getHost();
 		$session->set('donation_code', $donation_code, 'krdonationcodecheck');
 
 		if($host == 'localhost')
 		{
-			$field_value = '<div class="'.$this->randomClassName($session).'">'.JTEXT::_('KR_DONATION_CODE_CHECK_DEFAULT_LOCALHOST').'</div>';
+			$field_value = '<div class="'.$this->randomClassName($session).'">'.JText::_('KR_DONATION_CODE_CHECK_DEFAULT_LOCALHOST').'</div>';
 
 			if(!empty($donation_code))
 			{
-				$field_value .= '<div class="'.$this->randomClassName($session, 'warning').'">'.JTEXT::_('KR_DONATION_CODE_CHECK_ERROR_LOCALHOST').'</div>';
+				$field_value .= '<div class="'.$this->randomClassName($session, 'warning').'">'.JText::_('KR_DONATION_CODE_CHECK_ERROR_LOCALHOST').'</div>';
 			}
 
 			$session->set('field_value', $field_value, 'krdonationcodecheck');
@@ -96,16 +96,16 @@ class JFormFieldKRDonationCodeCheck extends JFormField
 
 		if($donation_code_check !== 1)
 		{
-			$field_value = '<div class="'.$this->randomClassName($session).'">'.JTEXT::sprintf('KR_DONATION_CODE_CHECK_DEFAULT', $host).'</div>';
+			$field_value = '<div class="'.$this->randomClassName($session).'">'.JText::sprintf('KR_DONATION_CODE_CHECK_DEFAULT', $host).'</div>';
 
 			if($donation_code_check === -1)
 			{
-				$field_value .= '<div class="'.$this->randomClassName($session, 'warning').'">'.JTEXT::_('KR_DONATION_CODE_CHECK_ERROR_SERVER').'</div>';
+				$field_value .= '<div class="'.$this->randomClassName($session, 'warning').'">'.JText::_('KR_DONATION_CODE_CHECK_ERROR_SERVER').'</div>';
 			}
 
 			if($donation_code_check === -2)
 			{
-				$field_value .= '<div class="'.$this->randomClassName($session, 'warning').'">'.JTEXT::_('KR_DONATION_CODE_CHECK_ERROR').'</div>';
+				$field_value .= '<div class="'.$this->randomClassName($session, 'warning').'">'.JText::_('KR_DONATION_CODE_CHECK_ERROR').'</div>';
 			}
 
 			$session->set('field_value', $field_value, 'krdonationcodecheck');
@@ -118,7 +118,7 @@ class JFormFieldKRDonationCodeCheck extends JFormField
 
 		if($this->id == 'jform_params_donation' OR $this->id == 'jform_donation')
 		{
-			$field_value .= '<div class="'.$this->randomClassName($session, 'success').'">'.JTEXT::_('KR_DONATION_CODE_CHECK_SUCCESS').'</div>';
+			$field_value .= '<div class="'.$this->randomClassName($session, 'success').'">'.JText::_('KR_DONATION_CODE_CHECK_SUCCESS').'</div>';
 		}
 
 		$session->set('field_value', 1, 'krdonationcodecheck');
