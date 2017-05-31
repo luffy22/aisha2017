@@ -447,36 +447,18 @@ function sendMail($data)
         $body       .= "<p>Bank Name: Axis Bank</p>";
         $body       .= "<p>Swift Code: AXISINBB080</p>";
     }
-    else if($data->pay_mode=="paytm"&&$data->paid=="no")
+    else if(($data->pay_mode=="paytm"||$data->pay_mode=="ccavenue"||$data->pay_mode=="paypal")&&$data->paid=="no")
     {
         $body       .= "<p>Payment Status: </strong>Failed</p>";
 
     }
-    else if($data->pay_mode=="ccavenue"&& $data->paid=="no")
-    {
-        $body       .= "<p>Payment Status: Failed</p>";
-
-    }
-    else if($data->pay_mode=="paypal"&& $data->paid=="no")
-    {
-        $body       .= "<p>Payment Status: Failed</p><br/>";
-
-    }
-    else if($data->pay_mode=="paytm"&&$data->paid=="yes")
+    else if(($data->pay_mode=="paytm"||$data->pay_mode=="ccavenue")&&$data->paid=="yes")
     {
         $body       .= "<p>Payment Status: Success</p>";
         $body       .= "<p>Payment Id: ".$data->track_id."</p>";
         $body       .= "<p>Bank Reference Id: ".$data->bank_ref."</p>";
         $body       .= "<br/><p><strong>Please keep this email as reference. Alternatively you can also print this email for future reference.</strong></p>";
-        $body       .= "<p><strong>In case the order is not completed in ten working days you would be refunded full amount back into your bank account. Kindly keep this email as reference.</strong></p><br/>";
-    }
-    else if($data->pay_mode=="ccavenue"&&$data->paid=="yes")
-    {
-        $body       .= "<p>Payment Status: Success</p>";
-        $body       .= "<p>Payment Id: ".$data->track_id."</p>";
-        $body       .= "<p>Bank Reference Id: ".$data->bank_ref."</p>";
-        $body       .= "<br/><p><strong>Please keep this email as reference. Alternatively you can also print this email for future reference.</strong></p>";
-        $body       .= "<p><strong>In case the order is not completed in ten working days you would be refunded full amount back into your bank account. Kindly keep this email as reference.</strong></p><br/>";
+        $body       .= "<p><strong>In case the order is not completed in ten working days you would be refunded full amount back into your bank account.</strong></p><br/>";
     }
     else if($data->pay_mode=="paypal"&&$data->paid=="yes")
     {
@@ -484,7 +466,7 @@ function sendMail($data)
         $body       .= "<p>Payment Id: ".$data->paypal_id."</p>";
         $body       .= "<p>Payment Status: ".$data->status."</p>";
         $body       .= "<br/><p><strong>Please keep this email as reference. Alternatively you can also print this email for future reference.</strong></p>";
-        $body       .= "<p><strong>In case the order is not completed in ten working days you would be refunded full amount back into your bank account. Kindly keep this email as reference.</strong></p><br/>";
+        $body       .= "<p><strong>In case the order is not completed in ten working days you would be refunded full amount back into your bank account.</strong></p><br/>";
     }
     else
     {
@@ -516,30 +498,19 @@ function sendMail($data)
     } 
     else 
     {
-        if($data->pay_mode=="paytm"&&$data->paid=="yes")
+        if(($data->pay_mode=="paytm"||$data->pay_mode=="ccavenue")&&$data->paid=="yes")
         {
-            $msg    =  'Payment via Paytm is successful. Please check your email to see payment details.';
+            $msg    =  'Payment to Astro Isha is successful. Please check your email to see payment details.';
             $msgType    = "success";
             $app->redirect($link, $msg,$msgType);
         }
-        else if($data->pay_mode=="paytm"&&$data->paid=="no")
+        else if(($data->pay_mode=="paytm"||$data->pay_mode=="ccavenue")&&$data->paid=="no")
         {
-            $msg    =  'Payment via Paytm has failed. Kindly check your email for details.';
+            $msg    =  'Payment to Astro Isha has failed. Kindly check your email for details.';
             $msgType    = "error";
             $app->redirect($link, $msg,$msgType);
         }
-        else if($data->pay_mode=="ccavenue"&&$data->paid=="yes")
-        {
-            $msg    =  'Please check your email to see payment details.';
-            $msgType    = "success";
-            $app->redirect($link, $msg,$msgType);
-        }
-        else if($data->pay_mode=="ccavenue"&&$data->paid=="no")
-        {
-            $msg    =  'Payment has failed. Kindly check your email for details.';
-            $msgType    = "error";
-            $app->redirect($link, $msg,$msgType);
-        }
+        
         else if($data->pay_mode=="paypal"&&$data->paid=="no")
         {
             $msg    =  'Payment via Paypal has failed. Kindly check your email for details.';
