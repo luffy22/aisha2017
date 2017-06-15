@@ -1,0 +1,4 @@
+[07-Apr-2017 14:43:59 Etc/GMT] PHP Notice:  Undefined index: BANKTXNID in /home/astroxou/public_html/PaytmKit/pgResponse2.php on line 38
+[07-Apr-2017 14:44:57 Etc/GMT] PHP Notice:  Undefined index: TXNID in /home/astroxou/public_html/PaytmKit/pgResponse2.php on line 36
+[07-Apr-2017 14:44:57 Etc/GMT] PHP Notice:  Undefined index: BANKTXNID in /home/astroxou/public_html/PaytmKit/pgResponse2.php on line 38
+[07-Apr-2017 14:48:05 Etc/GMT] PHP Notice:  Undefined index: BANKTXNID in /home/astroxou/public_html/PaytmKit/pgResponse2.php on line 38
