@@ -389,6 +389,10 @@
   <changefreq>weekly</changefreq>
 </url>
 <url>
+	<loc>https://www.astroisha.com/main?start=10</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
   <loc>https://www.astroisha.com/main/61-vedic-astrology</loc>
   <changefreq>weekly</changefreq>
 </url>
@@ -447,6 +451,18 @@
 <url>
   <loc>https://www.astroisha.com/main/308-saturn-sagittarius</loc>
   <changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/main/332-shani-fear</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/main/336-vimshottari-dasha</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/main/338-vargottama</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
   <loc>https://www.astroisha.com/featured</loc>
@@ -559,6 +575,18 @@
 <url>
   <loc>https://www.astroisha.com/featured/310-rahu_balancer</loc>
   <changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/featured/320-female-goddess</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/featured/330-jupiter-vs-venus</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/featured/334-prison-confinement</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
   <loc>https://www.astroisha.com/yogas</loc>
@@ -749,6 +777,18 @@
 	<changefreq>weekly</changefreq>
 </url>
 <url>
+	<loc>https://www.astroisha.com/yogas/323-kalinidhi_yoga</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/yogas/329-amsavatara-yoga</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/yogas/335-kusuma-yoga</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
 	<loc>https://www.astroisha.com/case</loc>
 	<changefreq>weekly</changefreq>
 </url>
@@ -762,6 +802,10 @@
 </url>
 <url>
 	<loc>https://www.astroisha.com/case/314-modi-nbry</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/case/321-adityanath-horoscope</loc>
 	<changefreq>weekly</changefreq>
 </url>
 <url>
@@ -791,6 +835,10 @@
 <url>
   <loc>https://www.astroisha.com/planet-bhavas?start=60</loc>
   <changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/planet-bhavas?start=70</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
   <loc>https://www.astroisha.com/planet-bhavas/134-chandra-1st-house</loc>
@@ -1045,7 +1093,35 @@
 </url>
 <url>
 	<loc>https://www.astroisha.com/planet-bhavas/319-jupiter-4th-house</loc>
-	<changefreq>Weekly</changefreq>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/planet-bhavas/324-jupiter-5th-house</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/planet-bhavas/326-jupiter-6th-house</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/planet-bhavas/328-jupiter-7th-house</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/planet-bhavas/331-jupiter-8th-house</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/planet-bhavas/333-jupiter-9th-house</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/planet-bhavas/337-jupiter-10th-house</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/planet-bhavas/339-jupiter-11th-house</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
   <loc>https://www.astroisha.com/weekly</loc>
@@ -1196,6 +1272,14 @@
 	<changefreq>weekly</changefreq>
 </url>
 <url>
+	<loc>https://www.astroisha.com/relationship/322-gay-relations-horo</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/relationship/327-divorcee-marry</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
   <loc>https://www.astroisha.com/career</loc>
   <changefreq>weekly</changefreq>
 </url>
@@ -1310,6 +1394,10 @@
 <url>
   <loc>https://www.astroisha.com/remedies/199-ketu-remedies</loc>
   <changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/remedies/325-finance-remedy</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
   <loc>https://www.astroisha.com/gemstones</loc>
