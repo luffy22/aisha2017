@@ -28,6 +28,8 @@ defined('_JEXEC') or die;
 <li class="nav-item active"><a class="nav-link" href="#fb" role="tab" data-toggle="tab">Facebook</a></li>
 <li class="nav-item"><a class="nav-link" href="#disqus" role="tab" data-toggle="tab">Disqus</a></li>
 </ul>
+<div class="mb-1"></div>
+<p>If you wish for a reply then kindly use Disqus. Facebook does not notify about comment posted on website.</p>
 <!-- Tab panes -->
 <div class="tab-content">
 <div class="mt-1"></div>
