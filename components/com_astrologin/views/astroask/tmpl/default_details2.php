@@ -11,7 +11,6 @@ $no_of_ques             = $_GET['no_of_ques'];
 <input type="hidden" name="ques_id" id="ques_id" value="<?php echo $uniq_id; ?>" />
 <input type="hidden" name="ques_no" id="ques_no" value="<?php echo $no_of_ques; ?>" />
 <div class="mb-2"></div>
-<div id="ques_accordion">
 <?php
 for($i=0;$i<$no_of_ques;$i++)
  {
@@ -59,7 +58,6 @@ for($i=0;$i<$no_of_ques;$i++)
 <?php 
 }
 ?>
-</div>
 <div class="mb-2"></div>
 <div class="form-group">
     <button type="reset" class="btn btn-danger">Reset</button>
