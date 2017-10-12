@@ -601,6 +601,18 @@
 	<changefreq>weekly</changefreq>
 </url>
 <url>
+	<loc>https://www.astroisha.com/featured/351-rahu-raj-yoga</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/transits</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/transits/352-rahu-cancer-transit</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
   <loc>https://www.astroisha.com/yogas</loc>
   <changefreq>weekly</changefreq>
 </url>
@@ -818,6 +830,14 @@
 </url>
 <url>
 	<loc>https://www.astroisha.com/case/321-adityanath-horoscope</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/case/342-krishna-kemdruma</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/case/353-visha-yoga-choices</loc>
 	<changefreq>weekly</changefreq>
 </url>
 <url>
@@ -1144,6 +1164,18 @@
 	<changefreq>weekly</changefreq>
 </url>
 <url>
+	<loc>https://www.astroisha.com/planet-bhavas/347-venus-1st-house</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/planet-bhavas/350-venus-2nd-house</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/planet-bhavas/354-venus-3rd-house</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
   <loc>https://www.astroisha.com/weekly</loc>
   <changefreq>weekly</changefreq>
 </url>
@@ -1377,6 +1409,10 @@
 </url>
 <url>
 	<loc>https://www.astroisha.com/health/317-stone-blockages</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>https://www.astroisha.com/health/349-astro-std</loc>
 	<changefreq>weekly</changefreq>
 </url>
 <url>
