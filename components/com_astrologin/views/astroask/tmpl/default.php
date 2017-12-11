@@ -7,11 +7,11 @@ $ip                         = '117.196.1.11';
 //$ip                         = '157.55.39.123';  // ip address
 //$ip                       = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
 
-//$info                       = geoip_country_code_by_name($ip);
-//$country                    = geoip_country_name_by_name($ip);
-$location                 = $geoip->lookupLocation($ip);
-$info                     = $location->countryCode;
-$country                  = $location->countryName;
+$info                       = geoip_country_code_by_name($ip);
+$country                    = geoip_country_name_by_name($ip);
+//$location                 = $geoip->lookupLocation($ip);
+//$info                     = $location->countryCode;
+//$country                  = $location->countryName;
 //print_r($this->msg);exit;
 ?>
 <style type="text/css">#info_expert,#choose_ques,#order_type,#fees_type,#pay_id,#btn_grp,#ajax_load{ display: none; }</style>
