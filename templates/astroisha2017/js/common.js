@@ -111,7 +111,6 @@ $(function()
       $('#accordion-'+id).accordion({
             heightStyle: "content",
             collapsible: true,
-            active : false
         });
     });
  $(document).ready(function()
