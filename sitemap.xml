@@ -1176,60 +1176,60 @@
 	<changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly</loc>
+  <loc>https://www.astroisha.com/yearly</loc>
   <changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly?start=10</loc>
+  <loc>https://www.astroisha.com/yearly?start=10</loc>
   <changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly/291-aries-2017</loc>
-  <changefreq>weekly</changefreq>
+	<loc>https://www.astroisha.com/yearly/360-aries-2018</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly/292-taurus-2017</loc>
-  <changefreq>weekly</changefreq>
+	<loc>https://www.astroisha.com/yearly/361-taurus-2018</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly/293-gemini-2017</loc>
-  <changefreq>weekly</changefreq>
+	<loc>https://www.astroisha.com/yearly/362-gemini-2018</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly/294-cancer-2017</loc>
-  <changefreq>weekly</changefreq>
+	<loc>https://www.astroisha.com/yearly/363-cancer-2018</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly/295-leo-2017</loc>
-  <changefreq>weekly</changefreq>
+	<loc>https://www.astroisha.com/yearly/364-leo-2018</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly/296-virgo-2017</loc>
-  <changefreq>weekly</changefreq>
+	<loc>https://www.astroisha.com/yearly/365-virgo-2018</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly/297-libra-2017</loc>
-  <changefreq>weekly</changefreq>
+	<loc>https://www.astroisha.com/yearly/366-libra-2018</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly/298-scorpio-2017</loc>
-  <changefreq>weekly</changefreq>
+	<loc>https://www.astroisha.com/yearly/367-scorpio-2018</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly/299-sagittarius-2017</loc>
-  <changefreq>weekly</changefreq>
+	<loc>https://www.astroisha.com/yearly/368-sagittarius-2018</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly/300-capricorn-2017</loc>
-  <changefreq>weekly</changefreq>
+	<loc>https://www.astroisha.com/yearly/369-capricorn-2018</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly/301-aquarius-2017</loc>
-  <changefreq>weekly</changefreq>
+	<loc>https://www.astroisha.com/yearly/370-aquarius-2018</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
-  <loc>https://www.astroisha.com/weekly/302-pisces-2017</loc>
-  <changefreq>weekly</changefreq>
+	<loc>https://www.astroisha.com/yearly/371-pisces-2018</loc>
+	<changefreq>weekly</changefreq>
 </url>
 <url>
   <loc>https://www.astroisha.com/relationship</loc>

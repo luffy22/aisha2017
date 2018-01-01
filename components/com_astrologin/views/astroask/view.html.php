@@ -12,6 +12,7 @@ class AstroLoginViewAstroAsk extends JViewLegacy
     public function display($tpl = null)
     {
         $this->msg         = $this->get('Data');
+        //print_r($this->msg);exit;
         // Check for errors.
         if (count($errors = $this->get('Errors')))
         {
