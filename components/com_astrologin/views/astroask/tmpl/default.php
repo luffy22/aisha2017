@@ -32,7 +32,7 @@ $details                    = $this->msg;
 </div></div>
 <form name="ask_expert" method="post" enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('?option=com_astrologin&task=astroask.askExpert') ?>">
 <input type='hidden' name='expert_uname' id="expert_uname" value="<?php echo $details['username'] ?>" />
-<div class="form-group" id="choose_ques">
+<div class="form-control" id="choose_ques">
 <label for="select_expert">Choose Number Of Questions</label>
 <select class="form-control" name="expert_max_ques" id="select_ques" onchange="javascript:changefees2();">
 <?php
@@ -45,26 +45,27 @@ $details                    = $this->msg;
 ?>
 </select>
 </div>
-<div class="form-control" id="order_type">
+<div class="mb-2"></div>
+<div class="form-group" id="order_type">
 <?php
 if($details['phone_or_report']=='phone')
 {
 ?>
-    <div class='form-group'><label for='phone_or_report'>Order Type: </label> <i class='fa fa-phone'></i><?php echo ucfirst($details['phone_or_report']) ?></div>
+    <div class='form-control'><label for='phone_or_report'>Order Type: </label> <i class='fa fa-phone'></i><?php echo ucfirst($details['phone_or_report']) ?></div>
         <input type='hidden' name='expert_order_type' id='expert_order_type' value='phone' />";
 <?php
 }
 else if($details['phone_or_report']=='report')
 {
 ?>
-<div class='form-group'><label for='phone_or_report'>Order Type: </label> <i class='fa fa-file-pdf-o'></i><?php echo ucfirst($details['phone_or_report']) ?></div>
+<div class='form-control'><label for='phone_or_report'>Order Type: </label> <i class='fa fa-file-pdf-o'></i><?php echo ucfirst($details['phone_or_report']) ?></div>
 <input type='hidden' name='expert_order_type' id='expert_order_type' value='report' />
 <?php
 }
 else if($details['phone_or_report']=='both')
 {
 ?>
-<div class='form-group'><label>Order Type: </label>
+<div class='form-control'><label>Order Type: </label>
 <input type='radio' name='expert_order_type' id='expert_order_type' value='phone' /> <i class='fa fa-phone'></i> Phone
 <input type='radio' name='expert_order_type' id='expert_order_type' value='report' checked /> <i class='fa fa-file-pdf-o'></i> Report
 </div>
@@ -73,7 +74,7 @@ else if($details['phone_or_report']=='both')
 else 
 {
 ?>
-<div class='form-group'><label for='phone_or_report'>Order Type: </label> <i class='fa fa-file-pdf-o'></i> Report</div>
+<div class='form-control'><label for='phone_or_report'>Order Type: </label> <i class='fa fa-file-pdf-o'></i> Report</div>
 <input type='hidden' name='expert_order_type' id='expert_order_type' value='report' />
 <?php   
 }
@@ -85,9 +86,9 @@ else
 <input type="hidden" name="expert_curr_full" id="expert_curr_full" value="<?php echo $details['curr_full']; ?>" />
 <input type="hidden" name="expert_final_fees" id="expert_final_fees" />
 <div class="mb-2"></div>
-<div class="form-group" id="fees_type"><label>Fees:</label> <div id='fees_id'><?php echo $details['amount']."&nbsp;".$details['curr_code']."(".$details['currency']."-".$details['curr_full'].")" ?></div></div>
+<div class="form-control" id="fees_type"><label>Fees:</label> <div id='fees_id'><?php echo $details['amount']."&nbsp;".$details['curr_code']."(".$details['currency']."-".$details['curr_full'].")" ?></div></div>
 <div class="mb-2"></div>
-<div class="form-group" id="pay_id">
+<div class="form-control" id="pay_id">
     <label for='expert_choice' class='control-label'>Payment Type: </label>
     <div id="payment_type">
  <?php
@@ -113,6 +114,7 @@ else
 ?>
     </div>
 </div>
+
 <div class="mb-2"></div>
 <div class="form-group" id="btn_grp">
     <button type="submit" name="expert_submit" id="ask_submit" class="btn btn-primary" >Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>

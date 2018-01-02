@@ -330,11 +330,6 @@ function getExpertDetails(country)
     }
 }
 $( document ).ready(function() {
-    myVar = setInterval(slideMenu, 1000);
-//var id = $('.accordion-id').attr('id');
- 
+var id = $('.art_id').attr('id');
+  $( "#article_slider" ).toggle( "slide", "slow" );
 });
-function slideMenu()
-{
-     $( "#article_slider" ).hide( "slide", 10000 );
-}
