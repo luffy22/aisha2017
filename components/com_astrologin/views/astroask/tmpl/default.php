@@ -84,7 +84,7 @@ else
 <input type="hidden" name="expert_curr_code" id="expert_curr_code" value="<?php echo $details['curr_code'] ?>" />
 <input type="hidden" name="expert_currency" id="expert_currency" value="<?php echo $details['currency']; ?>" />
 <input type="hidden" name="expert_curr_full" id="expert_curr_full" value="<?php echo $details['curr_full']; ?>" />
-<input type="hidden" name="expert_final_fees" id="expert_final_fees" />
+<input type="hidden" name="expert_final_fees" id="expert_final_fees" value="<?php echo $details['amount'] ?>" />
 <div class="mb-2"></div>
 <div class="form-control" id="fees_type"><label>Fees:</label> <div id='fees_id'><?php echo $details['amount']."&nbsp;".$details['curr_code']."(".$details['currency']."-".$details['curr_full'].")" ?></div></div>
 <div class="mb-2"></div>
